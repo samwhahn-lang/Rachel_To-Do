@@ -543,6 +543,16 @@
       text-transform: uppercase;
     }
 
+    .memory-mnemonic-box {
+      background: rgba(0,255,245,.05);
+      border-left: 3px solid var(--cyan);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 10px;
+      padding: 8px 10px;
+    }
+
     .memory-stat-grid {
       display: grid;
       gap: 16px;
@@ -748,31 +758,31 @@
     }
 
     const NAME_POOL = [
-      { name: "Marcus Chen", face: "Sharp jawline, round glasses, short black hair", detail: "Marine biologist who collects vintage maps" },
-      { name: "Priya Okonkwo", face: "High cheekbones, braided hair with gold beads", detail: "Structural engineer who plays the sitar" },
-      { name: "Dalia Rosenstein", face: "Warm brown eyes, curly auburn hair, freckles across the nose", detail: "Pediatric surgeon who brews her own kombucha" },
-      { name: "Tariq Weston", face: "Broad forehead, neat close-cropped beard, deep-set dark eyes", detail: "High school history teacher and amateur boxer" },
-      { name: "Ingrid Nakamura", face: "Pale blue eyes, platinum blonde hair, high sharp cheekbones", detail: "Forensic accountant who speaks four languages" },
-      { name: "Kwame Adler", face: "Wide bright smile, shaved head, deep brown complexion", detail: "Jazz pianist who restores vintage motorcycles" },
-      { name: "Celeste Moreau", face: "Long neck, dark wavy hair, sharp straight nose", detail: "Aerospace engineer who coaches youth soccer" },
-      { name: "Ravi Fitzgerald", face: "Thick dark eyebrows, wire-rimmed glasses, neatly combed hair", detail: "Environmental lawyer who keeps bees on his rooftop" },
-      { name: "Zara Petrov", face: "Bright green eyes, short pixie cut, prominent chin", detail: "ER nurse who performs improv comedy on weekends" },
-      { name: "Elias Mbeki", face: "Tall forehead, angular face, warm easy smile", detail: "Urban planner who photographs abandoned buildings" },
-      { name: "Sofia Andersen", face: "Round face, deep dimples, strawberry blonde ponytail", detail: "Data scientist who trains border collies" },
-      { name: "Dmitri Osei", face: "Broad nose, close-cropped hair, intense steady gaze", detail: "Cryptographer who collects rare chess sets" },
-      { name: "Yuki Patel", face: "Soft features, straight dark hair, small delicate ears", detail: "Transplant surgeon who paints miniature landscapes" },
-      { name: "Naomi Garfield", face: "High forehead, natural hair, strong squared jawline", detail: "Maritime lawyer who rock climbs every weekend" },
-      { name: "Cormac Delacroix", face: "Red beard, weathered skin, blue-gray eyes", detail: "Geologist who writes murder mysteries" },
-      { name: "Amara Stellenbosch", face: "Long lashes, sculpted brows, close-cropped natural hair", detail: "Neuroscientist who makes her own cheese" },
-      { name: "Ivan Chakraborty", face: "Prominent cheekbones, salt-and-pepper hair, narrow eyes", detail: "Civil engineer who teaches ballroom dancing" },
-      { name: "Leonora Voss", face: "Almond-shaped eyes, ash blonde hair, wide expressive mouth", detail: "Forensic pathologist who writes poetry" },
-      { name: "Obinna Walsh", face: "Strong brow ridge, wide-set eyes, easy relaxed grin", detail: "Tax attorney who breeds tropical fish" },
-      { name: "Hana Johansson", face: "Button nose, high cheekbones, dramatically dark eyebrows", detail: "Biostatistician who runs ultramarathons" },
-      { name: "Felix Mensah", face: "Square jaw, gap between front teeth, warm brown eyes", detail: "Pediatric dentist who builds model trains" },
-      { name: "Renata Okafor", face: "Expressive dark eyes, full lips, cropped natural hair", detail: "Structural architect who studies falconry" },
-      { name: "Soren Bhatia", face: "Thin lips, high hairline, calm and steady gaze", detail: "Climate scientist who does woodcarving" },
-      { name: "Chidinma Park", face: "Round wide eyes, warm complexion, short textured hair", detail: "Pharmacologist who restores antique clocks" },
-      { name: "Augustus Yamamoto", face: "Lean angular face, deep-set dark eyes, silvering temples", detail: "Maritime historian who sculpts in clay" },
+      { name: "Marcus Chen", face: "Sharp jawline, round glasses, short black hair", detail: "Marine biologist who collects vintage maps", mnemonic: "MARCHING through the sea — picture Marcus MARCHING, sharp jaw cutting waves, reading a vintage map on waterproof paper through his round glasses." },
+      { name: "Priya Okonkwo", face: "High cheekbones, braided hair with gold beads", detail: "Structural engineer who plays the sitar", mnemonic: "PRAYER (Priya): she's PRAYING over each gold bead in her braid, each prayer engineering a stronger sitar bridge note by note." },
+      { name: "Dalia Rosenstein", face: "Warm brown eyes, curly auburn hair, freckles across the nose", detail: "Pediatric surgeon who brews her own kombucha", mnemonic: "DAHLIA (Dalia): a dahlia blooms in her auburn curls, each petal a tiny kombucha bottle — she snips them off with surgical scissors." },
+      { name: "Tariq Weston", face: "Broad forehead, neat close-cropped beard, deep-set dark eyes", detail: "High school history teacher and amateur boxer", mnemonic: "TEARING (Tariq) + WEST (Weston): he's TEARING his neat beard while boxing a WESTERN-sunset history textbook into submission." },
+      { name: "Ingrid Nakamura", face: "Pale blue eyes, platinum blonde hair, high sharp cheekbones", detail: "Forensic accountant who speaks four languages", mnemonic: "INGOT (Ingrid): a platinum ingot with pale blue eyes — speaks four languages simultaneously while auditing a frozen vault, cheekbones sharp as a ledger." },
+      { name: "Kwame Adler", face: "Wide bright smile, shaved head, deep brown complexion", detail: "Jazz pianist who restores vintage motorcycles", mnemonic: "CAME (Kwame) + EAGLE (Adler = eagle in German): an eagle CAME and landed on his shaved head, dropping jazz keys and a motorcycle wrench into his bright smile." },
+      { name: "Celeste Moreau", face: "Long neck, dark wavy hair, sharp straight nose", detail: "Aerospace engineer who coaches youth soccer", mnemonic: "CELESTIAL (Celeste): her long neck extends into the stars — she's coaching a soccer team of ASTRONAUTS, nose like a rocket fin pointing skyward." },
+      { name: "Ravi Fitzgerald", face: "Thick dark eyebrows, wire-rimmed glasses, neatly combed hair", detail: "Environmental lawyer who keeps bees on his rooftop", mnemonic: "RAVING (Ravi): he's RAVING in court — bees swarming his thick eyebrows, wire glasses steaming with passion for the environment." },
+      { name: "Zara Petrov", face: "Bright green eyes, short pixie cut, prominent chin", detail: "ER nurse who performs improv comedy on weekends", mnemonic: "ZERO (Zara): 'Zero nerves!' — green-eyed nurse doing STAND-UP IMPROV in the ER, pixie cut bouncing, chin leading her punchline." },
+      { name: "Elias Mbeki", face: "Tall forehead, angular face, warm easy smile", detail: "Urban planner who photographs abandoned buildings", mnemonic: "EEL-ias (Elias): an EEL slides across his tall forehead, camera pressed to its eye, photographing a crumbling building through his warm smile." },
+      { name: "Sofia Andersen", face: "Round face, deep dimples, strawberry blonde ponytail", detail: "Data scientist who trains border collies", mnemonic: "SOFA (Sofia): she works from a SOFA built entirely of border collies, data pipelines glowing on her laptop, strawberry ponytail bright, dimples deep." },
+      { name: "Dmitri Osei", face: "Broad nose, close-cropped hair, intense steady gaze", detail: "Cryptographer who collects rare chess sets", mnemonic: "THREE (Dmitri sounds like 'the three'): THREE rare chess pieces locked in a safe — each encrypted, his intense gaze cracking each code in silence." },
+      { name: "Yuki Patel", face: "Soft features, straight dark hair, small delicate ears", detail: "Transplant surgeon who paints miniature landscapes", mnemonic: "YUCKY (Yuki): 'How do you paint something so YUCKY tiny?!' — she uses surgical tools to create miniature landscapes, small ears alert for the OR pager." },
+      { name: "Naomi Garfield", face: "High forehead, natural hair, strong squared jawline", detail: "Maritime lawyer who rock climbs every weekend", mnemonic: "GNOME (Naomi sounds like gnome-y): a gnome with a squared jawline, maritime contracts tucked in her harness, scaling a rock face with high-forehead determination." },
+      { name: "Cormac Delacroix", face: "Red beard, weathered skin, blue-gray eyes", detail: "Geologist who writes murder mysteries", mnemonic: "CORE (Cormac) + CROSS (Delacroix): dig to the EARTH'S CORE and find him writing murder mysteries by volcanic light, red beard singed, blue-gray eyes scanning the scene." },
+      { name: "Amara Stellenbosch", face: "Long lashes, sculpted brows, close-cropped natural hair", detail: "Neuroscientist who makes her own cheese", mnemonic: "STELLAR (Stellenbosch): she reaches for STELLAR heights with her sculpted brows, drawing neuron diagrams in freshly made cheese while her long lashes sweep the data." },
+      { name: "Ivan Chakraborty", face: "Prominent cheekbones, salt-and-pepper hair, narrow eyes", detail: "Civil engineer who teaches ballroom dancing", mnemonic: "IVAN the Terrible + CHA-CHA (Chakraborty): Ivan the Terrible doing the CHA-CHA, salt-and-pepper hair spinning, narrow eyes focused on engineering a perfect pivot." },
+      { name: "Leonora Voss", face: "Almond-shaped eyes, ash blonde hair, wide expressive mouth", detail: "Forensic pathologist who writes poetry", mnemonic: "LION (Leonora): a LION with ash-blonde hair writes forensic POETRY, almond eyes scanning each crime-scene stanza, wide mouth reciting the findings." },
+      { name: "Obinna Walsh", face: "Strong brow ridge, wide-set eyes, easy relaxed grin", detail: "Tax attorney who breeds tropical fish", mnemonic: "OH BEEN A (Obinna): 'I've always been a tropical fish lawyer!' he grins — wide-set eyes watching neon fish swim through stacked tax returns." },
+      { name: "Hana Johansson", face: "Button nose, high cheekbones, dramatically dark eyebrows", detail: "Biostatistician who runs ultramarathons", mnemonic: "BANANA (Hana sounds like banana): a biostatistician running a BANANA MARATHON, dramatically dark eyebrows furrowed at the mile-marker data, button nose leading the pace." },
+      { name: "Felix Mensah", face: "Square jaw, gap between front teeth, warm brown eyes", detail: "Pediatric dentist who builds model trains", mnemonic: "FELIX the Cat (Felix): Felix the Cat in the dental chair, gap grin gleaming, building a model train set between appointments with warm brown eyes." },
+      { name: "Renata Okafor", face: "Expressive dark eyes, full lips, cropped natural hair", detail: "Structural architect who studies falconry", mnemonic: "REBORN (Renata = reborn): REBORN as a falconer each morning — her expressive eyes locked on a falcon perched on a blueprint she designed." },
+      { name: "Soren Bhatia", face: "Thin lips, high hairline, calm and steady gaze", detail: "Climate scientist who does woodcarving", mnemonic: "SOARING (Soren): he's SOARING through climate charts mid-air, woodcarving a tiny windmill with his thin lips pursed in concentration, totally unruffled." },
+      { name: "Chidinma Park", face: "Round wide eyes, warm complexion, short textured hair", detail: "Pharmacologist who restores antique clocks", mnemonic: "CHIDING IN THE PARK (Chidinma Park): picture her CHIDING a broken clock IN THE PARK — round eyes wide, adjusting gears with pharmaceutical precision." },
+      { name: "Augustus Yamamoto", face: "Lean angular face, deep-set dark eyes, silvering temples", detail: "Maritime historian who sculpts in clay", mnemonic: "AUGUST + MOUNTAIN (Yamamoto = mountain base): every AUGUST, he sculpts a clay ocean liner at the base of a MOUNTAIN, silver temples glinting in the summer light." },
     ];
 
     const WORD_POOL = [
@@ -808,12 +818,15 @@
     ];
 
     const NAME_TIPS = [
-      "Face anchor: pick one striking physical feature and mentally attach the name to it — the more absurd the image, the stronger it sticks.",
-      "Name substitution: turn the name into a vivid concrete word (Marcus → march, Priya → prayer) and picture it on their face.",
-      "Detail story: build one vivid sentence linking name, face, and detail into a single memorable scene.",
-      "3-repetition rule: say the name silently 3 times while focusing on their face description. Brief spaced repetition encodes names fast.",
-      "Celebrity swap: think of a famous person with the same first name and imagine them with this person's face and detail.",
+      "Face anchor (strongest technique): hang the name on one physical feature. Zara has green eyes — picture them spelling Z-A-R-A in neon. The weirder the image, the harder it sticks.",
+      "Sound-swap: replace the name with a word it sounds like, then act it out on their face. Marcus → 'marching'. Felix → 'Felix the Cat'. Imagine that action happening right on their forehead.",
+      "Three-link sentence: one vivid sentence connecting name + face + detail. 'Elias (eel) slid across his tall forehead, camera aimed at a crumbling building.' Absurd = memorable.",
+      "Micro-repetition: say the name silently 3 times with a 1-second gap between each, while holding the face description in your mind. Three spaced beats outperform ten rapid repetitions.",
+      "Celebrity bridge: think of a famous [Name] and picture them morphing into this person's face and detail. Ivan → Ivan the Terrible doing the cha-cha in a hard hat.",
     ];
+
+    const CORRECT_LABELS = ["Locked in!", "Nailed it!", "Solid recall!", "Got it!", "Sharp memory!"];
+    const WRONG_LABELS = ["Slipped away", "Not quite", "Blanked on this one", "Close miss", "Missed this one"];
 
     function MemoryTrainingPage({ onBack, user }) {
       const CACHE_KEY = `memory_perf_${user?.id || 'guest'}`;
@@ -859,7 +872,7 @@
       }, [phase]);
 
       useEffect(() => {
-        if (timeLeft === 0 && phase !== 'setup' && phase !== 'done') setPhase('done');
+        if (timeLeft === 0 && phase !== 'setup' && phase !== 'done' && phase !== 'quiz' && phase !== 'feedback') setPhase('done');
       }, [timeLeft]);
 
       useEffect(() => {
@@ -886,11 +899,11 @@
           if (i % 2 === 0) {
             const wrongs = distractors.slice(i * 3, i * 3 + 3).map(p => p.name);
             const choices = [...wrongs, person.name].sort(() => Math.random() - 0.5);
-            return { id: `q${i}`, kind: 'face-to-name', prompt: person.face, answer: person.name, choices };
+            return { id: `q${i}`, kind: 'face-to-name', prompt: person.face, answer: person.name, choices, mnemonic: person.mnemonic, personName: person.name };
           }
           const wrongs = distractors.slice(i * 3, i * 3 + 3).map(p => p.detail);
           const choices = [...wrongs, person.detail].sort(() => Math.random() - 0.5);
-          return { id: `q${i}`, kind: 'name-to-detail', prompt: person.name, answer: person.detail, choices };
+          return { id: `q${i}`, kind: 'name-to-detail', prompt: person.name, answer: person.detail, choices, mnemonic: person.mnemonic, personName: person.name };
         });
         return { type: 'names', persons: shown, studyTime: Math.max(10, count * 8), questions: questions.sort(() => Math.random() - 0.5) };
       }
@@ -943,7 +956,8 @@
             if (exercise.digits[i] === given[i]) matched++;
           }
           const partialRatio = correct ? 1 : matched / exercise.digits.length;
-          results = [{ kind: 'numbers', digits: exercise.digits, given, correct, partialRatio, matched, tip: NUMBER_TIPS[Math.floor(Math.random() * NUMBER_TIPS.length)] }];
+          const numLabel = correct ? 'Perfect recall!' : `${matched} of ${exercise.digits.length} digits correct`;
+          results = [{ kind: 'numbers', digits: exercise.digits, given, correct, partialRatio, matched, label: numLabel, tip: NUMBER_TIPS[Math.floor(Math.random() * NUMBER_TIPS.length)] }];
           numCorrect = correct ? 1 : 0; totalQs = 1; ratio = partialRatio;
         } else if (exercise.type === 'words') {
           const userWords = wordInput.toLowerCase().split(/[\s,;\n]+/).map(w => w.trim()).filter(w => w.length > 0);
@@ -953,12 +967,16 @@
           const extra = userWords.filter(w => !targetLower.includes(w));
           numCorrect = recalled.length; totalQs = exercise.words.length;
           ratio = numCorrect / totalQs;
-          results = [{ kind: 'words', words: exercise.words, recalled, missed, extra, correct: recalled.length === exercise.words.length, ratio, tip: WORD_TIPS[Math.floor(Math.random() * WORD_TIPS.length)] }];
+          const wordLabel = ratio === 1 ? 'Full recall!' : ratio >= 0.7 ? 'Strong effort!' : ratio >= 0.4 ? 'Partial recall' : 'Tough one';
+          results = [{ kind: 'words', words: exercise.words, recalled, missed, extra, correct: recalled.length === exercise.words.length, ratio, label: `${recalled.length}/${exercise.words.length} — ${wordLabel}`, tip: WORD_TIPS[Math.floor(Math.random() * WORD_TIPS.length)] }];
         } else {
           results = exercise.questions.map(q => {
             const given = choiceAnswers[q.id] || '';
             const correct = given === q.answer;
-            return { kind: q.kind, prompt: q.prompt, given, answer: q.answer, correct, tip: NAME_TIPS[Math.floor(Math.random() * NAME_TIPS.length)] };
+            const label = correct
+              ? CORRECT_LABELS[Math.floor(Math.random() * CORRECT_LABELS.length)]
+              : WRONG_LABELS[Math.floor(Math.random() * WRONG_LABELS.length)];
+            return { kind: q.kind, prompt: q.prompt, given, answer: q.answer, correct, label, mnemonic: q.mnemonic, personName: q.personName, tip: NAME_TIPS[Math.floor(Math.random() * NAME_TIPS.length)] };
           });
           numCorrect = results.filter(r => r.correct).length;
           totalQs = results.length; ratio = numCorrect / totalQs;
@@ -983,7 +1001,7 @@
       }
 
       function handleNext() {
-        if (timeLeft <= 5) { setPhase('done'); return; }
+        if (timeLeft <= 0) { setPhase('done'); return; }
         launchExercise(nextLevelRef.current);
       }
 
@@ -1071,7 +1089,7 @@
         <div>
           <div className="memory-header">
             <button className="btn gray" style={{ padding: '4px 8px', fontSize: '11px' }} onClick={onBack}>← Back</button>
-            <div className="memory-timer">{formatTime(timeLeft)}</div>
+            <div className="memory-timer" style={{ color: timeLeft === 0 ? 'var(--red)' : timeLeft <= 30 ? 'var(--gold)' : 'var(--lime)' }}>{timeLeft === 0 ? "Time's up" : formatTime(timeLeft)}</div>
             <div style={{ color: 'var(--muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '.1em' }}>Level {level}</div>
           </div>
 
@@ -1130,6 +1148,11 @@
 
           {phase === 'quiz' && (
             <div>
+              {timeLeft === 0 && (
+                <div className="panel" style={{ borderLeftColor: 'var(--red)', color: 'var(--red)', marginBottom: '12px', fontSize: '13px' }}>
+                  Time's up — submit your answer to see the results.
+                </div>
+              )}
               {exercise.type === 'numbers' && (
                 <div className="panel">
                   <div className="section-title" style={{ marginBottom: '10px' }}>Recall the number string</div>
@@ -1187,7 +1210,7 @@
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     <span style={{ color: result.correct ? 'var(--lime)' : 'var(--red)', fontSize: '16px', fontWeight: 800 }}>{result.correct ? '✓' : '✗'}</span>
                     <span style={{ color: result.correct ? 'var(--lime)' : 'var(--red)', fontWeight: 700, fontSize: '13px' }}>
-                      {result.kind === 'words' ? `${result.recalled.length}/${result.words.length} words recalled` : result.correct ? 'Correct' : 'Incorrect'}
+                      {result.label || (result.correct ? 'Correct' : 'Incorrect')}
                     </span>
                   </div>
 
@@ -1229,14 +1252,14 @@
                     </div>
                   )}
 
-                  {result.kind !== 'numbers' && (
-                    <div style={{ marginBottom: result.correct ? 0 : '6px' }}>
+                  {result.kind !== 'numbers' && result.kind !== 'words' && (
+                    <div style={{ marginBottom: '6px' }}>
                       <div style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '4px' }}>
                         {result.kind === 'face-to-name' ? 'Face: ' : 'Name: '}
                         <span style={{ color: 'var(--text)' }}>{result.prompt}</span>
                       </div>
                       {!result.correct && (
-                        <div>
+                        <div style={{ marginBottom: '4px' }}>
                           <div style={{ color: 'var(--muted)', fontSize: '11px' }}>You chose: <span style={{ color: 'var(--red)' }}>{result.given || '(none)'}</span></div>
                           <div style={{ color: 'var(--muted)', fontSize: '11px' }}>Correct: <span style={{ color: 'var(--lime)' }}>{result.answer}</span></div>
                         </div>
@@ -1244,11 +1267,24 @@
                     </div>
                   )}
 
-                  {!result.correct && <div className="memory-tip-box"><span style={{ color: 'var(--gold)', fontWeight: 700 }}>Tip: </span>{result.tip}</div>}
+                  {result.mnemonic && (
+                    <div className="memory-mnemonic-box">
+                      <div style={{ color: 'var(--cyan)', fontWeight: 700, fontSize: '11px', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '.08em' }}>
+                        Memory Anchor — {result.personName}
+                      </div>
+                      {result.mnemonic}
+                    </div>
+                  )}
+
+                  {!result.correct && result.tip && (
+                    <div className="memory-tip-box">
+                      <span style={{ color: 'var(--gold)', fontWeight: 700 }}>Technique: </span>{result.tip}
+                    </div>
+                  )}
                 </div>
               ))}
               <button className="btn" style={{ width: '100%' }} onClick={handleNext}>
-                {timeLeft <= 10 ? 'End Session' : 'Next Exercise →'}
+                {timeLeft <= 0 ? 'End Session' : 'Next Exercise →'}
               </button>
             </div>
           )}
