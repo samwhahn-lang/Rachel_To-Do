@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Task System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Rachel's Tasks</title>
 
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -14,162 +14,189 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0d0d;
-      --panel: #1a1a1a;
-      --panel2: #2d2d2d;
-      --line: #3a3a3a;
-      --text: #e8e8e8;
-      --muted: #777;
-      --lime: #d4ff00;
-      --cyan: #00fff5;
-      --red: #ff6b6b;
-      --gold: #ffd700;
+      --bg: #f8f6ff;
+      --surface: #ffffff;
+      --surface2: #f0eeff;
+      --border: #e2ddf5;
+      --text: #2c2440;
+      --muted: #8f87b0;
+      --primary: #7c5cbf;
+      --primary-light: #ede8ff;
+      --peach: #e8874d;
+      --peach-light: #fff0e6;
+      --green: #52b788;
+      --green-light: #e5f5ee;
+      --red: #e07070;
+      --red-light: #ffeaea;
+      --gold: #c99a2e;
+      --gold-light: #fff9e0;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
       min-height: 100vh;
     }
 
     #root {
-      max-width: 1000px;
+      max-width: 640px;
       margin: 0 auto;
-      padding: 24px 16px;
+      padding: 20px 16px 110px;
     }
 
-    .title {
-      color: var(--lime);
-      font-size: clamp(1.6rem, 4vw, 2.8rem);
+    .greeting {
+      color: var(--primary);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
       font-weight: 800;
-      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
       text-align: center;
-      text-transform: uppercase;
     }
 
-    .tag {
+    .date-tag {
       color: var(--muted);
-      font-size: 12px;
-      letter-spacing: .12em;
+      font-size: 14px;
       margin-bottom: 18px;
       text-align: center;
-      text-transform: uppercase;
     }
 
-    .panel {
-      background: var(--panel);
-      border-left: 4px solid var(--lime);
-      margin-bottom: 14px;
-      padding: 14px;
+    .progress-wrap {
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: 0 1px 6px rgba(44,36,64,0.07);
+      margin-bottom: 16px;
+      padding: 14px 16px;
     }
 
-    .panel.error {
-      border-left-color: var(--red);
-      color: #ffb5b5;
-    }
-
-    .panel.gold {
-      border-left-color: var(--gold);
-    }
-
-    .panel.cyan {
-      border-left-color: var(--cyan);
-    }
-
-    .bar {
-      align-items: center;
-      background: var(--panel);
-      border: 1px solid var(--panel2);
+    .progress-label {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
       justify-content: space-between;
-      margin-bottom: 14px;
-      padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      margin-bottom: 8px;
     }
 
-    .left {
+    .progress-label strong { color: var(--text); }
+
+    .progress-track {
+      background: var(--border);
+      border-radius: 99px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, var(--primary), var(--green));
+      border-radius: 99px;
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+
+    .action-bar {
+      align-items: center;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: 0 1px 6px rgba(44,36,64,0.07);
+      margin-bottom: 14px;
+      padding: 16px;
+    }
+
+    .card.peach { border-left: 4px solid var(--peach); }
+    .card.error {
+      background: var(--red-light);
+      border-left: 4px solid var(--red);
+      color: var(--red);
     }
 
     .btn {
-      background: transparent;
-      border: 1px solid var(--lime);
-      color: var(--lime);
+      background: var(--primary-light);
+      border: none;
+      border-radius: 99px;
+      color: var(--primary);
       cursor: pointer;
       font-family: inherit;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 8px 10px;
-      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
     }
 
-    .btn.gray {
-      border-color: var(--muted);
+    .btn:hover { background: var(--border); }
+    .btn:active { transform: scale(0.96); }
+
+    .btn.primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn.primary:hover { background: #6a4dab; }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1.5px solid var(--border);
       color: var(--muted);
     }
 
-    .btn.cyan {
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
-
-    .btn:hover {
-      background: rgba(212,255,0,.1);
-    }
-
-    .btn:disabled {
-      cursor: default;
-      opacity: .35;
-    }
-
-    .btn.cyan:hover {
-      background: rgba(0,255,245,.08);
-    }
+    .btn.ghost:hover { background: var(--surface2); color: var(--text); }
+    .btn:disabled { cursor: default; opacity: 0.4; }
 
     .in {
-      background: var(--panel2);
-      border: 1px solid var(--muted);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
       color: var(--text);
-      flex: 1;
       font-family: inherit;
-      min-width: 180px;
-      padding: 10px;
+      font-size: 15px;
+      padding: 11px 14px;
+      transition: border-color 0.15s;
       width: 100%;
     }
 
     .in:focus {
-      border-color: var(--lime);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(124,92,191,0.12);
       outline: none;
     }
 
-    .row {
+    .form-row {
+      align-items: center;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 10px;
+    }
+
+    label {
+      color: var(--muted);
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
     }
 
     .section-head {
       align-items: center;
-      border-bottom: 1px solid var(--panel2);
       display: flex;
       gap: 8px;
       justify-content: space-between;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     .section-title {
-      color: var(--lime);
-      font-weight: 800;
-      text-transform: uppercase;
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 700;
     }
 
     .tasks {
@@ -181,56 +208,92 @@
 
     .task {
       align-items: flex-start;
-      background: var(--panel2);
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
       display: flex;
-      gap: 10px;
-      padding: 10px;
+      gap: 12px;
+      padding: 14px;
+      transition: opacity 0.2s;
     }
 
     .task.sub {
-      border-left: 2px solid var(--cyan);
+      background: var(--surface2);
+      border-left: 3px solid var(--primary);
       margin-left: 20px;
     }
 
-    .task.done {
-      opacity: .55;
-    }
-
-    .task.done .task-text {
-      color: var(--muted);
-      text-decoration: line-through;
-    }
+    .task.done { opacity: 0.5; }
+    .task.done .task-text { color: var(--muted); text-decoration: line-through; }
+    .task.dragging { opacity: 0.3; }
+    .task.drag-over-top { border-top: 2.5px solid var(--primary); }
+    .task.drag-over-bottom { border-bottom: 2.5px solid var(--primary); }
 
     .task-text {
       cursor: pointer;
+      font-size: 15px;
+      line-height: 1.45;
       word-break: break-word;
     }
+
+    .time-badge {
+      background: var(--primary-light);
+      border-radius: 99px;
+      color: var(--primary);
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 4px;
+      padding: 2px 9px;
+      white-space: nowrap;
+    }
+
+    .type-badge {
+      border: none;
+      border-radius: 99px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      white-space: nowrap;
+    }
+
+    .type-badge.recurring { background: var(--green-light); color: var(--green); }
+    .type-badge.today { background: var(--peach-light); color: var(--peach); }
 
     .meta {
       align-items: center;
       display: flex;
       flex-shrink: 0;
       gap: 6px;
-      margin-left: auto;
     }
 
-    .icon {
+    .icon-btn {
+      align-items: center;
       background: transparent;
-      border: 1px solid var(--muted);
-      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
       color: var(--muted);
       cursor: pointer;
-      font-weight: 700;
-      height: 30px;
-      line-height: 1;
-      width: 30px;
+      display: flex;
+      font-size: 16px;
+      height: 36px;
+      justify-content: center;
+      min-width: 36px;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
 
-    .icon:hover {
-      border-color: var(--lime);
-      color: var(--lime);
+    .icon-btn:hover { background: var(--surface2); border-color: var(--primary); color: var(--primary); }
+
+    .check {
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+      height: 24px;
+      margin-top: 2px;
+      min-width: 24px;
+      width: 24px;
     }
 
     .drag-handle {
@@ -246,330 +309,124 @@
     }
 
     .drag-handle span {
-      background: var(--muted);
-      border-radius: 1px;
+      background: var(--border);
+      border-radius: 2px;
       display: block;
       height: 2px;
-      width: 14px;
+      width: 16px;
     }
 
-    .drag-handle:hover span {
-      background: var(--lime);
+    .drag-handle:hover span { background: var(--primary); }
+
+    .time-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
     }
 
-    .task.dragging {
-      opacity: 0.35;
+    .time-chip {
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      transition: all 0.15s;
     }
 
-    .task.drag-over-top {
-      border-top: 2px solid var(--lime);
+    .time-chip.active, .time-chip:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
     }
 
-    .task.drag-over-bottom {
-      border-bottom: 2px solid var(--lime);
-    }
+    .subtask-form { margin: 6px 0 6px 20px; }
 
-    .badge {
-      border: 1px solid;
-      font-size: 10px;
+    .history-date {
+      color: var(--gold);
+      font-size: 14px;
       font-weight: 700;
-      padding: 2px 6px;
-      text-transform: uppercase;
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    .small-badge {
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
       white-space: nowrap;
     }
 
-    .badge.type-toggle {
-      background: transparent;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .badge.type-toggle:hover {
-      background: rgba(212,255,0,.1);
-    }
-
-    .check {
-      accent-color: var(--lime);
-      cursor: pointer;
-      flex-shrink: 0;
-      height: 18px;
-      margin-top: 2px;
-      width: 18px;
-    }
-
-    .b1 { border-color: var(--lime); color: var(--lime); }
-    .b2 { border-color: var(--cyan); color: var(--cyan); }
-    .b3 { border-color: var(--gold); color: var(--gold); }
+    .badge-recurring { background: var(--green-light); color: var(--green); }
+    .badge-today { background: var(--peach-light); color: var(--peach); }
+    .badge-done { background: var(--green-light); color: var(--green); }
+    .badge-open { background: var(--gold-light); color: var(--gold); }
 
     .auth {
-      background: var(--panel);
-      border: 1px solid var(--panel2);
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(44,36,64,0.1);
       margin: 40px auto;
-      max-width: 460px;
-      padding: 18px;
+      max-width: 400px;
+      padding: 28px 24px;
+    }
+
+    .auth-title {
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .auth-sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      text-align: center;
     }
 
     .loading {
       color: var(--muted);
-      padding: 30px;
+      font-size: 15px;
+      padding: 60px 30px;
       text-align: center;
     }
 
-    .subtask-form {
-      margin: 8px 0 8px 24px;
+    @keyframes celebrate-in {
+      0%   { opacity: 0; transform: translate(-50%, 16px) scale(0.9); }
+      18%  { opacity: 1; transform: translate(-50%, -4px) scale(1.04); }
+      80%  { opacity: 1; transform: translate(-50%, -4px) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -4px) scale(1); }
     }
 
-    .history-day {
-      margin-bottom: 14px;
-    }
-
-    .history-date {
-      color: var(--gold);
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .learning-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .learn-item {
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 8px 10px;
-    }
-
-    @media (max-width: 700px) {
-      #root { padding: 14px 8px; }
-
-      .task {
-        align-items: flex-start;
-        min-height: 56px;
-        padding: 10px 8px;
-      }
-
-      .task > div[style] {
-        min-width: 0;
-      }
-
-      .task-text {
-        display: block;
-        line-height: 1.35;
-        white-space: normal;
-      }
-
-      .meta {
-        flex-wrap: nowrap;
-        gap: 4px;
-      }
-
-      .icon {
-        border-radius: 5px;
-        font-size: 13px;
-        height: 28px;
-        width: 28px;
-      }
-
-      .badge {
-        display: inline-block;
-        font-size: 9px;
-        padding: 2px 5px;
-      }
-
-      .task.sub {
-        margin-left: 8px;
-      }
-
-      .subtask-form {
-        margin-left: 10px;
-      }
-
-      .learning-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .memory-header {
-      align-items: center;
-      background: var(--panel);
-      border: 1px solid var(--panel2);
-      display: flex;
-      gap: 12px;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      padding: 10px 14px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .memory-timer {
-      color: var(--lime);
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: .05em;
-    }
-
-    .memory-setup {
-      max-width: 560px;
-      margin: 0 auto;
-    }
-
-    .memory-duration-row {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .memory-progress-bar {
-      background: var(--panel2);
-      border-radius: 2px;
-      height: 6px;
-      overflow: hidden;
-      width: 100%;
-    }
-
-    .memory-progress-fill {
-      background: var(--cyan);
-      border-radius: 2px;
-      height: 100%;
-      transition: width .9s linear;
-    }
-
-    .memory-card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-left: 4px solid var(--cyan);
-      border-radius: 4px;
-      padding: 14px;
-    }
-
-    .memory-card-name {
-      color: var(--cyan);
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: .04em;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-
-    .memory-card-face {
-      color: var(--text);
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-
-    .memory-card-detail {
-      color: var(--gold);
-      font-size: 12px;
+    .celebrate-toast {
+      animation: celebrate-in 2.4s ease-out forwards;
+      background: var(--primary);
+      border-radius: 99px;
+      bottom: 90px;
+      box-shadow: 0 8px 32px rgba(124,92,191,0.35);
+      color: #fff;
+      font-size: 17px;
       font-weight: 700;
-    }
-
-    .memory-digits-display {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 8px 0;
-    }
-
-    .memory-digit-char {
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      color: var(--lime);
-      display: inline-block;
-      font-size: 1.8rem;
-      font-weight: 800;
-      line-height: 1;
-      min-width: 2rem;
-      padding: 6px 4px;
+      left: 50%;
+      padding: 14px 28px;
+      pointer-events: none;
+      position: fixed;
       text-align: center;
+      z-index: 9999;
     }
 
-    .memory-choices {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .memory-choice {
-      background: var(--panel2);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      color: var(--text);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-      padding: 10px 12px;
-      text-align: left;
-    }
-
-    .memory-choice:hover {
-      border-color: var(--muted);
-    }
-
-    .memory-choice.selected {
-      background: rgba(0,255,245,.08);
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
-
-    .memory-tip-box {
-      background: rgba(255,215,0,.07);
-      border-left: 3px solid var(--gold);
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      margin-top: 10px;
-      padding: 8px 10px;
-    }
-
-    .memory-word-chip {
-      background: var(--panel2);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      color: var(--lime);
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .04em;
-      padding: 6px 10px;
-      text-transform: uppercase;
-    }
-
-    .memory-mnemonic-box {
-      background: rgba(0,255,245,.05);
-      border-left: 3px solid var(--cyan);
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-      margin-top: 10px;
-      padding: 8px 10px;
-    }
-
-    .memory-stat-grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: 1fr 1fr 1fr;
-      text-align: center;
-    }
-
-    .memory-stat-value {
-      font-size: 2rem;
-      font-weight: 800;
-    }
-
-    .memory-stat-label {
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
+    @media (max-width: 600px) {
+      #root { padding: 16px 12px 110px; }
+      .task { padding: 12px; }
+      .task.sub { margin-left: 12px; }
+      .subtask-form { margin-left: 12px; }
     }
   </style>
 </head>
@@ -580,7 +437,7 @@
   <script type="text/babel">
     if (!window.React || !window.ReactDOM || !window.supabase) {
       document.getElementById("root").innerHTML =
-        '<div class="panel error">Missing required CDN scripts. Check React, Babel, and Supabase script loading.</div>';
+        '<div class="card error">Missing required scripts. Check your connection and reload.</div>';
       throw new Error("Library preload failure");
     }
 
@@ -592,1063 +449,290 @@
     const memoryStorage = (() => {
       const m = {};
       return {
-        getItem: (k) => (k in m ? m[k] : null),
+        getItem: k => (k in m ? m[k] : null),
         setItem: (k, v) => { m[k] = String(v); },
-        removeItem: (k) => { delete m[k]; }
+        removeItem: k => { delete m[k]; }
       };
     })();
 
     function getSafeStorage() {
       try {
-        const key = "__ls_test__";
-        window.localStorage.setItem(key, "1");
-        window.localStorage.removeItem(key);
+        window.localStorage.setItem("__t__", "1");
+        window.localStorage.removeItem("__t__");
         return window.localStorage;
-      } catch {
-        return memoryStorage;
-      }
+      } catch { return memoryStorage; }
     }
 
     const safeStorage = getSafeStorage();
 
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: true,
-        storage: safeStorage
-      }
+      auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true, storage: safeStorage }
     });
 
-    function nyDateFrom(baseDate) {
+    function nyDate(d) {
       const parts = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).formatToParts(baseDate);
-
-      const byType = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-      return `${byType.year}-${byType.month}-${byType.day}`;
+        timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(d);
+      const v = Object.fromEntries(parts.map(p => [p.type, p.value]));
+      return `${v.year}-${v.month}-${v.day}`;
     }
 
-    function getCurrentDate() {
-      return nyDateFrom(new Date());
-    }
+    function today() { return nyDate(new Date()); }
 
-    function getDateDaysAgo(daysAgo) {
+    function daysAgo(n) {
       const d = new Date();
-      d.setDate(d.getDate() - daysAgo);
-      return nyDateFrom(d);
+      d.setDate(d.getDate() - n);
+      return nyDate(d);
     }
 
-    const cache = {
-      get(uid) {
-        try {
-          const raw = safeStorage.getItem(`todo_cache_${uid}`);
-          if (!raw) return null;
-          const parsed = JSON.parse(raw);
-          return parsed.date === getCurrentDate() ? parsed.payload : null;
-        } catch {
-          return null;
-        }
-      },
-      set(uid, payload) {
-        try {
-          safeStorage.setItem(`todo_cache_${uid}`, JSON.stringify({
-            date: getCurrentDate(),
-            payload
-          }));
-        } catch {}
-      },
-      clear(uid) {
-        try { safeStorage.removeItem(`todo_cache_${uid}`); } catch {}
-      }
-    };
-
-    const historyCache = {
-      get(uid) {
-        try {
-          const raw = safeStorage.getItem(`todo_history_v3_${uid}`);
-          if (!raw) return null;
-          const parsed = JSON.parse(raw);
-          return parsed.date === getCurrentDate() ? parsed.payload : null;
-        } catch {
-          return null;
-        }
-      },
-      set(uid, payload) {
-        try {
-          safeStorage.setItem(`todo_history_v3_${uid}`, JSON.stringify({
-            date: getCurrentDate(),
-            payload
-          }));
-        } catch {}
-      },
-      clear(uid) {
-        try { safeStorage.removeItem(`todo_history_v3_${uid}`); } catch {}
-      }
-    };
-
-    const learningCache = {
-      get(uid) {
-        try {
-          const raw = safeStorage.getItem(`todo_learning_${uid}`);
-          if (!raw) return null;
-          const parsed = JSON.parse(raw);
-          return parsed.date === getCurrentDate() ? parsed.payload : null;
-        } catch {
-          return null;
-        }
-      },
-      set(uid, payload) {
-        try {
-          safeStorage.setItem(`todo_learning_${uid}`, JSON.stringify({
-            date: getCurrentDate(),
-            payload
-          }));
-        } catch {}
-      },
-      clear(uid) {
-        try { safeStorage.removeItem(`todo_learning_${uid}`); } catch {}
-      }
-    };
-
-    function pickRandom(pool, count) {
-      const shuffled = [...pool];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled.slice(0, count);
+    function greeting() {
+      const h = new Date().getHours();
+      return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
     }
 
-    const poolCache = {
-      get() {
+    // Store time estimate in task text as suffix: "Walk the dog [15m]"
+    function parseTask(text) {
+      const m = text.match(/\s*\[(\d+(?:m|h))\]$/);
+      if (!m) return { label: text, estimate: null };
+      return { label: text.slice(0, text.length - m[0].length).trim(), estimate: m[1] };
+    }
+
+    function buildTask(label, estimate) {
+      return estimate ? `${label} [${estimate}]` : label;
+    }
+
+    const dataCache = {
+      get(uid) {
         try {
-          const raw = safeStorage.getItem("todo_pools");
-          if (!raw) return null;
-          const parsed = JSON.parse(raw);
-          if (Date.now() - parsed.ts > 7 * 24 * 60 * 60 * 1000) return null;
-          return parsed.payload;
+          const r = JSON.parse(safeStorage.getItem(`rc_cache_${uid}`));
+          return r?.date === today() ? r.payload : null;
         } catch { return null; }
       },
-      set(payload) {
-        try {
-          safeStorage.setItem("todo_pools", JSON.stringify({ ts: Date.now(), payload }));
-        } catch {}
-      }
+      set(uid, payload) {
+        try { safeStorage.setItem(`rc_cache_${uid}`, JSON.stringify({ date: today(), payload })); } catch {}
+      },
+      clear(uid) { try { safeStorage.removeItem(`rc_cache_${uid}`); } catch {} }
     };
 
-    async function fetchPools() {
-      const cached = poolCache.get();
-      if (cached) return cached;
-
-      const [idiomsRes, vocabRes] = await Promise.all([
-        supabase.from("idiom_pool").select("phrase,meaning"),
-        supabase.from("vocab_pool").select("word,pos,definition")
-      ]);
-
-      if (idiomsRes.error) throw idiomsRes.error;
-      if (vocabRes.error) throw vocabRes.error;
-
-      const payload = { idioms: idiomsRes.data || [], vocab: vocabRes.data || [] };
-      poolCache.set(payload);
-      return payload;
-    }
-
-    const NAME_POOL = [
-      { name: "Marcus Chen", face: "Sharp jawline, round glasses, short black hair", detail: "Marine biologist who collects vintage maps", mnemonic: "MARCHING through the sea — picture Marcus MARCHING, sharp jaw cutting waves, reading a vintage map on waterproof paper through his round glasses." },
-      { name: "Priya Okonkwo", face: "High cheekbones, braided hair with gold beads", detail: "Structural engineer who plays the sitar", mnemonic: "PRAYER (Priya): she's PRAYING over each gold bead in her braid, each prayer engineering a stronger sitar bridge note by note." },
-      { name: "Dalia Rosenstein", face: "Warm brown eyes, curly auburn hair, freckles across the nose", detail: "Pediatric surgeon who brews her own kombucha", mnemonic: "DAHLIA (Dalia): a dahlia blooms in her auburn curls, each petal a tiny kombucha bottle — she snips them off with surgical scissors." },
-      { name: "Tariq Weston", face: "Broad forehead, neat close-cropped beard, deep-set dark eyes", detail: "High school history teacher and amateur boxer", mnemonic: "TEARING (Tariq) + WEST (Weston): he's TEARING his neat beard while boxing a WESTERN-sunset history textbook into submission." },
-      { name: "Ingrid Nakamura", face: "Pale blue eyes, platinum blonde hair, high sharp cheekbones", detail: "Forensic accountant who speaks four languages", mnemonic: "INGOT (Ingrid): a platinum ingot with pale blue eyes — speaks four languages simultaneously while auditing a frozen vault, cheekbones sharp as a ledger." },
-      { name: "Kwame Adler", face: "Wide bright smile, shaved head, deep brown complexion", detail: "Jazz pianist who restores vintage motorcycles", mnemonic: "CAME (Kwame) + EAGLE (Adler = eagle in German): an eagle CAME and landed on his shaved head, dropping jazz keys and a motorcycle wrench into his bright smile." },
-      { name: "Celeste Moreau", face: "Long neck, dark wavy hair, sharp straight nose", detail: "Aerospace engineer who coaches youth soccer", mnemonic: "CELESTIAL (Celeste): her long neck extends into the stars — she's coaching a soccer team of ASTRONAUTS, nose like a rocket fin pointing skyward." },
-      { name: "Ravi Fitzgerald", face: "Thick dark eyebrows, wire-rimmed glasses, neatly combed hair", detail: "Environmental lawyer who keeps bees on his rooftop", mnemonic: "RAVING (Ravi): he's RAVING in court — bees swarming his thick eyebrows, wire glasses steaming with passion for the environment." },
-      { name: "Zara Petrov", face: "Bright green eyes, short pixie cut, prominent chin", detail: "ER nurse who performs improv comedy on weekends", mnemonic: "ZERO (Zara): 'Zero nerves!' — green-eyed nurse doing STAND-UP IMPROV in the ER, pixie cut bouncing, chin leading her punchline." },
-      { name: "Elias Mbeki", face: "Tall forehead, angular face, warm easy smile", detail: "Urban planner who photographs abandoned buildings", mnemonic: "EEL-ias (Elias): an EEL slides across his tall forehead, camera pressed to its eye, photographing a crumbling building through his warm smile." },
-      { name: "Sofia Andersen", face: "Round face, deep dimples, strawberry blonde ponytail", detail: "Data scientist who trains border collies", mnemonic: "SOFA (Sofia): she works from a SOFA built entirely of border collies, data pipelines glowing on her laptop, strawberry ponytail bright, dimples deep." },
-      { name: "Dmitri Osei", face: "Broad nose, close-cropped hair, intense steady gaze", detail: "Cryptographer who collects rare chess sets", mnemonic: "THREE (Dmitri sounds like 'the three'): THREE rare chess pieces locked in a safe — each encrypted, his intense gaze cracking each code in silence." },
-      { name: "Yuki Patel", face: "Soft features, straight dark hair, small delicate ears", detail: "Transplant surgeon who paints miniature landscapes", mnemonic: "YUCKY (Yuki): 'How do you paint something so YUCKY tiny?!' — she uses surgical tools to create miniature landscapes, small ears alert for the OR pager." },
-      { name: "Naomi Garfield", face: "High forehead, natural hair, strong squared jawline", detail: "Maritime lawyer who rock climbs every weekend", mnemonic: "GNOME (Naomi sounds like gnome-y): a gnome with a squared jawline, maritime contracts tucked in her harness, scaling a rock face with high-forehead determination." },
-      { name: "Cormac Delacroix", face: "Red beard, weathered skin, blue-gray eyes", detail: "Geologist who writes murder mysteries", mnemonic: "CORE (Cormac) + CROSS (Delacroix): dig to the EARTH'S CORE and find him writing murder mysteries by volcanic light, red beard singed, blue-gray eyes scanning the scene." },
-      { name: "Amara Stellenbosch", face: "Long lashes, sculpted brows, close-cropped natural hair", detail: "Neuroscientist who makes her own cheese", mnemonic: "STELLAR (Stellenbosch): she reaches for STELLAR heights with her sculpted brows, drawing neuron diagrams in freshly made cheese while her long lashes sweep the data." },
-      { name: "Ivan Chakraborty", face: "Prominent cheekbones, salt-and-pepper hair, narrow eyes", detail: "Civil engineer who teaches ballroom dancing", mnemonic: "IVAN the Terrible + CHA-CHA (Chakraborty): Ivan the Terrible doing the CHA-CHA, salt-and-pepper hair spinning, narrow eyes focused on engineering a perfect pivot." },
-      { name: "Leonora Voss", face: "Almond-shaped eyes, ash blonde hair, wide expressive mouth", detail: "Forensic pathologist who writes poetry", mnemonic: "LION (Leonora): a LION with ash-blonde hair writes forensic POETRY, almond eyes scanning each crime-scene stanza, wide mouth reciting the findings." },
-      { name: "Obinna Walsh", face: "Strong brow ridge, wide-set eyes, easy relaxed grin", detail: "Tax attorney who breeds tropical fish", mnemonic: "OH BEEN A (Obinna): 'I've always been a tropical fish lawyer!' he grins — wide-set eyes watching neon fish swim through stacked tax returns." },
-      { name: "Hana Johansson", face: "Button nose, high cheekbones, dramatically dark eyebrows", detail: "Biostatistician who runs ultramarathons", mnemonic: "BANANA (Hana sounds like banana): a biostatistician running a BANANA MARATHON, dramatically dark eyebrows furrowed at the mile-marker data, button nose leading the pace." },
-      { name: "Felix Mensah", face: "Square jaw, gap between front teeth, warm brown eyes", detail: "Pediatric dentist who builds model trains", mnemonic: "FELIX the Cat (Felix): Felix the Cat in the dental chair, gap grin gleaming, building a model train set between appointments with warm brown eyes." },
-      { name: "Renata Okafor", face: "Expressive dark eyes, full lips, cropped natural hair", detail: "Structural architect who studies falconry", mnemonic: "REBORN (Renata = reborn): REBORN as a falconer each morning — her expressive eyes locked on a falcon perched on a blueprint she designed." },
-      { name: "Soren Bhatia", face: "Thin lips, high hairline, calm and steady gaze", detail: "Climate scientist who does woodcarving", mnemonic: "SOARING (Soren): he's SOARING through climate charts mid-air, woodcarving a tiny windmill with his thin lips pursed in concentration, totally unruffled." },
-      { name: "Chidinma Park", face: "Round wide eyes, warm complexion, short textured hair", detail: "Pharmacologist who restores antique clocks", mnemonic: "CHIDING IN THE PARK (Chidinma Park): picture her CHIDING a broken clock IN THE PARK — round eyes wide, adjusting gears with pharmaceutical precision." },
-      { name: "Augustus Yamamoto", face: "Lean angular face, deep-set dark eyes, silvering temples", detail: "Maritime historian who sculpts in clay", mnemonic: "AUGUST + MOUNTAIN (Yamamoto = mountain base): every AUGUST, he sculpts a clay ocean liner at the base of a MOUNTAIN, silver temples glinting in the summer light." },
-    ];
-
-    const WORD_POOL = [
-      "apple", "bridge", "candle", "desert", "eagle", "fence", "guitar",
-      "hammer", "island", "jacket", "kettle", "ladder", "marble", "needle",
-      "ocean", "piano", "quilt", "river", "shovel", "tower", "umbrella",
-      "valley", "wallet", "anchor", "basket", "cloud", "dragon", "engine",
-      "forest", "globe", "helmet", "jungle", "lemon", "mirror", "napkin",
-      "olive", "pencil", "rocket", "saddle", "tunnel", "volcano", "window",
-      "arrow", "barrel", "castle", "diamond", "feather", "glacier", "harbor",
-      "lantern", "meadow", "oyster", "palace", "ribbon", "sailor", "trophy",
-      "viper", "walrus", "zipper", "almond", "bison", "cactus", "dolphin",
-      "fabric", "garlic", "harvest", "insect", "jaguar", "kernel", "lobster",
-      "mustard", "nomad", "pebble", "quarry", "sphinx", "tandem", "velvet",
-      "wrench", "canopy", "debris", "emblem", "falcon", "goblet", "hatchet",
-      "ibis", "jewel", "kestrel", "lagoon", "mango", "nozzle", "pillar",
-    ];
-
-    const WORD_TIPS = [
-      "Story link: weave all the words into a single vivid, absurd story — the stranger the scene, the more memorable it becomes.",
-      "Method of loci: mentally place each word at a specific spot in a room you know well, then walk through it to recall them.",
-      "Category grouping: mentally sort words into clusters (animals, tools, nature). Recalling one category brings back all its members.",
-      "Emotional hook: attach a strong feeling or personal memory to each word. Emotion dramatically strengthens recall.",
-      "Visual chaining: picture the words as physical objects colliding or interacting — movement and interaction encode better than static images.",
-    ];
-
-    const NUMBER_TIPS = [
-      "Chunking: group digits into pairs or triplets (e.g. 47·291·836). Your brain handles chunks far better than lone digits.",
-      "Story method: assign a vivid image to each chunk. 47 = a person running, 29 = jumping a fence — link them into one scene.",
-      "Rhythm and beat: say the number aloud 3 times with a specific rhythm. Music and rhythm encode to long-term memory faster.",
-      "Familiar anchors: do any chunks match ages, years, or addresses you already know? Use that existing memory as a hook.",
-      "Journey method: mentally walk through a room and place each chunk at a specific object in sequence.",
-    ];
-
-    const NAME_TIPS = [
-      "Face anchor (strongest technique): hang the name on one physical feature. Zara has green eyes — picture them spelling Z-A-R-A in neon. The weirder the image, the harder it sticks.",
-      "Sound-swap: replace the name with a word it sounds like, then act it out on their face. Marcus → 'marching'. Felix → 'Felix the Cat'. Imagine that action happening right on their forehead.",
-      "Three-link sentence: one vivid sentence connecting name + face + detail. 'Elias (eel) slid across his tall forehead, camera aimed at a crumbling building.' Absurd = memorable.",
-      "Micro-repetition: say the name silently 3 times with a 1-second gap between each, while holding the face description in your mind. Three spaced beats outperform ten rapid repetitions.",
-      "Celebrity bridge: think of a famous [Name] and picture them morphing into this person's face and detail. Ivan → Ivan the Terrible doing the cha-cha in a hard hat.",
-    ];
-
-    const CORRECT_LABELS = ["Locked in!", "Nailed it!", "Solid recall!", "Got it!", "Sharp memory!"];
-    const WRONG_LABELS = ["Slipped away", "Not quite", "Blanked on this one", "Close miss", "Missed this one"];
-
-    function MemoryTrainingPage({ onBack, user }) {
-      const CACHE_KEY = `memory_perf_${user?.id || 'guest'}`;
-
-      const [phase, setPhase] = useState('setup');
-      const [durationMins, setDurationMins] = useState(5);
-      const [timeLeft, setTimeLeft] = useState(0);
-      const [studyTimeLeft, setStudyTimeLeft] = useState(0);
-      const [studyTotal, setStudyTotal] = useState(1);
-      const [level, setLevel] = useState(1);
-      const [recentScores, setRecentScores] = useState([]);
-      const [exercise, setExercise] = useState(null);
-      const [numberInput, setNumberInput] = useState('');
-      const [wordInput, setWordInput] = useState('');
-      const [choiceAnswers, setChoiceAnswers] = useState({});
-      const [feedbackData, setFeedbackData] = useState(null);
-      const [stats, setStats] = useState({ correct: 0, total: 0, count: 0 });
-      const [lastPerf, setLastPerf] = useState(null);
-      const nextLevelRef = useRef(1);
-      const phaseRef = useRef('setup');
-
-      useEffect(() => { phaseRef.current = phase; }, [phase]);
-
-      useEffect(() => {
+    const histCache = {
+      get(uid) {
         try {
-          const saved = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-          if (saved) {
-            setLastPerf(saved);
-            const startLevel = Math.max(1, Math.min(8, saved.level || 1));
-            setLevel(startLevel);
-            nextLevelRef.current = startLevel;
-          }
-        } catch(e) {}
-      }, []);
+          const r = JSON.parse(safeStorage.getItem(`rc_hist_${uid}`));
+          return r?.date === today() ? r.payload : null;
+        } catch { return null; }
+      },
+      set(uid, payload) {
+        try { safeStorage.setItem(`rc_hist_${uid}`, JSON.stringify({ date: today(), payload })); } catch {}
+      },
+      clear(uid) { try { safeStorage.removeItem(`rc_hist_${uid}`); } catch {} }
+    };
 
-      useEffect(() => {
-        if (phase === 'setup' || phase === 'done') return;
-        const id = setInterval(() => {
-          setTimeLeft(t => Math.max(0, t - 1));
-          if (phaseRef.current === 'study') setStudyTimeLeft(t => Math.max(0, t - 1));
-        }, 1000);
-        return () => clearInterval(id);
-      }, [phase]);
+    const CHEERS = [
+      "Nice work! ✓", "You did it!", "Keep going!", "One more down!",
+      "You're on a roll!", "Amazing!", "Yes!", "That's the one!",
+      "Crushing it!", "Well done!"
+    ];
 
-      useEffect(() => {
-        if (timeLeft === 0 && phase !== 'setup' && phase !== 'done' && phase !== 'quiz' && phase !== 'feedback') setPhase('done');
-      }, [timeLeft]);
+    // ─── App root ───────────────────────────────────────────────────────────────
 
-      useEffect(() => {
-        if (studyTimeLeft === 0 && phase === 'study' && exercise) setPhase('quiz');
-      }, [studyTimeLeft]);
-
-      function buildExercise(lvl) {
-        const roll = Math.random();
-        if (roll < 0.34) {
-          const len = Math.min(3 + lvl, 10);
-          const digits = Array.from({ length: len }, () => Math.floor(Math.random() * 10)).join('');
-          return { type: 'numbers', digits, studyTime: Math.max(4, Math.ceil(len * 1.2)) };
-        }
-        if (roll < 0.67) {
-          const count = Math.min(3 + lvl, 10);
-          const words = [...WORD_POOL].sort(() => Math.random() - 0.5).slice(0, count);
-          return { type: 'words', words, studyTime: Math.max(6, Math.ceil(count * 2.5)) };
-        }
-        const count = lvl <= 2 ? 2 : lvl <= 4 ? 3 : 4;
-        const pool = [...NAME_POOL].sort(() => Math.random() - 0.5);
-        const shown = pool.slice(0, count);
-        const distractors = pool.slice(count);
-        const questions = shown.map((person, i) => {
-          if (i % 2 === 0) {
-            const wrongs = distractors.slice(i * 3, i * 3 + 3).map(p => p.name);
-            const choices = [...wrongs, person.name].sort(() => Math.random() - 0.5);
-            return { id: `q${i}`, kind: 'face-to-name', prompt: person.face, answer: person.name, choices, mnemonic: person.mnemonic, personName: person.name };
-          }
-          const wrongs = distractors.slice(i * 3, i * 3 + 3).map(p => p.detail);
-          const choices = [...wrongs, person.detail].sort(() => Math.random() - 0.5);
-          return { id: `q${i}`, kind: 'name-to-detail', prompt: person.name, answer: person.detail, choices, mnemonic: person.mnemonic, personName: person.name };
-        });
-        return { type: 'names', persons: shown, studyTime: Math.max(10, count * 8), questions: questions.sort(() => Math.random() - 0.5) };
-      }
-
-      function startSession() {
-        const total = durationMins * 60;
-        setTimeLeft(total);
-        const startLevel = nextLevelRef.current;
-        setLevel(startLevel);
-        setRecentScores([]);
-        setStats({ correct: 0, total: 0, count: 0 });
-        launchExercise(startLevel);
-      }
-
-      function launchExercise(lvl) {
-        const ex = buildExercise(lvl);
-        setExercise(ex);
-        setNumberInput('');
-        setWordInput('');
-        setChoiceAnswers({});
-        setFeedbackData(null);
-        setStudyTimeLeft(ex.studyTime);
-        setStudyTotal(ex.studyTime);
-        setPhase('study');
-      }
-
-      function savePerf(finalLevel, sessionStats) {
-        try {
-          const existing = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
-          const updated = {
-            level: finalLevel,
-            totalCorrect: (existing.totalCorrect || 0) + sessionStats.correct,
-            totalQuestions: (existing.totalQuestions || 0) + sessionStats.total,
-            sessions: (existing.sessions || 0) + 1,
-            lastDate: new Date().toLocaleDateString(),
-          };
-          localStorage.setItem(CACHE_KEY, JSON.stringify(updated));
-          setLastPerf(updated);
-        } catch(e) {}
-      }
-
-      function submitAnswers() {
-        let results, numCorrect, totalQs, ratio;
-
-        if (exercise.type === 'numbers') {
-          const given = numberInput.trim();
-          const correct = given === exercise.digits;
-          let matched = 0;
-          for (let i = 0; i < Math.min(exercise.digits.length, given.length); i++) {
-            if (exercise.digits[i] === given[i]) matched++;
-          }
-          const partialRatio = correct ? 1 : matched / exercise.digits.length;
-          const numLabel = correct ? 'Perfect recall!' : `${matched} of ${exercise.digits.length} digits correct`;
-          results = [{ kind: 'numbers', digits: exercise.digits, given, correct, partialRatio, matched, label: numLabel, tip: NUMBER_TIPS[Math.floor(Math.random() * NUMBER_TIPS.length)] }];
-          numCorrect = correct ? 1 : 0; totalQs = 1; ratio = partialRatio;
-        } else if (exercise.type === 'words') {
-          const userWords = wordInput.toLowerCase().split(/[\s,;\n]+/).map(w => w.trim()).filter(w => w.length > 0);
-          const targetLower = exercise.words.map(w => w.toLowerCase());
-          const recalled = exercise.words.filter(w => userWords.includes(w.toLowerCase()));
-          const missed = exercise.words.filter(w => !userWords.includes(w.toLowerCase()));
-          const extra = userWords.filter(w => !targetLower.includes(w));
-          numCorrect = recalled.length; totalQs = exercise.words.length;
-          ratio = numCorrect / totalQs;
-          const wordLabel = ratio === 1 ? 'Full recall!' : ratio >= 0.7 ? 'Strong effort!' : ratio >= 0.4 ? 'Partial recall' : 'Tough one';
-          results = [{ kind: 'words', words: exercise.words, recalled, missed, extra, correct: recalled.length === exercise.words.length, ratio, label: `${recalled.length}/${exercise.words.length} — ${wordLabel}`, tip: WORD_TIPS[Math.floor(Math.random() * WORD_TIPS.length)] }];
-        } else {
-          results = exercise.questions.map(q => {
-            const given = choiceAnswers[q.id] || '';
-            const correct = given === q.answer;
-            const label = correct
-              ? CORRECT_LABELS[Math.floor(Math.random() * CORRECT_LABELS.length)]
-              : WRONG_LABELS[Math.floor(Math.random() * WRONG_LABELS.length)];
-            return { kind: q.kind, prompt: q.prompt, given, answer: q.answer, correct, label, mnemonic: q.mnemonic, personName: q.personName, tip: NAME_TIPS[Math.floor(Math.random() * NAME_TIPS.length)] };
-          });
-          numCorrect = results.filter(r => r.correct).length;
-          totalQs = results.length; ratio = numCorrect / totalQs;
-        }
-
-        const newStats = { correct: stats.correct + numCorrect, total: stats.total + totalQs, count: stats.count + 1 };
-        setStats(newStats);
-
-        const newScores = [...recentScores.slice(-4), ratio];
-        setRecentScores(newScores);
-        let newLevel = level;
-        if (newScores.length >= 2) {
-          const avg = newScores.reduce((s, v) => s + v, 0) / newScores.length;
-          if (avg >= 0.8 && level < 8) newLevel = level + 1;
-          else if (avg <= 0.35 && level > 1) newLevel = level - 1;
-        }
-        setLevel(newLevel);
-        nextLevelRef.current = newLevel;
-        savePerf(newLevel, newStats);
-        setFeedbackData(results);
-        setPhase('feedback');
-      }
-
-      function handleNext() {
-        if (timeLeft <= 0) { setPhase('done'); return; }
-        launchExercise(nextLevelRef.current);
-      }
-
-      function formatTime(secs) {
-        const m = Math.floor(secs / 60);
-        const s = secs % 60;
-        return `${m}:${String(s).padStart(2, '0')}`;
-      }
-
-      if (phase === 'setup') return (
-        <div>
-          <button className="btn gray" style={{ marginBottom: '16px' }} onClick={onBack}>← Back</button>
-          <div className="memory-setup">
-            <h1 className="title" style={{ fontSize: 'clamp(1.2rem,3vw,2rem)', marginBottom: '8px' }}>Memory Training</h1>
-            <div className="tag" style={{ marginBottom: '24px' }}>Build your encoding and recall abilities</div>
-            <div className="panel">
-              <div className="section-head"><div className="section-title">Session Duration</div></div>
-              <div className="memory-duration-row">
-                {[2, 5, 10].map(m => (
-                  <button key={m} className={`btn ${durationMins === m ? '' : 'gray'}`} onClick={() => setDurationMins(m)}>{m} min</button>
-                ))}
-                <input type="number" className="in" style={{ width: '80px', flex: 'none' }} min="1" max="60" value={durationMins}
-                  onChange={e => setDurationMins(Math.max(1, Math.min(60, Number(e.target.value))))} />
-              </div>
-            </div>
-            {lastPerf && (
-              <div className="panel" style={{ borderLeftColor: 'var(--gold)' }}>
-                <div style={{ color: 'var(--muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: '6px' }}>Last Session</div>
-                <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: '13px' }}>Level <strong style={{ color: 'var(--lime)' }}>{lastPerf.level}</strong></span>
-                  <span style={{ fontSize: '13px' }}>Lifetime accuracy <strong style={{ color: 'var(--cyan)' }}>{lastPerf.totalQuestions > 0 ? Math.round((lastPerf.totalCorrect / lastPerf.totalQuestions) * 100) : 0}%</strong></span>
-                  <span style={{ fontSize: '13px' }}>{lastPerf.sessions} session{lastPerf.sessions !== 1 ? 's' : ''}</span>
-                  {lastPerf.lastDate && <span style={{ color: 'var(--muted)', fontSize: '12px' }}>Last: {lastPerf.lastDate}</span>}
-                </div>
-              </div>
-            )}
-            <div className="panel">
-              <div className="section-head"><div className="section-title">What You'll Practice</div></div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', color: 'var(--muted)', fontSize: '13px', lineHeight: '1.6' }}>
-                <div><span style={{ color: 'var(--lime)' }}>■</span> <strong style={{ color: 'var(--text)' }}>Number Strings</strong> — Memorize digit sequences, then recall them exactly</div>
-                <div><span style={{ color: 'var(--gold)' }}>■</span> <strong style={{ color: 'var(--text)' }}>Word Lists</strong> — Memorize a set of words, then type back as many as you can (any order)</div>
-                <div><span style={{ color: 'var(--cyan)' }}>■</span> <strong style={{ color: 'var(--text)' }}>Names & Details</strong> — Study people with face descriptions and details, then answer questions</div>
-                <div style={{ marginTop: '4px' }}>Difficulty adapts to your performance. Your level carries over between sessions.</div>
-              </div>
-            </div>
-            <button className="btn" style={{ width: '100%', padding: '14px', fontSize: '14px', marginTop: '8px' }} onClick={startSession}>
-              {lastPerf ? `Resume at Level ${nextLevelRef.current} →` : 'Start Session →'}
-            </button>
-          </div>
-        </div>
-      );
-
-      if (phase === 'done') {
-        const accuracy = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
-        return (
-          <div>
-            <button className="btn gray" style={{ marginBottom: '16px' }} onClick={onBack}>← Back</button>
-            <div className="memory-setup">
-              <h1 className="title" style={{ fontSize: 'clamp(1.2rem,3vw,2rem)', marginBottom: '8px' }}>Session Complete</h1>
-              <div className="tag" style={{ marginBottom: '24px' }}>Here's how you did</div>
-              <div className="panel">
-                <div className="memory-stat-grid">
-                  <div><div className="memory-stat-value" style={{ color: 'var(--lime)' }}>{accuracy}%</div><div className="memory-stat-label">Accuracy</div></div>
-                  <div><div className="memory-stat-value" style={{ color: 'var(--cyan)' }}>{stats.correct}/{stats.total}</div><div className="memory-stat-label">Questions</div></div>
-                  <div><div className="memory-stat-value" style={{ color: 'var(--gold)' }}>{stats.count}</div><div className="memory-stat-label">Exercises</div></div>
-                </div>
-              </div>
-              <div className="panel" style={{ color: 'var(--muted)', fontSize: '13px', lineHeight: '1.6' }}>
-                {accuracy >= 80 && <span style={{ color: 'var(--lime)' }}>Excellent encoding — you're operating at a high level. Push with longer sessions.</span>}
-                {accuracy >= 50 && accuracy < 80 && <span style={{ color: 'var(--text)' }}>Solid progress. The techniques in the feedback tips will sharpen your encoding significantly.</span>}
-                {accuracy < 50 && <span style={{ color: 'var(--red)' }}>Keep practicing. Memory is a skill — consistency matters more than any single session result.</span>}
-              </div>
-              <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
-                <button className="btn" style={{ flex: 1 }} onClick={startSession}>Train Again</button>
-                <button className="btn gray" onClick={onBack}>← Tasks</button>
-              </div>
-            </div>
-          </div>
-        );
-      }
-
-      const studyPct = studyTotal > 0 ? (studyTimeLeft / studyTotal) * 100 : 0;
-
-      return (
-        <div>
-          <div className="memory-header">
-            <button className="btn gray" style={{ padding: '4px 8px', fontSize: '11px' }} onClick={onBack}>← Back</button>
-            <div className="memory-timer" style={{ color: timeLeft === 0 ? 'var(--red)' : timeLeft <= 30 ? 'var(--gold)' : 'var(--lime)' }}>{timeLeft === 0 ? "Time's up" : formatTime(timeLeft)}</div>
-            <div style={{ color: 'var(--muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '.1em' }}>Level {level}</div>
-          </div>
-
-          {phase === 'study' && (
-            <div>
-              <div style={{ marginBottom: '14px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--muted)', fontSize: '11px', marginBottom: '4px' }}>
-                  <span>Study window</span><span>{studyTimeLeft}s</span>
-                </div>
-                <div className="memory-progress-bar">
-                  <div className="memory-progress-fill" style={{ width: `${studyPct}%` }} />
-                </div>
-              </div>
-
-              {exercise.type === 'numbers' && (
-                <div className="panel">
-                  <div className="section-title" style={{ marginBottom: '12px' }}>Memorize this number</div>
-                  <div className="memory-digits-display">
-                    {exercise.digits.split('').map((d, i) => (
-                      <React.Fragment key={i}>
-                        {i > 0 && i % 3 === 0 && <span style={{ color: 'var(--panel2)', fontSize: '1.5rem' }}>·</span>}
-                        <span className="memory-digit-char">{d}</span>
-                      </React.Fragment>
-                    ))}
-                  </div>
-                  <div style={{ color: 'var(--muted)', fontSize: '11px', marginTop: '10px' }}>{exercise.digits.length} digits — try chunking or linking each group to a vivid image</div>
-                </div>
-              )}
-
-              {exercise.type === 'words' && (
-                <div className="panel">
-                  <div className="section-title" style={{ marginBottom: '12px' }}>Memorize these words</div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', margin: '8px 0' }}>
-                    {exercise.words.map((word, i) => (
-                      <span key={i} className="memory-word-chip">{word}</span>
-                    ))}
-                  </div>
-                  <div style={{ color: 'var(--muted)', fontSize: '11px', marginTop: '10px' }}>{exercise.words.length} words — any order counts. Try linking them into a vivid story.</div>
-                </div>
-              )}
-
-              {exercise.type === 'names' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div className="section-title" style={{ marginBottom: '2px' }}>Memorize these people</div>
-                  {exercise.persons.map((person, i) => (
-                    <div key={i} className="memory-card">
-                      <div className="memory-card-name">{person.name}</div>
-                      <div className="memory-card-face">{person.face}</div>
-                      <div className="memory-card-detail">{person.detail}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {phase === 'quiz' && (
-            <div>
-              {timeLeft === 0 && (
-                <div className="panel" style={{ borderLeftColor: 'var(--red)', color: 'var(--red)', marginBottom: '12px', fontSize: '13px' }}>
-                  Time's up — submit your answer to see the results.
-                </div>
-              )}
-              {exercise.type === 'numbers' && (
-                <div className="panel">
-                  <div className="section-title" style={{ marginBottom: '10px' }}>Recall the number string</div>
-                  <div style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '12px' }}>Type exactly what you memorized — no spaces</div>
-                  <input className="in" type="text" inputMode="numeric" placeholder="Enter digits..." value={numberInput}
-                    onChange={e => setNumberInput(e.target.value.replace(/\D/g, ''))} autoFocus />
-                  <button className="btn" style={{ marginTop: '10px', width: '100%' }} disabled={numberInput.length === 0} onClick={submitAnswers}>Submit Answer</button>
-                </div>
-              )}
-
-              {exercise.type === 'words' && (
-                <div className="panel">
-                  <div className="section-title" style={{ marginBottom: '10px' }}>Recall the word list</div>
-                  <div style={{ color: 'var(--muted)', fontSize: '12px', marginBottom: '12px' }}>Type every word you remember — spaces, commas, or new lines. Order doesn't matter.</div>
-                  <textarea className="in" style={{ minHeight: '100px', resize: 'vertical' }}
-                    placeholder="apple, bridge, rocket..." value={wordInput}
-                    onChange={e => setWordInput(e.target.value)} autoFocus />
-                  <button className="btn" style={{ marginTop: '10px', width: '100%' }} disabled={wordInput.trim().length === 0} onClick={submitAnswers}>Submit Answer</button>
-                </div>
-              )}
-
-              {exercise.type === 'names' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <div className="section-title">Answer the questions</div>
-                  {exercise.questions.map(q => (
-                    <div key={q.id} className="panel">
-                      <div style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '.08em' }}>
-                        {q.kind === 'face-to-name' ? 'This person looks like:' : 'What do you know about:'}
-                      </div>
-                      <div style={{ color: 'var(--text)', fontWeight: 700, fontSize: '13px', lineHeight: '1.5', marginBottom: '12px' }}>"{q.prompt}"</div>
-                      <div style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '.08em' }}>
-                        {q.kind === 'face-to-name' ? 'Who is this?' : 'What is their detail?'}
-                      </div>
-                      <div className="memory-choices">
-                        {q.choices.map((choice, ci) => (
-                          <button key={ci} className={`memory-choice ${choiceAnswers[q.id] === choice ? 'selected' : ''}`}
-                            onClick={() => setChoiceAnswers(prev => ({ ...prev, [q.id]: choice }))}>
-                            {choice}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                  <button className="btn" disabled={exercise.questions.some(q => !choiceAnswers[q.id])} onClick={submitAnswers}>Submit Answers</button>
-                </div>
-              )}
-            </div>
-          )}
-
-          {phase === 'feedback' && feedbackData && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div className="section-title">Results</div>
-              {feedbackData.map((result, i) => (
-                <div key={i} className="panel" style={{ borderLeftColor: result.correct ? 'var(--lime)' : 'var(--red)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <span style={{ color: result.correct ? 'var(--lime)' : 'var(--red)', fontSize: '16px', fontWeight: 800 }}>{result.correct ? '✓' : '✗'}</span>
-                    <span style={{ color: result.correct ? 'var(--lime)' : 'var(--red)', fontWeight: 700, fontSize: '13px' }}>
-                      {result.label || (result.correct ? 'Correct' : 'Incorrect')}
-                    </span>
-                  </div>
-
-                  {result.kind === 'words' && (
-                    <div>
-                      <div style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '8px' }}>The words were:</div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: result.extra.length > 0 ? '10px' : 0 }}>
-                        {result.words.map((w, wi) => {
-                          const got = result.recalled.map(r => r.toLowerCase()).includes(w.toLowerCase());
-                          return <span key={wi} className="memory-word-chip" style={{ color: got ? 'var(--lime)' : 'var(--red)', borderColor: got ? 'var(--lime)' : 'var(--red)' }}>{w}</span>;
-                        })}
-                      </div>
-                      {result.extra.length > 0 && (
-                        <div style={{ color: 'var(--muted)', fontSize: '11px' }}>Not on the list: <span>{result.extra.join(', ')}</span></div>
-                      )}
-                    </div>
-                  )}
-
-                  {result.kind === 'numbers' && (
-                    <div>
-                      <div style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '6px' }}>The number was:</div>
-                      <div className="memory-digits-display">
-                        {result.digits.split('').map((d, di) => {
-                          const hit = result.given[di] === d;
-                          return (
-                            <React.Fragment key={di}>
-                              {di > 0 && di % 3 === 0 && <span style={{ color: 'var(--panel2)', fontSize: '1.5rem' }}>·</span>}
-                              <span className="memory-digit-char" style={{ color: result.correct || hit ? 'var(--lime)' : 'var(--red)', borderColor: result.correct || hit ? 'var(--lime)' : 'var(--red)' }}>{d}</span>
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
-                      {!result.correct && (
-                        <div style={{ marginTop: '8px' }}>
-                          <div style={{ color: 'var(--muted)', fontSize: '11px' }}>You entered: <span style={{ color: 'var(--red)' }}>{result.given || '(nothing)'}</span></div>
-                          <div style={{ color: 'var(--muted)', fontSize: '11px', marginTop: '2px' }}>{result.matched}/{result.digits.length} digits in the correct position</div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {result.kind !== 'numbers' && result.kind !== 'words' && (
-                    <div style={{ marginBottom: '6px' }}>
-                      <div style={{ color: 'var(--muted)', fontSize: '11px', marginBottom: '4px' }}>
-                        {result.kind === 'face-to-name' ? 'Face: ' : 'Name: '}
-                        <span style={{ color: 'var(--text)' }}>{result.prompt}</span>
-                      </div>
-                      {!result.correct && (
-                        <div style={{ marginBottom: '4px' }}>
-                          <div style={{ color: 'var(--muted)', fontSize: '11px' }}>You chose: <span style={{ color: 'var(--red)' }}>{result.given || '(none)'}</span></div>
-                          <div style={{ color: 'var(--muted)', fontSize: '11px' }}>Correct: <span style={{ color: 'var(--lime)' }}>{result.answer}</span></div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {result.mnemonic && (
-                    <div className="memory-mnemonic-box">
-                      <div style={{ color: 'var(--cyan)', fontWeight: 700, fontSize: '11px', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '.08em' }}>
-                        Memory Anchor — {result.personName}
-                      </div>
-                      {result.mnemonic}
-                    </div>
-                  )}
-
-                  {!result.correct && result.tip && (
-                    <div className="memory-tip-box">
-                      <span style={{ color: 'var(--gold)', fontWeight: 700 }}>Technique: </span>{result.tip}
-                    </div>
-                  )}
-                </div>
-              ))}
-              <button className="btn" style={{ width: '100%' }} onClick={handleNext}>
-                {timeLeft <= 0 ? 'End Session' : 'Next Exercise →'}
-              </button>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    function App() {
-      return <MainApp />;
-    }
+    function App() { return <MainApp />; }
 
     function MainApp() {
-      const [user, setUser] = useState(null);
-      const [loading, setLoading] = useState(true);
-      const [error, setError] = useState(null);
+      const [user, setUser]         = useState(null);
+      const [loading, setLoading]   = useState(true);
+      const [error, setError]       = useState(null);
       const [sections, setSections] = useState([]);
-      const [archive, setArchive] = useState(null);
+      const [archive, setArchive]   = useState(null);
       const [showArchive, setShowArchive] = useState(false);
-      const [loadInfo, setLoadInfo] = useState(null);
       const userRef = useRef(null);
-      const dateRef = useRef(getCurrentDate());
+      const dateRef = useRef(today());
 
-      useEffect(() => {
-        userRef.current = user;
-      }, [user]);
+      useEffect(() => { userRef.current = user; }, [user]);
 
       useEffect(() => {
         const failsafe = setTimeout(() => {
-          setLoading((prev) => {
-            if (prev) setError("Startup took too long. If you are signed in, press Refresh.");
-            return false;
-          });
+          setLoading(p => { if (p) setError("Loading timed out. Try refreshing."); return false; });
         }, 9000);
 
-        const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-          const nextUser = session?.user || null;
-          setUser(nextUser);
+        const { data: al } = supabase.auth.onAuthStateChange(async (event, session) => {
+          const u = session?.user || null;
+          setUser(u);
           setLoading(false);
 
           if (event === "SIGNED_OUT") {
-            if (userRef.current?.id) cache.clear(userRef.current.id);
-            if (userRef.current?.id) historyCache.clear(userRef.current.id);
-            if (userRef.current?.id) learningCache.clear(userRef.current.id);
-            setSections([]);
-            setArchive(null);
-            setShowArchive(false);
-            setLoadInfo(null);
+            const id = userRef.current?.id;
+            if (id) { dataCache.clear(id); histCache.clear(id); }
+            setSections([]); setArchive(null); setShowArchive(false);
             return;
           }
 
-          if (nextUser) {
-            const cached = cache.get(nextUser.id);
+          if (u) {
+            const cached = dataCache.get(u.id);
             if (cached) setSections(cached);
-            ensureDailyTasks(getCurrentDate(), nextUser.id)
-              .catch((e) => console.warn("ensureDailyTasks:", e.message))
-              .finally(() => loadSections(nextUser.id, true).catch((e) => setError("Failed to load: " + e.message)));
+            ensureDaily(today(), u.id)
+              .catch(e => console.warn("ensureDaily:", e.message))
+              .finally(() => loadSections(u.id, true).catch(e => setError("Load failed: " + e.message)));
           }
         });
 
-        const midnightWatcher = setInterval(async () => {
-          const currentDate = getCurrentDate();
-          if (currentDate === dateRef.current) return;
-
-          dateRef.current = currentDate;
+        const midnightWatch = setInterval(async () => {
+          const cur = today();
+          if (cur === dateRef.current) return;
+          dateRef.current = cur;
           const uid = userRef.current?.id;
           if (!uid) return;
-
           try {
-            cache.clear(uid);
-            historyCache.clear(uid);
-            learningCache.clear(uid);
-            await ensureDailyTasks(currentDate, uid);
+            dataCache.clear(uid); histCache.clear(uid);
+            await ensureDaily(cur, uid);
             await loadSections(uid, true);
             setArchive(null);
-          } catch (e) {
-            setError("Midnight refresh failed: " + e.message);
-          }
+          } catch (e) { setError("Midnight refresh failed: " + e.message); }
         }, 60000);
 
-        return () => {
-          clearTimeout(failsafe);
-          clearInterval(midnightWatcher);
-          authListener?.subscription?.unsubscribe();
-        };
+        return () => { clearTimeout(failsafe); clearInterval(midnightWatch); al?.subscription?.unsubscribe(); };
       }, []);
 
-      async function ensureDailyTasks(date, userId) {
+      async function ensureDaily(date, userId) {
         if (!userId) return;
-
-        const { data: templates, error: templateError } = await supabase
-          .from("task_templates")
+        const { data: tpls, error: te } = await supabase.from("task_templates")
           .select("id,section_id,text,parent_task_id,order_index")
-          .eq("user_id", userId)
-          .order("order_index", { ascending: true });
+          .eq("user_id", userId).order("order_index", { ascending: true });
+        if (te) throw te;
+        if (!tpls?.length) return;
 
-        if (templateError) throw templateError;
+        const { data: existing, error: ee } = await supabase.from("tasks")
+          .select("id,template_id").eq("user_id", userId).eq("date", date).not("template_id", "is", null);
+        if (ee) throw ee;
 
-        if (!templates || templates.length === 0) {
-          safeStorage.setItem(`last_init_${userId}`, date);
-          return;
-        }
+        const existIds = new Set((existing || []).map(t => String(t.template_id)));
+        const missing = tpls.filter(t => !existIds.has(String(t.id)));
+        if (!missing.length) return;
 
-        const { data: existingDailyTasks, error: existingError } = await supabase
-          .from("tasks")
-          .select("id,template_id")
-          .eq("user_id", userId)
-          .eq("date", date)
-          .not("template_id", "is", null);
-
-        if (existingError) throw existingError;
-
-        const existingTemplateIds = new Set(
-          (existingDailyTasks || []).map((task) => String(task.template_id))
-        );
-
-        const missingTemplates = templates.filter(
-          (template) => !existingTemplateIds.has(String(template.id))
-        );
-
-        if (missingTemplates.length === 0) {
-          safeStorage.setItem(`last_init_${userId}`, date);
-          return;
-        }
-
-        const rows = missingTemplates.map((template) => ({
-          section_id: template.section_id,
-          user_id: userId,
-          text: template.text,
-          completed: false,
-          date,
-          template_id: template.id,
-          parent_task_id: null,
-          order_index: template.order_index || 0
+        const rows = missing.map(t => ({
+          section_id: t.section_id, user_id: userId, text: t.text,
+          completed: false, date, template_id: t.id, parent_task_id: null, order_index: t.order_index || 0
         }));
 
-        const { data: createdTasks, error: insertError } = await supabase
-          .from("tasks")
-          .insert(rows)
-          .select("id,template_id");
+        const { data: created, error: ie } = await supabase.from("tasks").insert(rows).select("id,template_id");
+        if (ie && ie.code !== "23505") throw ie;
 
-        if (insertError && insertError.code !== "23505") throw insertError;
+        const byTpl = {};
+        (existing || []).forEach(t => { byTpl[String(t.template_id)] = t.id; });
+        (created || []).forEach(t => { byTpl[String(t.template_id)] = t.id; });
 
-        const taskByTemplateId = {};
-        (existingDailyTasks || []).forEach((task) => {
-          taskByTemplateId[String(task.template_id)] = task.id;
-        });
-        (createdTasks || []).forEach((task) => {
-          taskByTemplateId[String(task.template_id)] = task.id;
-        });
-
-        const parentUpdates = missingTemplates
-          .filter((template) => (
-            template.parent_task_id &&
-            taskByTemplateId[String(template.parent_task_id)] &&
-            taskByTemplateId[String(template.id)]
-          ))
-          .map((template) => supabase
-            .from("tasks")
-            .update({ parent_task_id: taskByTemplateId[String(template.parent_task_id)] })
-            .eq("id", taskByTemplateId[String(template.id)]));
-
-        if (parentUpdates.length > 0) await Promise.all(parentUpdates);
-
-        safeStorage.setItem(`last_init_${userId}`, date);
+        const parentUps = missing
+          .filter(t => t.parent_task_id && byTpl[String(t.parent_task_id)] && byTpl[String(t.id)])
+          .map(t => supabase.from("tasks").update({ parent_task_id: byTpl[String(t.parent_task_id)] }).eq("id", byTpl[String(t.id)]));
+        if (parentUps.length) await Promise.all(parentUps);
       }
 
-      async function createDefaultSection(userId) {
-        const { data, error } = await supabase
-          .from("sections")
-          .insert([{ user_id: userId, name: "Tasks", order_index: 0 }])
-          .select("id,user_id,name,order_index")
-          .single();
-
+      async function defaultSection(userId) {
+        const { data, error } = await supabase.from("sections")
+          .insert([{ user_id: userId, name: "My Tasks", order_index: 0 }])
+          .select("id,user_id,name,order_index").single();
         if (error) throw error;
         return data;
       }
 
-      async function loadSections(userIdFromCall, force = false) {
-        const userId = userIdFromCall || userRef.current?.id;
-        if (!userId) return;
-
-        if (force) {
-          cache.clear(userId);
-          safeStorage.removeItem(`last_init_${userId}`);
-        }
+      async function loadSections(uid, force = false) {
+        if (!uid) return;
+        if (force) { dataCache.clear(uid); safeStorage.removeItem(`last_init_${uid}`); }
 
         if (!force) {
-          const cached = cache.get(userId);
+          const cached = dataCache.get(uid);
           if (cached) {
             setSections(cached);
-            const hasTasks = cached.some((section) => (section.tasks || []).length > 0);
-            if (hasTasks) return;
+            if (cached.some(s => (s.tasks || []).length > 0)) return;
           }
         }
 
-        const today = getCurrentDate();
+        const { data: secs, error: se } = await supabase.from("sections")
+          .select("id,user_id,name,order_index").eq("user_id", uid).order("order_index", { ascending: true });
+        if (se) throw se;
 
-        const { data: sectionsData, error: sectionsError } = await supabase
-          .from("sections")
-          .select("id,user_id,name,order_index")
-          .eq("user_id", userId)
-          .order("order_index", { ascending: true });
+        let avail = secs || [];
+        if (!avail.length) avail = [await defaultSection(uid)];
 
-        if (sectionsError) throw sectionsError;
-
-        let availableSections = sectionsData || [];
-
-        if (availableSections.length === 0) {
-          availableSections = [await createDefaultSection(userId)];
-        }
-
-        const { data: tasksData, error: tasksError } = await supabase
-          .from("tasks")
+        const { data: tasks, error: te } = await supabase.from("tasks")
           .select("id,section_id,user_id,text,completed,date,template_id,parent_task_id,order_index")
-          .eq("user_id", userId)
-          .eq("date", today)
-          .order("order_index", { ascending: true });
+          .eq("user_id", uid).eq("date", today()).order("order_index", { ascending: true });
+        if (te) throw te;
 
-        if (tasksError) throw tasksError;
+        const allTasks = tasks || [];
+        let merged = avail.map(s => ({ ...s, tasks: allTasks.filter(t => String(t.section_id) === String(s.id)) }));
 
-        const effectiveTasks = tasksData || [];
-
-        let merged = availableSections.map((section) => ({
-          ...section,
-          tasks: effectiveTasks.filter((task) => String(task.section_id) === String(section.id))
-        }));
-
-        const knownSectionIds = new Set(availableSections.map((section) => String(section.id)));
-        const orphanTasks = effectiveTasks.filter((task) => !knownSectionIds.has(String(task.section_id)));
-
-        if (orphanTasks.length > 0) {
-          const fallbackSection = availableSections[0];
-          const movedTasks = orphanTasks.map((task) => ({ ...task, section_id: fallbackSection.id }));
-
-          const movedTaskResults = await Promise.all(orphanTasks.map((task) => (
-            supabase.from("tasks").update({ section_id: fallbackSection.id }).eq("id", task.id)
-          )));
-          const movedTaskError = movedTaskResults.find((result) => result.error)?.error;
-          if (movedTaskError) throw movedTaskError;
-
-          const movedTemplateResults = await Promise.all(orphanTasks
-            .filter((task) => task.template_id)
-            .map((task) => (
-              supabase.from("task_templates").update({ section_id: fallbackSection.id }).eq("id", task.template_id)
-            )));
-          const movedTemplateError = movedTemplateResults.find((result) => result.error)?.error;
-          if (movedTemplateError) throw movedTemplateError;
-
-          merged = merged.map((section, index) => (
-            index === 0
-              ? { ...section, tasks: [...(section.tasks || []), ...movedTasks] }
-              : section
-          ));
-        }
-
-        if (effectiveTasks.length > 0 && merged.every((section) => (section.tasks || []).length === 0)) {
-          merged = [{
-            ...availableSections[0],
-            user_id: userId,
-            name: "Tasks",
-            tasks: effectiveTasks
-          }];
+        const knownIds = new Set(avail.map(s => String(s.id)));
+        const orphans = allTasks.filter(t => !knownIds.has(String(t.section_id)));
+        if (orphans.length) {
+          const fallback = avail[0];
+          await Promise.all(orphans.map(t => supabase.from("tasks").update({ section_id: fallback.id }).eq("id", t.id)));
+          merged = merged.map((s, i) => i === 0 ? { ...s, tasks: [...(s.tasks || []), ...orphans.map(t => ({...t, section_id: fallback.id}))] } : s);
         }
 
         setSections(merged);
-        cache.set(userId, merged);
-
-        setLoadInfo({
-          today,
-          taskCount: effectiveTasks.length,
-          sectionCount: availableSections.length,
-          templateBackedCount: effectiveTasks.filter((task) => task.template_id).length
-        });
+        dataCache.set(uid, merged);
       }
 
       async function loadArchive() {
-        if (showArchive) {
-          setShowArchive(false);
-          return;
-        }
-
+        if (showArchive) { setShowArchive(false); return; }
         try {
-          const currentUser = userRef.current;
-          if (!currentUser) {
-            setError("History is available after sign in.");
-            return;
-          }
-
-          const { data: rawTasks, error: taskError } = await supabase
-            .from("tasks")
+          const u = userRef.current;
+          if (!u) { setError("Sign in to view history."); return; }
+          const { data: raw, error: re } = await supabase.from("tasks")
             .select("text,completed,date,template_id,section_id")
-            .eq("user_id", currentUser.id)
-            .lte("date", getCurrentDate())
-            .gte("date", getDateDaysAgo(30))
-            .order("date", { ascending: false });
+            .eq("user_id", u.id).lte("date", today()).gte("date", daysAgo(30)).order("date", { ascending: false });
+          if (re) throw re;
 
-          if (taskError) throw taskError;
-
-          const sectionIds = Array.from(new Set(
-            (rawTasks || []).map((task) => task.section_id).filter(Boolean)
-          ));
-          const sectionNames = {};
-
-          if (sectionIds.length > 0) {
-            const { data: sectionData } = await supabase
-              .from("sections")
-              .select("id,name")
-              .eq("user_id", currentUser.id)
-              .in("id", sectionIds);
-
-            (sectionData || []).forEach((section) => {
-              sectionNames[String(section.id)] = section.name;
-            });
+          const sids = Array.from(new Set((raw || []).map(t => t.section_id).filter(Boolean)));
+          const snames = {};
+          if (sids.length) {
+            const { data: sd } = await supabase.from("sections").select("id,name").eq("user_id", u.id).in("id", sids);
+            (sd || []).forEach(s => { snames[String(s.id)] = s.name; });
           }
 
-          const data = (rawTasks || [])
-            .map((task) => ({
-              ...task,
-              sections: { name: sectionNames[String(task.section_id)] || "Tasks" }
-            }))
+          const data = (raw || [])
+            .map(t => ({ ...t, sname: snames[String(t.section_id)] || "Tasks" }))
             .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-          setArchive(data || []);
-          historyCache.set(currentUser.id, data || []);
+          setArchive(data);
+          histCache.set(u.id, data);
           setShowArchive(true);
           setError(null);
-        } catch (e) {
-          setError("Failed to load archive: " + e.message);
-        }
+        } catch (e) { setError("Failed to load history: " + e.message); }
       }
 
-      if (loading) return <div className="loading">Loading System...</div>;
-      if (!user) return <AuthScreen setError={setError} />;
+      if (loading) return <div className="loading">Loading…</div>;
+      if (!user)   return <AuthScreen setError={setError} />;
 
       return (
         <>
-          {error && <div className="panel error">{error}</div>}
+          {error && (
+            <div className="card error">
+              {error}
+              <button className="btn ghost" style={{marginLeft:8,fontSize:12}} onClick={() => setError(null)}>Dismiss</button>
+            </div>
+          )}
           <TaskApp
-            user={user}
-            sections={sections}
-            setSections={setSections}
-            setError={setError}
-            loadSections={loadSections}
-            loadArchive={loadArchive}
-            archive={archive}
-            showArchive={showArchive}
-            loadInfo={loadInfo}
+            user={user} sections={sections} setSections={setSections}
+            setError={setError} loadSections={loadSections}
+            loadArchive={loadArchive} archive={archive} showArchive={showArchive}
           />
         </>
       );
     }
 
+    // ─── Auth ────────────────────────────────────────────────────────────────────
+
     function AuthScreen({ setError }) {
-      const [isLogin, setIsLogin] = useState(true);
-      const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
-      const [loading, setLoading] = useState(false);
-      const [localError, setLocalError] = useState(null);
+      const [isLogin, setIsLogin]     = useState(true);
+      const [email, setEmail]         = useState("");
+      const [password, setPassword]   = useState("");
+      const [loading, setLoading]     = useState(false);
+      const [localErr, setLocalErr]   = useState(null);
 
       async function handleAuth(e) {
         e.preventDefault();
-        setLoading(true);
-        setLocalError(null);
-
+        setLoading(true); setLocalErr(null);
         try {
           if (isLogin) {
             const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -1656,60 +740,32 @@
           } else {
             const { error } = await supabase.auth.signUp({ email, password });
             if (error) throw error;
-            alert("Check your email to confirm your account.");
+            alert("Check your email to confirm your account, then log in.");
           }
-        } catch (e) {
-          setLocalError(e.message);
-          setError(e.message);
-        } finally {
-          setLoading(false);
-        }
+        } catch (e) { setLocalErr(e.message); setError(e.message); }
+        finally     { setLoading(false); }
       }
 
       return (
         <div className="auth">
-          <h2 className="title" style={{ fontSize: "1.6rem", marginBottom: "8px" }}>
-            {isLogin ? "Login" : "Sign Up"}
-          </h2>
-
-          {localError && <div className="panel error">{localError}</div>}
-
+          <div className="auth-title">Rachel's Tasks</div>
+          <div className="auth-sub">{isLogin ? "Welcome back!" : "Create your account"}</div>
+          {localErr && <div className="card error" style={{marginBottom:16}}>{localErr}</div>}
           <form onSubmit={handleAuth}>
-            <div>
-              <label>Email</label>
-              <input
-                className="in"
-                type="email"
-                required
-                disabled={loading}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div><label>Email</label>
+              <input className="in" type="email" required disabled={loading} value={email} onChange={e => setEmail(e.target.value)} />
             </div>
-
-            <div style={{ marginTop: "8px" }}>
-              <label>Password</label>
-              <input
-                className="in"
-                type="password"
-                required
-                disabled={loading}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <div style={{marginTop:12}}><label>Password</label>
+              <input className="in" type="password" required disabled={loading} value={password} onChange={e => setPassword(e.target.value)} />
             </div>
-
-            <div className="row">
-              <button className="btn" type="submit" disabled={loading}>
-                {loading ? "Please wait..." : (isLogin ? "Login" : "Sign Up")}
+            <div className="form-row">
+              <button className="btn primary" type="submit" disabled={loading} style={{flex:1}}>
+                {loading ? "Please wait…" : (isLogin ? "Log In" : "Sign Up")}
               </button>
-              <button
-                className="btn gray"
-                type="button"
-                disabled={loading}
-                onClick={() => setIsLogin(!isLogin)}
-              >
-                {isLogin ? "Need an account?" : "Have an account?"}
+            </div>
+            <div style={{textAlign:"center",marginTop:12}}>
+              <button className="btn ghost" type="button" disabled={loading} onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? "Need an account? Sign up" : "Already have an account? Log in"}
               </button>
             </div>
           </form>
@@ -1717,937 +773,467 @@
       );
     }
 
-    function TaskApp({ user, sections, setSections, setError, loadSections, loadArchive, archive, showArchive, loadInfo }) {
-      const [showMemory, setShowMemory] = useState(false);
-      const [showNewSection, setShowNewSection] = useState(false);
-      const [newSectionName, setNewSectionName] = useState("");
-      const [undoStack, setUndoStack] = useState([]);
-      const [learningCollapsed, setLearningCollapsed] = useState(false);
+    // ─── TaskApp ─────────────────────────────────────────────────────────────────
 
-      function pushUndo(label, undoFn) {
-        setUndoStack(prev => [...prev.slice(-4), { label, undo: undoFn }]);
+    function TaskApp({ user, sections, setSections, setError, loadSections, loadArchive, archive, showArchive }) {
+      const [showNewSection, setShowNewSection]   = useState(false);
+      const [newSectionName, setNewSectionName]   = useState("");
+      const [undoStack, setUndoStack]             = useState([]);
+      const [cheerMsg, setCheerMsg]               = useState(null);
+      const [cheerKey, setCheerKey]               = useState(0);
+      const cheerTimer = useRef(null);
+
+      function pushUndo(label, fn) {
+        setUndoStack(p => [...p.slice(-4), { label, undo: fn }]);
       }
 
       async function applyUndo() {
-        if (undoStack.length === 0) return;
+        if (!undoStack.length) return;
         const top = undoStack[undoStack.length - 1];
-        setUndoStack(prev => prev.slice(0, -1));
-        try {
-          await top.undo();
-        } catch (e) {
-          setError("Undo failed: " + e.message);
-        }
+        setUndoStack(p => p.slice(0, -1));
+        try { await top.undo(); } catch (e) { setError("Undo failed: " + e.message); }
       }
 
-      function scrollToId(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const bar = document.querySelector('.bar');
-        const offset = bar ? bar.getBoundingClientRect().height + 8 : 16;
-        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
-      }
-
-      function scrollToLearning(subId) {
-        setLearningCollapsed(false);
-        setTimeout(() => scrollToId(subId), 50);
+      function cheer() {
+        const msg = CHEERS[Math.floor(Math.random() * CHEERS.length)];
+        setCheerMsg(msg);
+        setCheerKey(k => k + 1);
+        if (cheerTimer.current) clearTimeout(cheerTimer.current);
+        cheerTimer.current = setTimeout(() => setCheerMsg(null), 2400);
       }
 
       const todayPretty = new Date().toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone: "America/New_York"
+        weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "America/New_York"
       });
 
-      const totalTasksToday = sections.reduce((sum, section) => sum + (section.tasks?.length || 0), 0);
+      const allTasks = sections.flatMap(s => s.tasks || []);
+      const done     = allTasks.filter(t => t.completed).length;
+      const total    = allTasks.length;
+      const pct      = total > 0 ? Math.round((done / total) * 100) : 0;
 
-      const groupedArchive = (archive || []).reduce((acc, item) => {
-        if (!acc[item.date]) acc[item.date] = [];
-        acc[item.date].push(item);
-        return acc;
-      }, {});
-
-      const sortedArchiveDays = Object.entries(groupedArchive)
-        .sort(([a], [b]) => b.localeCompare(a))
+      const groupedArchive = {};
+      (archive || []).forEach(t => { (groupedArchive[t.date] ||= []).push(t); });
+      const archiveDays = Object.entries(groupedArchive)
+        .sort(([a],[b]) => b.localeCompare(a))
         .map(([day, items]) => {
-          const bySection = items.reduce((acc, item) => {
-            const name = item.sections?.name || "No Section";
-            if (!acc[name]) acc[name] = [];
-            acc[name].push(item);
-            return acc;
-          }, {});
-          const sortedSections = Object.entries(bySection).sort(([a], [b]) => a.localeCompare(b));
-          return { day, sortedSections };
+          const bySec = {};
+          items.forEach(t => { (bySec[t.sname] ||= []).push(t); });
+          return { day, sections: Object.entries(bySec).sort(([a],[b]) => a.localeCompare(b)) };
         });
 
       async function addSection(e) {
         e.preventDefault();
         if (!newSectionName.trim()) return;
-
         try {
-          const { data, error } = await supabase
-            .from("sections")
-            .insert([{ user_id: user.id, name: newSectionName.trim(), order_index: sections.length }])
-            .select();
-
+          const { data, error } = await supabase.from("sections")
+            .insert([{ user_id: user.id, name: newSectionName.trim(), order_index: sections.length }]).select();
           if (error) throw error;
-
           const next = [...sections, { ...data[0], tasks: [] }];
-          setSections(next);
-          cache.set(user.id, next);
-          setNewSectionName("");
-          setShowNewSection(false);
-        } catch (e) {
-          setError("Failed to create section: " + e.message);
-        }
+          setSections(next); dataCache.set(user.id, next);
+          setNewSectionName(""); setShowNewSection(false);
+        } catch (e) { setError("Failed to create section: " + e.message); }
       }
 
-      async function deleteSection(sectionId) {
+      async function deleteSection(id) {
         if (!confirm("Delete this section and all its tasks?")) return;
-
         try {
-          const { error } = await supabase.from("sections").delete().eq("id", sectionId);
+          const { error } = await supabase.from("sections").delete().eq("id", id);
           if (error) throw error;
-
-          const next = sections.filter((section) => section.id !== sectionId);
-          setSections(next);
-          cache.set(user.id, next);
-        } catch (e) {
-          setError("Failed to delete section: " + e.message);
-        }
+          const next = sections.filter(s => s.id !== id);
+          setSections(next); dataCache.set(user.id, next);
+        } catch (e) { setError("Failed to delete section: " + e.message); }
       }
 
-      async function moveSection(sectionId, direction) {
-        const index = sections.findIndex((section) => section.id === sectionId);
-        const targetIndex = index + direction;
-        if (index < 0 || targetIndex < 0 || targetIndex >= sections.length) return;
-
-        const a = sections[index];
-        const b = sections[targetIndex];
-
-        const aOrder = a.order_index ?? index;
-        const bOrder = b.order_index ?? targetIndex;
-
-        const next = sections.map((section) => {
-          if (section.id === a.id) return { ...section, order_index: bOrder };
-          if (section.id === b.id) return { ...section, order_index: aOrder };
-          return section;
-        }).sort((x, y) => x.order_index - y.order_index);
-
-        setSections(next);
-        cache.set(user.id, next);
-
+      async function moveSection(id, dir) {
+        const idx = sections.findIndex(s => s.id === id);
+        const ti  = idx + dir;
+        if (idx < 0 || ti < 0 || ti >= sections.length) return;
+        const a = sections[idx], b = sections[ti];
+        const ao = a.order_index ?? idx, bo = b.order_index ?? ti;
+        const next = sections.map(s => {
+          if (s.id === a.id) return {...s, order_index: bo};
+          if (s.id === b.id) return {...s, order_index: ao};
+          return s;
+        }).sort((x,y) => x.order_index - y.order_index);
+        setSections(next); dataCache.set(user.id, next);
         try {
           await Promise.all([
-            supabase.from("sections").update({ order_index: bOrder }).eq("id", a.id),
-            supabase.from("sections").update({ order_index: aOrder }).eq("id", b.id)
+            supabase.from("sections").update({ order_index: bo }).eq("id", a.id),
+            supabase.from("sections").update({ order_index: ao }).eq("id", b.id)
           ]);
-        } catch (e) {
-          setError("Failed to sync section order: " + e.message);
-        }
+        } catch (e) { setError("Failed to reorder: " + e.message); }
       }
-
-      if (showMemory) return <MemoryTrainingPage user={user} onBack={() => setShowMemory(false)} />;
 
       return (
         <>
-          <h1 className="title">{todayPretty}</h1>
-          <div className="tag">Task Protocol</div>
+          <div className="greeting">{greeting()}, Rachel!</div>
+          <div className="date-tag">{todayPretty}</div>
 
-          <div className="bar">
-            <div className="left">
-              <button className="btn" onClick={() => setShowMemory(true)}>Memory Training</button>
-              <button className="btn" onClick={() => setShowNewSection(!showNewSection)}>+ New Section</button>
-              <button className="btn gray" onClick={() => loadSections(user.id, true)}>Refresh</button>
-              <button className="btn gray" onClick={loadArchive}>{showArchive ? "Hide Archive" : "History"}</button>
-              <button
-                className="btn gray"
-                onClick={applyUndo}
-                disabled={undoStack.length === 0}
-                title={undoStack.length > 0 ? `Undo: ${undoStack[undoStack.length - 1].label}` : "Nothing to undo"}
-              >Undo</button>
+          {total > 0 && (
+            <div className="progress-wrap">
+              <div className="progress-label">
+                <span>{pct === 100 ? "All done today!" : "Today's progress"}</span>
+                <strong>{done} of {total} done</strong>
+              </div>
+              <div className="progress-track">
+                <div className="progress-fill" style={{width: `${pct}%`}} />
+              </div>
             </div>
-            <button className="btn gray" onClick={() => supabase.auth.signOut()}>Sign Out</button>
-            <div style={{ width: '100%', borderTop: '1px solid var(--line)', paddingTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-              {sections.map(section => (
-                <button key={section.id} className="btn gray" onClick={() => scrollToId(`section-${section.id}`)}>
-                  {section.name}
-                </button>
-              ))}
-              <button className="btn cyan" onClick={() => scrollToLearning('learning-idioms')}>Idioms</button>
-              <button className="btn cyan" onClick={() => scrollToLearning('learning-vocab')}>Vocab</button>
-            </div>
+          )}
+
+          <div className="action-bar">
+            <button className="btn primary" onClick={() => setShowNewSection(!showNewSection)}>+ Section</button>
+            <button className="btn ghost"   onClick={() => loadSections(user.id, true)}>Refresh</button>
+            <button className="btn ghost"   onClick={loadArchive}>{showArchive ? "Hide History" : "History"}</button>
+            <button className="btn ghost"   onClick={applyUndo} disabled={!undoStack.length}
+              title={undoStack.length ? `Undo: ${undoStack[undoStack.length-1].label}` : "Nothing to undo"}>Undo</button>
+            <button className="btn ghost"   onClick={() => supabase.auth.signOut()} style={{marginLeft:"auto"}}>Sign Out</button>
           </div>
 
           {showNewSection && (
-            <div className="panel">
+            <div className="card">
               <form onSubmit={addSection}>
-                <input
-                  className="in"
-                  type="text"
-                  placeholder="Section Name"
-                  value={newSectionName}
-                  onChange={(e) => setNewSectionName(e.target.value)}
-                />
-                <div className="row">
-                  <button className="btn" type="submit">Create</button>
-                  <button className="btn gray" type="button" onClick={() => setShowNewSection(false)}>Cancel</button>
+                <label>New Section Name</label>
+                <input className="in" type="text" placeholder="e.g. Morning Routine" autoFocus
+                  value={newSectionName} onChange={e => setNewSectionName(e.target.value)} />
+                <div className="form-row">
+                  <button className="btn primary" type="submit">Create</button>
+                  <button className="btn ghost" type="button" onClick={() => setShowNewSection(false)}>Cancel</button>
                 </div>
               </form>
             </div>
           )}
 
           {showArchive && archive && (
-            <div className="panel gold">
-              <div className="section-title" style={{ color: "var(--gold)", marginBottom: "8px" }}>
-                History by Day (Last 30 Days)
+            <div className="card">
+              <div className="section-head">
+                <div className="section-title" style={{color:"var(--gold)"}}>History — Last 30 Days</div>
               </div>
-
-              {sortedArchiveDays.length === 0 ? (
-                <div style={{ color: "var(--muted)" }}>No history for the last 30 days.</div>
-              ) : (
-                sortedArchiveDays.map(({ day, sortedSections }) => (
-                  <div className="history-day" key={day}>
-                    <div className="history-date">{day}</div>
-                    {sortedSections.map(([sectionName, tasks]) => (
-                      <div key={sectionName} style={{ marginBottom: "8px" }}>
-                        <div style={{ color: "var(--cyan)", fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", marginBottom: "4px", textTransform: "uppercase" }}>
-                          {sectionName}
-                        </div>
-                        <ul className="tasks">
-                          {tasks.map((task, index) => (
-                            <li key={`${day}-${sectionName}-${index}`} className="task" style={{ opacity: 0.85 }}>
-                              <span className="task-text" style={{ textDecoration: task.completed ? "line-through" : "none" }}>
-                                {task.text}
-                              </span>
+              {!archiveDays.length ? (
+                <div style={{color:"var(--muted)",fontSize:14}}>No history yet.</div>
+              ) : archiveDays.map(({day, sections: daySecs}) => (
+                <div key={day}>
+                  <div className="history-date">{day}</div>
+                  {daySecs.map(([sname, items]) => (
+                    <div key={sname} style={{marginBottom:8}}>
+                      <div style={{color:"var(--muted)",fontSize:12,fontWeight:600,marginBottom:4}}>{sname}</div>
+                      <ul className="tasks">
+                        {items.map((t, i) => {
+                          const { label } = parseTask(t.text);
+                          return (
+                            <li key={i} className="task" style={{opacity:0.85}}>
+                              <span className="task-text" style={{textDecoration: t.completed ? "line-through" : "none"}}>{label}</span>
                               <div className="meta">
-                                <span className={`badge ${task.template_id ? "b1" : "b2"}`}>
-                                  {task.template_id ? "Daily" : "One-Time"}
+                                <span className={`small-badge ${t.template_id ? "badge-recurring" : "badge-today"}`}>
+                                  {t.template_id ? "Recurring" : "Today"}
                                 </span>
-                                <span className={`badge ${task.completed ? "b1" : "b3"}`}>
-                                  {task.completed ? "Done" : "Open"}
+                                <span className={`small-badge ${t.completed ? "badge-done" : "badge-open"}`}>
+                                  {t.completed ? "Done" : "Open"}
                                 </span>
                               </div>
                             </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                ))
-              )}
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           )}
 
-          {loadInfo && (
-            <div className={`panel ${loadInfo.taskCount === 0 ? "gold" : ""}`}>
-              Loaded {loadInfo.taskCount} task{loadInfo.taskCount === 1 ? "" : "s"} for {loadInfo.today}.
-              {" "}Daily/template-backed: {loadInfo.templateBackedCount}. Sections: {loadInfo.sectionCount}.
-            </div>
+          {!sections.length && (
+            <div className="card peach">No sections yet. Tap <strong>+ Section</strong> to get started.</div>
+          )}
+          {sections.length > 0 && total === 0 && (
+            <div className="card peach">No tasks for today yet — add one below!</div>
           )}
 
-          {sections.length === 0 && (
-            <div className="panel gold">
-              No sections found. Use <strong>+ New Section</strong> to create one, or <strong>Refresh</strong> to retry.
-            </div>
-          )}
-
-          {sections.length > 0 && totalTasksToday === 0 && (
-            <div className="panel gold">
-              No tasks found for today. Add a task below to get started.
-            </div>
-          )}
-
-          {sections.map((section) => (
-            <div className="panel" key={section.id} id={`section-${section.id}`}>
+          {sections.map(section => (
+            <div className="card" key={section.id} id={`section-${section.id}`}>
               <SectionComponent
-                user={user}
-                section={section}
-                sections={sections}
-                setSections={setSections}
-                deleteSection={deleteSection}
-                moveSection={moveSection}
-                setError={setError}
-                pushUndo={pushUndo}
+                user={user} section={section} sections={sections} setSections={setSections}
+                deleteSection={deleteSection} moveSection={moveSection}
+                setError={setError} pushUndo={pushUndo} onComplete={cheer}
               />
             </div>
           ))}
 
-          <LearningPanel user={user} collapsed={learningCollapsed} setCollapsed={setLearningCollapsed} />
+          {cheerMsg && (
+            <div className="celebrate-toast" key={cheerKey}>{cheerMsg}</div>
+          )}
         </>
       );
     }
 
-    function LearningPanel({ user, collapsed, setCollapsed }) {
-      const [data, setData] = useState(null);
-      const [status, setStatus] = useState("loading");
-      const [generating, setGenerating] = useState(false);
-      const [errMsg, setErrMsg] = useState(null);
+    // ─── Section ─────────────────────────────────────────────────────────────────
 
-      useEffect(() => { loadLearning(false); }, []);
-
-      async function loadLearning(forceNew) {
-        setErrMsg(null);
-        if (forceNew) {
-          setGenerating(true);
-        } else {
-          setStatus("loading");
-        }
-
-        const today = getCurrentDate();
-
-        if (!forceNew) {
-          const cached = learningCache.get(user.id);
-          if (cached) {
-            setData(cached);
-            setStatus("ready");
-            return;
-          }
-
-          const { data: existing, error: fetchErr } = await supabase
-            .from("daily_learning")
-            .select("idioms,vocab")
-            .eq("user_id", user.id)
-            .eq("date", today)
-            .maybeSingle();
-
-          if (fetchErr) {
-            setErrMsg("Could not load learning data: " + fetchErr.message);
-            setStatus("error");
-            return;
-          }
-
-          if (existing) {
-            const payload = { idioms: existing.idioms, vocab: existing.vocab };
-            setData(payload);
-            learningCache.set(user.id, payload);
-            setStatus("ready");
-            return;
-          }
-        }
-
-        const pools = await fetchPools();
-        const idioms = pickRandom(pools.idioms, 10);
-        const vocab = pickRandom(pools.vocab, 10);
-        const payload = { idioms, vocab };
-
-        const { error: upsertErr } = await supabase
-          .from("daily_learning")
-          .upsert(
-            { user_id: user.id, date: today, idioms, vocab, updated_at: new Date().toISOString() },
-            { onConflict: "user_id,date" }
-          );
-
-        if (upsertErr) {
-          setErrMsg("Could not save learning data: " + upsertErr.message);
-        }
-
-        setData(payload);
-        learningCache.set(user.id, payload);
-        setStatus("ready");
-        setGenerating(false);
-      }
-
-      return (
-        <div className="panel cyan" id="learning-panel">
-          <div className="section-head">
-            <div className="section-title" style={{ color: "var(--cyan)" }}>Learning</div>
-            <div className="meta">
-              <button
-                className="btn cyan"
-                style={{ fontSize: "11px", padding: "4px 10px" }}
-                disabled={generating}
-                onClick={() => loadLearning(true)}
-              >
-                {generating ? "Generating..." : "Generate New"}
-              </button>
-              <button className="icon" onClick={() => setCollapsed((v) => !v)}>
-                {collapsed ? "+" : "\u2212"}
-              </button>
-            </div>
-          </div>
-
-          {!collapsed && (
-            <>
-              {status === "loading" && (
-                <div style={{ color: "var(--muted)", padding: "8px 0" }}>Loading today's learning content...</div>
-              )}
-              {errMsg && (
-                <div style={{ color: "var(--red)", marginBottom: "10px", fontSize: "12px" }}>{errMsg}</div>
-              )}
-              {status === "ready" && data && (
-                <div className="learning-grid">
-                  <div id="learning-idioms">
-                    <div style={{ color: "var(--gold)", fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Idioms of the Day
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                      {(data.idioms || []).map((item, i) => (
-                        <div key={i} className="learn-item">
-                          <div style={{ color: "var(--cyan)", fontWeight: 700, fontSize: "13px", marginBottom: "3px" }}>
-                            {item.phrase}
-                          </div>
-                          <div style={{ color: "var(--muted)", fontSize: "12px", lineHeight: "1.45" }}>
-                            {item.meaning}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div id="learning-vocab">
-                    <div style={{ color: "var(--gold)", fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Vocabulary of the Day
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                      {(data.vocab || []).map((item, i) => (
-                        <div key={i} className="learn-item">
-                          <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "3px" }}>
-                            <span style={{ color: "var(--lime)", fontWeight: 700, fontSize: "13px" }}>{item.word}</span>
-                            <span style={{ color: "var(--muted)", fontSize: "10px", fontStyle: "italic" }}>{item.pos}</span>
-                          </div>
-                          <div style={{ color: "var(--muted)", fontSize: "12px", lineHeight: "1.45" }}>
-                            {item.definition}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      );
-    }
-
-    function SectionComponent({ user, section, sections, setSections, deleteSection, moveSection, setError, pushUndo }) {
-      const [tasks, setTasks] = useState(section.tasks || []);
-      const [newTaskText, setNewTaskText] = useState("");
-      const [taskType, setTaskType] = useState("daily");
-      const [isSubtaskMode, setIsSubtaskMode] = useState(false);
-      const [forcedParentTaskId, setForcedParentTaskId] = useState(null);
-      const [draggedId, setDraggedId] = useState(null);
-      const [dragOverId, setDragOverId] = useState(null);
-      const [dropAbove, setDropAbove] = useState(true);
-      const newTaskInputRef = useRef(null);
+    function SectionComponent({ user, section, sections, setSections, deleteSection, moveSection, setError, pushUndo, onComplete }) {
+      const [tasks, setTasks]                       = useState(section.tasks || []);
+      const [newText, setNewText]                   = useState("");
+      const [newEstimate, setNewEstimate]           = useState(null);
+      const [taskType, setTaskType]                 = useState("daily");
+      const [subtaskMode, setSubtaskMode]           = useState(false);
+      const [forcedParent, setForcedParent]         = useState(null);
+      const [draggedId, setDraggedId]               = useState(null);
+      const [dragOverId, setDragOverId]             = useState(null);
+      const [dropAbove, setDropAbove]               = useState(true);
+      const inputRef    = useRef(null);
       const sectionsRef = useRef(sections);
-      const today = getCurrentDate();
+      const curDate     = today();
 
       useEffect(() => setTasks(section.tasks || []), [section.tasks]);
       useEffect(() => { sectionsRef.current = sections; }, [sections]);
 
-      function sameId(a, b) {
-        return String(a) === String(b);
+      const sid = id => String(id);
+      const same = (a, b) => sid(a) === sid(b);
+
+      function applyTasks(next) {
+        setTasks(next);
+        const nextSecs = sectionsRef.current.map(s => same(s.id, section.id) ? {...s, tasks: next} : s);
+        setSections(nextSecs);
+        dataCache.set(user.id, nextSecs);
       }
 
-      function applyTasks(nextTasks) {
-        setTasks(nextTasks);
-        const nextSections = sectionsRef.current.map((s) => (
-          String(s.id) === String(section.id) ? { ...s, tasks: nextTasks } : s
-        ));
-        setSections(nextSections);
-        cache.set(user.id, nextSections);
-      }
+      function reindex(list) { return list.map((t, i) => ({...t, order_index: i})); }
 
-      function reindexTasks(taskList) {
-        return taskList.map((task, index) => ({ ...task, order_index: index }));
-      }
-
-      async function persistTaskOrder(taskList) {
-        const updates = [];
-        for (const task of taskList) {
-          updates.push(supabase.from("tasks").update({ order_index: task.order_index }).eq("id", task.id));
-          if (task.template_id) {
-            updates.push(supabase.from("task_templates").update({ order_index: task.order_index }).eq("id", task.template_id));
-          }
+      async function persistOrder(list) {
+        const ups = [];
+        for (const t of list) {
+          ups.push(supabase.from("tasks").update({ order_index: t.order_index }).eq("id", t.id));
+          if (t.template_id) ups.push(supabase.from("task_templates").update({ order_index: t.order_index }).eq("id", t.template_id));
         }
-        await Promise.all(updates);
+        await Promise.all(ups);
       }
 
-      function isDescendantOf(candidateId, ancestorId) {
-        let current = tasks.find((task) => sameId(task.id, candidateId));
+      function isDesc(candidateId, ancestorId) {
+        let cur = tasks.find(t => same(t.id, candidateId));
         const seen = new Set();
-
-        while (current?.parent_task_id) {
-          const key = String(current.id);
-          if (seen.has(key)) break;
-          seen.add(key);
-
-          if (sameId(current.parent_task_id, ancestorId)) return true;
-          current = tasks.find((task) => sameId(task.id, current.parent_task_id));
+        while (cur?.parent_task_id) {
+          const k = sid(cur.id);
+          if (seen.has(k)) break;
+          seen.add(k);
+          if (same(cur.parent_task_id, ancestorId)) return true;
+          cur = tasks.find(t => same(t.id, cur.parent_task_id));
         }
-
         return false;
       }
 
-      function findTaskBranchIds(rootId) {
-        const ids = new Set([String(rootId)]);
+      function branch(rootId) {
+        const ids = new Set([sid(rootId)]);
         let changed = true;
-
         while (changed) {
           changed = false;
-          tasks.forEach((task) => {
-            if (task.parent_task_id && ids.has(String(task.parent_task_id)) && !ids.has(String(task.id))) {
-              ids.add(String(task.id));
-              changed = true;
+          tasks.forEach(t => {
+            if (t.parent_task_id && ids.has(sid(t.parent_task_id)) && !ids.has(sid(t.id))) {
+              ids.add(sid(t.id)); changed = true;
             }
           });
         }
-
         return ids;
       }
 
-      function findInsertIndexForParent(parentId) {
-        const parentIndex = tasks.findIndex((task) => sameId(task.id, parentId));
-        if (parentIndex < 0) return tasks.length;
-
-        let i = parentIndex + 1;
-        while (i < tasks.length && isDescendantOf(tasks[i].id, parentId)) i += 1;
-
+      function insertAfterParent(parentId) {
+        const pi = tasks.findIndex(t => same(t.id, parentId));
+        if (pi < 0) return tasks.length;
+        let i = pi + 1;
+        while (i < tasks.length && isDesc(tasks[i].id, parentId)) i++;
         return i;
       }
 
-      function startSubtaskFor(parentId) {
-        setForcedParentTaskId(parentId);
-        setIsSubtaskMode(true);
-        setTimeout(() => newTaskInputRef.current?.focus(), 0);
+      function startSubtask(parentId) {
+        setForcedParent(parentId);
+        setSubtaskMode(true);
+        setTimeout(() => inputRef.current?.focus(), 0);
       }
 
       async function addTask(e) {
         e.preventDefault();
-
-        const text = newTaskText.trim();
-        if (!text) return;
-
-        const previousTasks = tasks;
-
+        const labelText = newText.trim();
+        if (!labelText) return;
+        const text = buildTask(labelText, newEstimate);
+        const prev = tasks;
         const last = tasks[tasks.length - 1];
-        const parentTaskId = forcedParentTaskId || (isSubtaskMode && last ? (last.parent_task_id || last.id) : null);
-        const parentTask = parentTaskId ? tasks.find((task) => sameId(task.id, parentTaskId)) : null;
-        const parentTemplateId = parentTask?.template_id || null;
-        const insertIndex = parentTaskId ? findInsertIndexForParent(parentTaskId) : tasks.length;
+        const parentId = forcedParent || (subtaskMode && last ? (last.parent_task_id || last.id) : null);
+        const parentTask = parentId ? tasks.find(t => same(t.id, parentId)) : null;
+        const parentTplId = parentTask?.template_id || null;
+        const insertAt = parentId ? insertAfterParent(parentId) : tasks.length;
 
         try {
-          let createdTask = null;
-
+          let created;
           if (taskType === "daily") {
-            const { data: templateData, error: templateError } = await supabase
-              .from("task_templates")
-              .insert([{
-                section_id: section.id,
-                user_id: user.id,
-                text,
-                parent_task_id: parentTemplateId,
-                order_index: insertIndex
-              }])
-              .select("id");
-
-            if (templateError) throw templateError;
-
-            const { data, error } = await supabase
-              .from("tasks")
-              .insert([{
-                section_id: section.id,
-                user_id: user.id,
-                text,
-                completed: false,
-                date: today,
-                template_id: templateData[0].id,
-                parent_task_id: parentTaskId,
-                order_index: insertIndex
-              }])
-              .select();
-
+            const { data: tpl, error: te } = await supabase.from("task_templates")
+              .insert([{ section_id: section.id, user_id: user.id, text, parent_task_id: parentTplId, order_index: insertAt }]).select("id");
+            if (te) throw te;
+            const { data, error } = await supabase.from("tasks")
+              .insert([{ section_id: section.id, user_id: user.id, text, completed: false, date: curDate, template_id: tpl[0].id, parent_task_id: parentId, order_index: insertAt }]).select();
             if (error) throw error;
-            createdTask = data[0];
+            created = data[0];
           } else {
-            const { data, error } = await supabase
-              .from("tasks")
-              .insert([{
-                section_id: section.id,
-                user_id: user.id,
-                text,
-                completed: false,
-                date: today,
-                template_id: null,
-                parent_task_id: parentTaskId,
-                order_index: insertIndex
-              }])
-              .select();
-
+            const { data, error } = await supabase.from("tasks")
+              .insert([{ section_id: section.id, user_id: user.id, text, completed: false, date: curDate, template_id: null, parent_task_id: parentId, order_index: insertAt }]).select();
             if (error) throw error;
-            createdTask = data[0];
+            created = data[0];
           }
 
-          const next = [...tasks];
-          next.splice(insertIndex, 0, createdTask);
-          const normalized = reindexTasks(next);
+          const next = [...tasks]; next.splice(insertAt, 0, created);
+          const normed = reindex(next);
+          applyTasks(normed); await persistOrder(normed);
 
-          applyTasks(normalized);
-          await persistTaskOrder(normalized);
-
-          pushUndo(`Add "${text}"`, async () => {
-            await supabase.from("tasks").delete().eq("id", createdTask.id).eq("user_id", user.id);
-            if (createdTask.template_id) {
-              await supabase.from("task_templates").delete().eq("id", createdTask.template_id).eq("user_id", user.id);
-            }
-            applyTasks(previousTasks);
+          pushUndo(`Add "${labelText}"`, async () => {
+            await supabase.from("tasks").delete().eq("id", created.id).eq("user_id", user.id);
+            if (created.template_id) await supabase.from("task_templates").delete().eq("id", created.template_id).eq("user_id", user.id);
+            applyTasks(prev);
           });
 
-          setNewTaskText("");
-          setIsSubtaskMode(false);
-          setForcedParentTaskId(null);
-        } catch (e) {
-          setError("Failed to add task: " + e.message);
-        }
+          setNewText(""); setNewEstimate(null); setSubtaskMode(false); setForcedParent(null);
+        } catch (e) { setError("Failed to add task: " + e.message); }
       }
 
       async function toggleTask(taskId, completed) {
-        const previousTasks = tasks;
-        const nextTasks = tasks.map((task) => (
-          sameId(task.id, taskId) ? { ...task, completed } : task
-        ));
-
-        const taskText = previousTasks.find(t => sameId(t.id, taskId))?.text ?? '';
-        pushUndo(`${completed ? "Complete" : "Uncomplete"} "${taskText}"`, async () => {
+        const prev = tasks;
+        const txt = prev.find(t => same(t.id, taskId))?.text ?? "";
+        applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, completed} : t));
+        if (completed) onComplete();
+        pushUndo(`${completed ? "Complete" : "Uncomplete"} "${parseTask(txt).label}"`, async () => {
           await supabase.from("tasks").update({ completed: !completed }).eq("id", taskId).eq("user_id", user.id);
-          applyTasks(previousTasks);
+          applyTasks(prev);
         });
-
-        applyTasks(nextTasks);
-
         try {
-          const { data, error } = await supabase
-            .from("tasks")
-            .update({ completed })
-            .eq("id", taskId)
-            .eq("user_id", user.id)
-            .select("id")
-            .maybeSingle();
-
+          const { data, error } = await supabase.from("tasks").update({ completed }).eq("id", taskId).eq("user_id", user.id).select("id").maybeSingle();
           if (error) throw error;
-          if (!data) throw new Error("Supabase did not update this task.");
-
-          setError(null);
-        } catch (e) {
-          applyTasks(previousTasks);
-          setError("Failed to update task: " + e.message);
-        }
+          if (!data) throw new Error("Task not updated.");
+        } catch (e) { applyTasks(prev); setError("Failed to update: " + e.message); }
       }
 
       async function deleteTask(taskId) {
-        const branchIds = findTaskBranchIds(taskId);
-        const tasksToDelete = tasks.filter((task) => branchIds.has(String(task.id)));
-        if (tasksToDelete.length === 0) return;
-
-        const templateIds = Array.from(new Set(
-          tasksToDelete
-            .map((task) => task.template_id)
-            .filter(Boolean)
-        ));
-
-        let templatesToRestore = [];
-        if (templateIds.length > 0) {
-          const { data } = await supabase
-            .from("task_templates")
-            .select("*")
-            .in("id", templateIds)
-            .eq("user_id", user.id);
-          templatesToRestore = data || [];
+        const ids = branch(taskId);
+        const toDelete = tasks.filter(t => ids.has(sid(t.id)));
+        if (!toDelete.length) return;
+        const tplIds = Array.from(new Set(toDelete.map(t => t.template_id).filter(Boolean)));
+        let tplsToRestore = [];
+        if (tplIds.length) {
+          const { data } = await supabase.from("task_templates").select("*").in("id", tplIds).eq("user_id", user.id);
+          tplsToRestore = data || [];
         }
-
-        const previousTasks = tasks;
-        applyTasks(tasks.filter((task) => !branchIds.has(String(task.id))));
-
-        const rootText = tasksToDelete.find(t => sameId(t.id, taskId))?.text ?? "task";
-        pushUndo(`Delete "${rootText}"`, async () => {
-          if (templatesToRestore.length > 0) {
-            await supabase.from("task_templates").insert(templatesToRestore);
-          }
-          await supabase.from("tasks").insert(tasksToDelete.map(t => ({ ...t, user_id: user.id })));
-          applyTasks(previousTasks);
+        const prev = tasks;
+        applyTasks(tasks.filter(t => !ids.has(sid(t.id))));
+        const rootText = toDelete.find(t => same(t.id, taskId))?.text ?? "task";
+        pushUndo(`Delete "${parseTask(rootText).label}"`, async () => {
+          if (tplsToRestore.length) await supabase.from("task_templates").insert(tplsToRestore);
+          await supabase.from("tasks").insert(toDelete.map(t => ({...t, user_id: user.id})));
+          applyTasks(prev);
         });
-
         try {
-          const { error } = await supabase
-            .from("tasks")
-            .delete()
-            .in("id", Array.from(branchIds))
-            .eq("user_id", user.id);
-
+          const { error } = await supabase.from("tasks").delete().in("id", Array.from(ids)).eq("user_id", user.id);
           if (error) throw error;
-
-          if (templateIds.length > 0) {
-            const { error: templateError } = await supabase
-              .from("task_templates")
-              .delete()
-              .in("id", templateIds)
-              .eq("user_id", user.id);
-
-            if (templateError) throw templateError;
+          if (tplIds.length) {
+            const { error: te } = await supabase.from("task_templates").delete().in("id", tplIds).eq("user_id", user.id);
+            if (te) throw te;
           }
-
-          setError(null);
-        } catch (e) {
-          applyTasks(previousTasks);
-          setError("Failed to delete task: " + e.message);
-        }
+        } catch (e) { applyTasks(prev); setError("Failed to delete: " + e.message); }
       }
 
-      async function updateTaskType(taskId, nextType) {
-        const task = tasks.find((t) => sameId(t.id, taskId));
+      async function updateType(taskId, nextType) {
+        const task = tasks.find(t => same(t.id, taskId));
         if (!task) return;
-
         const isDaily = Boolean(task.template_id);
         if ((nextType === "daily" && isDaily) || (nextType === "one-time" && !isDaily)) return;
-
-        const previousTasks = tasks;
+        const prev = tasks;
 
         if (nextType === "one-time") {
-          applyTasks(tasks.map((t) => sameId(t.id, taskId) ? { ...t, template_id: null } : t));
-
+          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, template_id: null} : t));
           try {
-            const { error: taskError } = await supabase
-              .from("tasks")
-              .update({ template_id: null })
-              .eq("id", taskId)
-              .eq("user_id", user.id);
-
-            if (taskError) throw taskError;
-
-            const { error: templateError } = await supabase
-              .from("task_templates")
-              .delete()
-              .eq("id", task.template_id)
-              .eq("user_id", user.id);
-
-            if (templateError) throw templateError;
-
-            setError(null);
-          } catch (e) {
-            applyTasks(previousTasks);
-            setError("Failed to switch task type: " + e.message);
-          }
-
+            await supabase.from("tasks").update({ template_id: null }).eq("id", taskId).eq("user_id", user.id);
+            await supabase.from("task_templates").delete().eq("id", task.template_id).eq("user_id", user.id);
+          } catch (e) { applyTasks(prev); setError("Switch failed: " + e.message); }
           return;
         }
 
-        let newTemplateId = null;
-
+        let newTplId = null;
         try {
-          const parentTask = task.parent_task_id
-            ? tasks.find((t) => sameId(t.id, task.parent_task_id))
-            : null;
-          const parentTemplateId = parentTask?.template_id || null;
-
-          const { data: templateData, error: templateError } = await supabase
-            .from("task_templates")
-            .insert([{
-              section_id: task.section_id,
-              user_id: user.id,
-              text: task.text,
-              parent_task_id: parentTemplateId,
-              order_index: task.order_index || 0
-            }])
-            .select("id")
-            .single();
-
-          if (templateError) throw templateError;
-          newTemplateId = templateData.id;
-
-          applyTasks(tasks.map((t) => (
-            sameId(t.id, taskId) ? { ...t, template_id: newTemplateId } : t
-          )));
-
-          const { error: taskError } = await supabase
-            .from("tasks")
-            .update({ template_id: newTemplateId })
-            .eq("id", taskId)
-            .eq("user_id", user.id);
-
-          if (taskError) throw taskError;
-
-          setError(null);
+          const pt = task.parent_task_id ? tasks.find(t => same(t.id, task.parent_task_id)) : null;
+          const { data: td, error: te } = await supabase.from("task_templates")
+            .insert([{ section_id: task.section_id, user_id: user.id, text: task.text, parent_task_id: pt?.template_id || null, order_index: task.order_index || 0 }])
+            .select("id").single();
+          if (te) throw te;
+          newTplId = td.id;
+          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, template_id: newTplId} : t));
+          await supabase.from("tasks").update({ template_id: newTplId }).eq("id", taskId).eq("user_id", user.id);
         } catch (e) {
-          if (newTemplateId) {
-            try {
-              await supabase
-                .from("task_templates")
-                .delete()
-                .eq("id", newTemplateId)
-                .eq("user_id", user.id);
-            } catch {}
-          }
-
-          applyTasks(previousTasks);
-          setError("Failed to switch task type: " + e.message);
+          if (newTplId) { try { await supabase.from("task_templates").delete().eq("id", newTplId).eq("user_id", user.id); } catch {} }
+          applyTasks(prev); setError("Switch failed: " + e.message);
         }
       }
 
-      async function updateTaskParent(taskId, parentId) {
-        const task = tasks.find((t) => sameId(t.id, taskId));
-
+      async function updateParent(taskId, parentId) {
+        const task = tasks.find(t => same(t.id, taskId));
         try {
-          if (parentId && isDescendantOf(parentId, taskId)) {
-            setError("Cannot set parent to a descendant task.");
-            return;
-          }
-
-          const { error } = await supabase
-            .from("tasks")
-            .update({ parent_task_id: parentId })
-            .eq("id", taskId);
-
-          if (error) throw error;
-
+          if (parentId && isDesc(parentId, taskId)) { setError("Cannot parent to a descendant."); return; }
+          await supabase.from("tasks").update({ parent_task_id: parentId }).eq("id", taskId);
           if (task?.template_id) {
-            const parentTask = parentId ? tasks.find((t) => sameId(t.id, parentId)) : null;
-            const templateParentId = parentTask?.template_id || null;
-
-            const { error: templateError } = await supabase
-              .from("task_templates")
-              .update({ parent_task_id: templateParentId })
-              .eq("id", task.template_id);
-
-            if (templateError) throw templateError;
+            const pt = parentId ? tasks.find(t => same(t.id, parentId)) : null;
+            await supabase.from("task_templates").update({ parent_task_id: pt?.template_id || null }).eq("id", task.template_id);
           }
-
-          applyTasks(tasks.map((t) => sameId(t.id, taskId) ? { ...t, parent_task_id: parentId } : t));
-        } catch (e) {
-          setError("Failed to update subtask status: " + e.message);
-        }
+          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, parent_task_id: parentId} : t));
+        } catch (e) { setError("Failed to update subtask: " + e.message); }
       }
 
-      async function moveTask(taskId, direction) {
-        const previousNormalized = reindexTasks([...tasks]);
-        const blockStart = tasks.findIndex((task) => sameId(task.id, taskId));
-        if (blockStart < 0) return;
-
-        // Collect the entire branch (this task + all descendants)
-        const branchIds = findTaskBranchIds(taskId);
-        const branchTasks = tasks.filter((t) => branchIds.has(String(t.id)));
-        const otherTasks = tasks.filter((t) => !branchIds.has(String(t.id)));
-
-        // No branch elements appear before the root, so position in otherTasks equals blockStart
-        const newPos = blockStart + direction;
-        if (newPos < 0 || newPos > otherTasks.length) return;
-
-        const next = [
-          ...otherTasks.slice(0, newPos),
-          ...branchTasks,
-          ...otherTasks.slice(newPos)
-        ];
-
-        const normalized = reindexTasks(next);
-        applyTasks(normalized);
-
-        const movedText = tasks.find(t => sameId(t.id, taskId))?.text ?? "task";
-        pushUndo(`Move "${movedText}"`, async () => {
-          applyTasks(previousNormalized);
-          await persistTaskOrder(previousNormalized);
-        });
-
-        try {
-          await persistTaskOrder(normalized);
-        } catch (e) {
-          setError("Order sync failed: " + e.message);
-        }
+      async function moveToPosition(fromId, toId, above) {
+        if (same(fromId, toId)) return;
+        const prevNormed = reindex([...tasks]);
+        const bIds = branch(fromId);
+        if (bIds.has(sid(toId))) return;
+        const branchTasks = tasks.filter(t => bIds.has(sid(t.id)));
+        const others      = tasks.filter(t => !bIds.has(sid(t.id)));
+        const ti = others.findIndex(t => same(t.id, toId));
+        if (ti < 0) return;
+        const at = above ? ti : ti + 1;
+        const normed = reindex([...others.slice(0, at), ...branchTasks, ...others.slice(at)]);
+        applyTasks(normed);
+        const txt = tasks.find(t => same(t.id, fromId))?.text ?? "task";
+        pushUndo(`Move "${parseTask(txt).label}"`, async () => { applyTasks(prevNormed); await persistOrder(prevNormed); });
+        try { await persistOrder(normed); } catch (e) { setError("Order sync failed: " + e.message); }
       }
 
-      async function moveTaskToPosition(fromTaskId, toTaskId, above) {
-        if (sameId(fromTaskId, toTaskId)) return;
-        const previousNormalized = reindexTasks([...tasks]);
-        const branchIds = findTaskBranchIds(fromTaskId);
-        if (branchIds.has(String(toTaskId))) return;
-
-        const branchTasks = tasks.filter(t => branchIds.has(String(t.id)));
-        const otherTasks = tasks.filter(t => !branchIds.has(String(t.id)));
-
-        const targetIdx = otherTasks.findIndex(t => sameId(t.id, toTaskId));
-        if (targetIdx < 0) return;
-
-        const insertAt = above ? targetIdx : targetIdx + 1;
-        const next = [
-          ...otherTasks.slice(0, insertAt),
-          ...branchTasks,
-          ...otherTasks.slice(insertAt)
-        ];
-
-        const normalized = reindexTasks(next);
-        applyTasks(normalized);
-
-        const movedText = tasks.find(t => sameId(t.id, fromTaskId))?.text ?? "task";
-        pushUndo(`Move "${movedText}"`, async () => {
-          applyTasks(previousNormalized);
-          await persistTaskOrder(previousNormalized);
-        });
-
-        try {
-          await persistTaskOrder(normalized);
-        } catch (e) {
-          setError("Order sync failed: " + e.message);
-        }
-      }
-
-      async function updateTaskText(taskId, newText) {
-        const text = newText.trim();
+      async function updateText(taskId, newTxt) {
+        const text = newTxt.trim();
         if (!text) return;
-
         try {
-          const { error } = await supabase.from("tasks").update({ text }).eq("id", taskId);
-          if (error) throw error;
-
-          const task = tasks.find((t) => sameId(t.id, taskId));
-          if (task?.template_id) {
-            const { error: templateError } = await supabase
-              .from("task_templates")
-              .update({ text })
-              .eq("id", task.template_id);
-
-            if (templateError) throw templateError;
-          }
-
-          applyTasks(tasks.map((t) => sameId(t.id, taskId) ? { ...t, text } : t));
-        } catch (e) {
-          setError("Update failed: " + e.message);
-        }
+          await supabase.from("tasks").update({ text }).eq("id", taskId);
+          const task = tasks.find(t => same(t.id, taskId));
+          if (task?.template_id) await supabase.from("task_templates").update({ text }).eq("id", task.template_id);
+          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, text} : t));
+        } catch (e) { setError("Update failed: " + e.message); }
       }
 
-      function renderTaskComposer(isInline) {
+      const TIME_OPTS = ["5m", "15m", "30m", "1h", "2h"];
+
+      function TaskComposer({ inline }) {
         return (
-          <form className={`row ${isInline ? "subtask-form" : ""}`} onSubmit={addTask}>
-            <input
-              className="in"
-              ref={newTaskInputRef}
-              type="text"
-              value={newTaskText}
-              placeholder={forcedParentTaskId ? "Add subtask under selected task..." : (isSubtaskMode ? "Add as subtask..." : "Add task...")}
-              onChange={(e) => setNewTaskText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Tab" && !forcedParentTaskId) {
-                  e.preventDefault();
-                  setIsSubtaskMode((v) => !v);
-                }
-              }}
+          <form className={inline ? "subtask-form" : ""} onSubmit={addTask} style={{marginTop: inline ? 0 : 14}}>
+            <input className="in" ref={inputRef} type="text" value={newText}
+              placeholder={forcedParent || subtaskMode ? "Add subtask…" : "What do you need to do?"}
+              onChange={e => setNewText(e.target.value)}
             />
-            <button type="button" className={`btn ${taskType === "daily" ? "" : "gray"}`} onClick={() => setTaskType("daily")}>Daily</button>
-            <button type="button" className={`btn ${taskType === "one-time" ? "" : "gray"}`} onClick={() => setTaskType("one-time")}>One-Time</button>
-            <button type="submit" className="btn">Add</button>
-            {isInline && (
-              <button
-                type="button"
-                className="btn gray"
-                onClick={() => {
-                  setForcedParentTaskId(null);
-                  setIsSubtaskMode(false);
-                  setNewTaskText("");
-                }}
-              >
-                Cancel
-              </button>
-            )}
+            <div className="time-picker">
+              {TIME_OPTS.map(opt => (
+                <button key={opt} type="button"
+                  className={`time-chip ${newEstimate === opt ? "active" : ""}`}
+                  onClick={() => setNewEstimate(newEstimate === opt ? null : opt)}>
+                  {opt}
+                </button>
+              ))}
+              <span style={{color:"var(--muted)",fontSize:12,lineHeight:"30px",marginLeft:2}}>estimate</span>
+            </div>
+            <div className="form-row">
+              <button type="button" className={`btn ${taskType === "daily" ? "primary" : "ghost"}`} onClick={() => setTaskType("daily")}>Recurring</button>
+              <button type="button" className={`btn ${taskType === "one-time" ? "primary" : "ghost"}`} onClick={() => setTaskType("one-time")}>Today Only</button>
+              <button type="submit" className="btn primary" style={{marginLeft:"auto"}}>Add</button>
+              {inline && (
+                <button type="button" className="btn ghost" onClick={() => { setForcedParent(null); setSubtaskMode(false); setNewText(""); setNewEstimate(null); }}>Cancel</button>
+              )}
+            </div>
           </form>
         );
       }
@@ -2657,56 +1243,49 @@
           <div className="section-head">
             <div className="section-title">{section.name}</div>
             <div className="meta">
-              <button className="icon" onClick={() => moveSection(section.id, -1)}>Up</button>
-              <button className="icon" onClick={() => moveSection(section.id, 1)}>Dn</button>
-              <button className="icon" onClick={() => deleteSection(section.id)}>Del</button>
+              <button className="icon-btn" title="Move up"   onClick={() => moveSection(section.id, -1)}>↑</button>
+              <button className="icon-btn" title="Move down" onClick={() => moveSection(section.id, 1)}>↓</button>
+              <button className="icon-btn" title="Delete"    onClick={() => deleteSection(section.id)} style={{color:"var(--red)"}}>×</button>
             </div>
           </div>
 
           <ul className="tasks">
-            {tasks.map((task) => (
+            {tasks.map(task => (
               <React.Fragment key={task.id}>
                 <TaskItem
                   task={task}
-                  toggleTask={toggleTask}
-                  deleteTask={deleteTask}
-                  updateTaskText={updateTaskText}
-                  updateTaskParent={updateTaskParent}
-                  updateTaskType={updateTaskType}
-                  startSubtaskFor={startSubtaskFor}
-                  draggedId={draggedId}
-                  dragOverId={dragOverId}
-                  dropAbove={dropAbove}
-                  onDragStart={(id) => setDraggedId(id)}
-                  onDragOver={(id, above) => { setDragOverId(id); setDropAbove(above); }}
+                  toggleTask={toggleTask} deleteTask={deleteTask}
+                  updateText={updateText}  updateParent={updateParent}
+                  updateType={updateType}  startSubtask={startSubtask}
+                  draggedId={draggedId} dragOverId={dragOverId} dropAbove={dropAbove}
+                  onDragStart={id => setDraggedId(id)}
+                  onDragOver={(id, ab) => { setDragOverId(id); setDropAbove(ab); }}
                   onDragEnd={() => { setDraggedId(null); setDragOverId(null); }}
-                  onDrop={(targetId, above) => {
-                    if (draggedId && !sameId(draggedId, targetId)) {
-                      moveTaskToPosition(draggedId, targetId, above);
-                    }
-                    setDraggedId(null);
-                    setDragOverId(null);
-                  }}
+                  onDrop={(tid, ab) => { if (draggedId && !same(draggedId, tid)) moveToPosition(draggedId, tid, ab); setDraggedId(null); setDragOverId(null); }}
                 />
-                {forcedParentTaskId && sameId(forcedParentTaskId, task.id) && renderTaskComposer(true)}
+                {forcedParent && same(forcedParent, task.id) && <TaskComposer inline />}
               </React.Fragment>
             ))}
           </ul>
 
-          {!forcedParentTaskId && renderTaskComposer(false)}
+          {!forcedParent && <TaskComposer inline={false} />}
         </>
       );
     }
 
-    function TaskItem({ task, toggleTask, deleteTask, updateTaskText, updateTaskParent, updateTaskType, startSubtaskFor, draggedId, dragOverId, dropAbove, onDragStart, onDragOver, onDragEnd, onDrop }) {
-      const [editing, setEditing] = useState(false);
-      const [text, setText] = useState(task.text);
+    // ─── Task item ───────────────────────────────────────────────────────────────
 
-      useEffect(() => setText(task.text), [task.text]);
+    function TaskItem({ task, toggleTask, deleteTask, updateText, updateParent, updateType, startSubtask, draggedId, dragOverId, dropAbove, onDragStart, onDragOver, onDragEnd, onDrop }) {
+      const [editing, setEditing] = useState(false);
+      const [draft, setDraft]     = useState(task.text);
+
+      useEffect(() => setDraft(task.text), [task.text]);
+
+      const { label, estimate } = parseTask(task.text);
 
       function save() {
-        const trimmed = text.trim();
-        if (trimmed && trimmed !== task.text) updateTaskText(task.id, trimmed);
+        const t = draft.trim();
+        if (t && t !== task.text) updateText(task.id, t);
         setEditing(false);
       }
 
@@ -2715,60 +1294,49 @@
 
       return (
         <li
-          className={`task ${task.completed ? "done" : ""} ${task.parent_task_id ? "sub" : ""} ${isDragging ? "dragging" : ""} ${isDragOver && dropAbove ? "drag-over-top" : ""} ${isDragOver && !dropAbove ? "drag-over-bottom" : ""}`}
-          draggable={true}
-          onDragStart={(e) => { e.dataTransfer.effectAllowed = "move"; onDragStart(task.id); }}
-          onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; const rect = e.currentTarget.getBoundingClientRect(); onDragOver(task.id, e.clientY < rect.top + rect.height / 2); }}
+          className={[
+            "task",
+            task.completed       ? "done"             : "",
+            task.parent_task_id  ? "sub"              : "",
+            isDragging           ? "dragging"          : "",
+            isDragOver && dropAbove  ? "drag-over-top"    : "",
+            isDragOver && !dropAbove ? "drag-over-bottom" : ""
+          ].join(" ")}
+          draggable
+          onDragStart={e => { e.dataTransfer.effectAllowed = "move"; onDragStart(task.id); }}
+          onDragOver={e => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; const r = e.currentTarget.getBoundingClientRect(); onDragOver(task.id, e.clientY < r.top + r.height / 2); }}
           onDragEnd={onDragEnd}
-          onDrop={(e) => { e.preventDefault(); const rect = e.currentTarget.getBoundingClientRect(); onDrop(task.id, e.clientY < rect.top + rect.height / 2); }}
+          onDrop={e => { e.preventDefault(); const r = e.currentTarget.getBoundingClientRect(); onDrop(task.id, e.clientY < r.top + r.height / 2); }}
         >
-          <input
-            className="check"
-            type="checkbox"
-            checked={Boolean(task.completed)}
-            onChange={(e) => toggleTask(task.id, e.target.checked)}
-          />
+          <input className="check" type="checkbox" checked={Boolean(task.completed)} onChange={e => toggleTask(task.id, e.target.checked)} />
 
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{flex:1, minWidth:0}}>
             {editing ? (
-              <input
-                className="in"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
+              <input className="in" value={draft} autoFocus style={{fontSize:15}}
+                onChange={e => setDraft(e.target.value)}
                 onBlur={save}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") save();
-                  if (e.key === "Escape") {
-                    setText(task.text);
-                    setEditing(false);
-                  }
-                }}
-                autoFocus
+                onKeyDown={e => { if (e.key === "Enter") save(); if (e.key === "Escape") { setDraft(task.text); setEditing(false); } }}
               />
             ) : (
-              <span className="task-text" title="Click to edit" onClick={() => setEditing(true)}>
-                {task.text}
-              </span>
+              <span className="task-text" title="Tap to edit" onClick={() => setEditing(true)}>{label}</span>
+            )}
+            {estimate && !editing && (
+              <div><span className="time-badge">⏱ {estimate}</span></div>
             )}
           </div>
 
           <div className="meta">
-            <div className="drag-handle" title="Drag to reorder">
-              <span></span><span></span><span></span>
-            </div>
-            <button className="icon" title="Add subtask below this task" onClick={() => startSubtaskFor(task.id)}>+</button>
+            <div className="drag-handle" title="Drag to reorder"><span/><span/><span/></div>
+            <button className="icon-btn" title="Add subtask" onClick={() => startSubtask(task.id)} style={{fontSize:18}}>+</button>
             {task.parent_task_id && (
-              <button className="icon" title="Remove parent" onClick={() => updateTaskParent(task.id, null)}>-</button>
+              <button className="icon-btn" title="Remove indent" onClick={() => updateParent(task.id, null)} style={{fontSize:14}}>↰</button>
             )}
-            <button
-              className={`badge type-toggle ${task.template_id ? "b1" : "b2"}`}
-              title={task.template_id ? "Switch to one-time" : "Switch to daily"}
-              type="button"
-              onClick={() => updateTaskType(task.id, task.template_id ? "one-time" : "daily")}
-            >
-              {task.template_id ? "Daily" : "One-Time"}
+            <button className={`type-badge ${task.template_id ? "recurring" : "today"}`}
+              title={task.template_id ? "Recurring — click to make today-only" : "Today only — click to make recurring"}
+              onClick={() => updateType(task.id, task.template_id ? "one-time" : "daily")}>
+              {task.template_id ? "Recurring" : "Today"}
             </button>
-            <button className="icon" title="Delete task" onClick={() => deleteTask(task.id)}>{"\u00D7"}</button>
+            <button className="icon-btn" title="Delete task" onClick={() => deleteTask(task.id)} style={{color:"var(--red)",fontSize:18}}>×</button>
           </div>
         </li>
       );
