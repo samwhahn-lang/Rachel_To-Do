@@ -52,7 +52,43 @@
     .progress-track { background:var(--border); border-radius:99px; height:10px; overflow:hidden; }
     .progress-fill  { background:linear-gradient(90deg,var(--primary),var(--green)); border-radius:99px; height:100%; transition:width .5s ease; }
 
-    .action-bar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; align-items:center; }
+    .action-bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+
+    .sticky-bar {
+      background: var(--bg);
+      margin-bottom: 16px;
+      padding: 10px 0 6px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      margin-top: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .section-nav::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      color: var(--muted);
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .nav-btn:hover { background:var(--primary-light); border-color:var(--primary); color:var(--primary); }
 
     .card { background:var(--surface); border-radius:16px; box-shadow:0 1px 6px rgba(44,36,64,.07); margin-bottom:14px; padding:16px; }
     .card.warn  { border-left:4px solid var(--peach); }
@@ -592,11 +628,26 @@
           </div>
         )}
 
-        <div className="action-bar">
-          <button className="btn primary" onClick={()=>setShowNewSection(!showNewSection)}>+ Section</button>
-          <button className="btn ghost"   onClick={()=>loadSections(user.id,true)}>Refresh</button>
-          <button className="btn ghost"   onClick={loadArchive}>{showArchive?"Hide History":"History"}</button>
-          <button className="btn ghost"   onClick={()=>sb.auth.signOut()} style={{marginLeft:"auto"}}>Sign Out</button>
+        <div className="sticky-bar">
+          <div className="action-bar">
+            <button className="btn primary" onClick={()=>setShowNewSection(!showNewSection)}>+ Section</button>
+            <button className="btn ghost"   onClick={()=>loadSections(user.id,true)}>Refresh</button>
+            <button className="btn ghost"   onClick={loadArchive}>{showArchive?"Hide History":"History"}</button>
+            <button className="btn ghost"   onClick={()=>sb.auth.signOut()} style={{marginLeft:"auto"}}>Sign Out</button>
+          </div>
+          {sections.length>0&&(
+            <div className="section-nav">
+              {sections.map(s=>(
+                <button key={s.id} className="nav-btn" onClick={()=>{
+                  const el=document.getElementById(`sec-${s.id}`);
+                  if(!el) return;
+                  const bar=document.querySelector('.sticky-bar');
+                  const offset=bar?bar.getBoundingClientRect().height+8:60;
+                  window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-offset,behavior:'smooth'});
+                }}>{s.name}</button>
+              ))}
+            </div>
+          )}
         </div>
 
         {showNewSection&&(
@@ -1021,7 +1072,7 @@
       try{ await persistOrder(normed); }catch(e){ setError("Order sync failed: "+e.message); }
     }
 
-    function TaskComposer({inline}){
+    function renderComposer(inline){
       return(
         <form className={inline?"subtask-form":""} onSubmit={addTask} style={{marginTop:inline?0:14}}>
           <input className="in" ref={inputRef} type="text" value={newText}
@@ -1092,12 +1143,12 @@
                 onDragEnd={()=>{ setDraggedId(null); setDragOverId(null); }}
                 onDrop={(tid,ab)=>{ if(draggedId&&!same(draggedId,tid)) moveToPos(draggedId,tid,ab); setDraggedId(null); setDragOverId(null); }}
               />
-              {forcedParent&&same(forcedParent,task.id)&&<TaskComposer inline/>}
+              {forcedParent&&same(forcedParent,task.id)&&renderComposer(true)}
             </React.Fragment>
           ))}
         </ul>
 
-        {!forcedParent&&<TaskComposer inline={false}/>}
+        {!forcedParent&&renderComposer(false)}
 
         {showGear&&(
           <SectionGearPanel
