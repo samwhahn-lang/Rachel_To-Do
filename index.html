@@ -14,22 +14,22 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f8f6ff;
-      --surface: #ffffff;
-      --surface2: #f0eeff;
-      --border: #e2ddf5;
-      --text: #2c2440;
-      --muted: #8f87b0;
-      --primary: #7c5cbf;
+      --bg:            #f8f6ff;
+      --surface:       #ffffff;
+      --surface2:      #f0eeff;
+      --border:        #e2ddf5;
+      --text:          #2c2440;
+      --muted:         #8f87b0;
+      --primary:       #7c5cbf;
       --primary-light: #ede8ff;
-      --peach: #e8874d;
-      --peach-light: #fff0e6;
-      --green: #52b788;
-      --green-light: #e5f5ee;
-      --red: #e07070;
-      --red-light: #ffeaea;
-      --gold: #c99a2e;
-      --gold-light: #fff9e0;
+      --green:         #52b788;
+      --green-light:   #e5f5ee;
+      --gold:          #c99a2e;
+      --gold-light:    #fff9e0;
+      --red:           #e07070;
+      --red-light:     #ffeaea;
+      --peach:         #e8874d;
+      --peach-light:   #fff0e6;
     }
 
     body {
@@ -41,1319 +41,1076 @@
       min-height: 100vh;
     }
 
-    #root {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 20px 16px 110px;
+    #root { max-width: 640px; margin: 0 auto; padding: 20px 16px 110px; }
+
+    /* ── Header ── */
+    .greeting  { color: var(--primary); font-size: clamp(1.5rem,5vw,2.2rem); font-weight: 800; letter-spacing:-.02em; text-align:center; margin-bottom:4px; }
+    .date-tag  { color: var(--muted); font-size:14px; text-align:center; margin-bottom:18px; }
+
+    /* ── Progress ── */
+    .progress-wrap { background:var(--surface); border-radius:16px; box-shadow:0 1px 6px rgba(44,36,64,.07); margin-bottom:16px; padding:14px 16px; }
+    .progress-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:8px; }
+    .progress-label strong { color:var(--text); }
+    .progress-track { background:var(--border); border-radius:99px; height:10px; overflow:hidden; }
+    .progress-fill  { background:linear-gradient(90deg,var(--primary),var(--green)); border-radius:99px; height:100%; transition:width .5s ease; }
+
+    /* ── Action bar ── */
+    .action-bar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; align-items:center; }
+
+    /* ── Cards ── */
+    .card { background:var(--surface); border-radius:16px; box-shadow:0 1px 6px rgba(44,36,64,.07); margin-bottom:14px; padding:16px; }
+    .card.warn { border-left:4px solid var(--peach); }
+    .card.error { background:var(--red-light); border-left:4px solid var(--red); color:var(--red); font-size:14px; }
+
+    /* ── Buttons ── */
+    .btn { background:var(--primary-light); border:none; border-radius:99px; color:var(--primary); cursor:pointer; font-family:inherit; font-size:13px; font-weight:600; padding:8px 16px; transition:background .15s,transform .1s; white-space:nowrap; }
+    .btn:hover   { background:var(--border); }
+    .btn:active  { transform:scale(.96); }
+    .btn.primary { background:var(--primary); color:#fff; }
+    .btn.primary:hover { background:#6a4dab; }
+    .btn.ghost   { background:transparent; border:1.5px solid var(--border); color:var(--muted); }
+    .btn.ghost:hover { background:var(--surface2); color:var(--text); }
+    .btn.danger  { background:var(--red-light); color:var(--red); }
+    .btn:disabled { cursor:default; opacity:.4; }
+
+    /* ── Inputs ── */
+    .in { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; color:var(--text); font-family:inherit; font-size:15px; padding:11px 14px; transition:border-color .15s; width:100%; }
+    .in:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(124,92,191,.12); outline:none; }
+    .in.sm    { font-size:13px; padding:8px 12px; }
+
+    select.in { cursor:pointer; }
+
+    label { color:var(--muted); display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
+
+    .form-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; align-items:center; }
+
+    /* ── Icon buttons ── */
+    .icon-btn { align-items:center; background:transparent; border:1.5px solid var(--border); border-radius:10px; color:var(--muted); cursor:pointer; display:flex; font-size:16px; height:36px; justify-content:center; min-width:36px; transition:background .15s,border-color .15s,color .15s; }
+    .icon-btn:hover { background:var(--surface2); border-color:var(--primary); color:var(--primary); }
+
+    /* ── Section head ── */
+    .section-head { align-items:center; display:flex; gap:8px; justify-content:space-between; margin-bottom:12px; }
+    .section-title { color:var(--text); font-size:17px; font-weight:700; }
+
+    /* ── Tasks ── */
+    .tasks { display:flex; flex-direction:column; gap:8px; list-style:none; }
+
+    .task { background:var(--surface); border:1.5px solid var(--border); border-radius:14px; padding:12px 14px; transition:opacity .2s; }
+    .task.sub      { background:var(--surface2); border-left:3px solid var(--primary); margin-left:20px; }
+    .task.done     { opacity:.48; }
+    .task.done .task-text { color:var(--muted); text-decoration:line-through; }
+    .task.dragging      { opacity:.3; }
+    .task.drag-over-top    { border-top:2.5px solid var(--primary); }
+    .task.drag-over-bottom { border-bottom:2.5px solid var(--primary); }
+
+    .task-top { display:flex; align-items:flex-start; gap:10px; }
+    .task-body { flex:1; min-width:0; }
+
+    .task-text { cursor:pointer; font-size:15px; line-height:1.45; word-break:break-word; display:block; }
+
+    .task-chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; align-items:center; }
+
+    .check { accent-color:var(--primary); cursor:pointer; flex-shrink:0; height:24px; margin-top:2px; min-width:24px; width:24px; }
+
+    /* ── Chips / badges ── */
+    .chip { border:none; border-radius:99px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:700; padding:3px 10px; white-space:nowrap; line-height:1.6; }
+
+    .chip.p-high   { background:var(--red-light);   color:var(--red); }
+    .chip.p-medium { background:var(--gold-light);  color:var(--gold); }
+    .chip.p-low    { background:var(--green-light); color:var(--green); }
+
+    .chip.type-recurring { background:var(--green-light); color:var(--green); }
+    .chip.type-today     { background:var(--peach-light);  color:var(--peach); }
+
+    .time-badge { background:var(--primary-light); border-radius:99px; color:var(--primary); display:inline-block; font-size:11px; font-weight:600; padding:3px 9px; }
+
+    /* category chip - bg/color set inline */
+    .cat-chip { border-radius:99px; font-size:11px; font-weight:700; padding:3px 10px; color:#fff; white-space:nowrap; cursor:pointer; border:none; font-family:inherit; line-height:1.6; }
+
+    /* ── Pill select (section mover + category changer) ── */
+    .pill-select {
+      appearance:none; -webkit-appearance:none;
+      background:var(--surface2);
+      border:1.5px solid var(--border);
+      border-radius:99px;
+      color:var(--muted);
+      cursor:pointer;
+      font-family:inherit;
+      font-size:11px;
+      font-weight:700;
+      padding:3px 22px 3px 10px;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238f87b0'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;
+      background-position:right 7px center;
+      line-height:1.6;
     }
+    .pill-select:focus { outline:none; border-color:var(--primary); }
 
-    .greeting {
-      color: var(--primary);
-      font-size: clamp(1.6rem, 5vw, 2.4rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 4px;
-      text-align: center;
-    }
+    /* ── Drag handle ── */
+    .drag-handle { align-items:center; background:transparent; border:none; cursor:grab; display:flex; flex-direction:column; gap:3px; justify-content:center; padding:4px 6px; }
+    .drag-handle span { background:var(--border); border-radius:2px; display:block; height:2px; width:14px; }
+    .drag-handle:hover span { background:var(--primary); }
 
-    .date-tag {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
+    /* ── Subtask form indent ── */
+    .subtask-form { margin:6px 0 6px 20px; }
 
-    .progress-wrap {
-      background: var(--surface);
-      border-radius: 16px;
-      box-shadow: 0 1px 6px rgba(44,36,64,0.07);
-      margin-bottom: 16px;
-      padding: 14px 16px;
-    }
+    /* ── Time picker ── */
+    .time-picker { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .time-chip { background:var(--surface2); border:1.5px solid var(--border); border-radius:99px; color:var(--muted); cursor:pointer; font-family:inherit; font-size:12px; font-weight:600; padding:5px 12px; transition:all .15s; }
+    .time-chip.active,.time-chip:hover { background:var(--primary-light); border-color:var(--primary); color:var(--primary); }
 
-    .progress-label {
-      display: flex;
-      font-size: 13px;
-      color: var(--muted);
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
+    /* ── Priority picker (form) ── */
+    .pri-picker { display:flex; gap:6px; margin-top:8px; }
+    .pri-chip { border-radius:99px; cursor:pointer; font-family:inherit; font-size:12px; font-weight:700; padding:5px 14px; border:1.5px solid transparent; transition:all .15s; }
+    .pri-chip.high   { background:var(--red-light);   color:var(--red);   border-color:transparent; }
+    .pri-chip.medium { background:var(--gold-light);  color:var(--gold);  border-color:transparent; }
+    .pri-chip.low    { background:var(--green-light); color:var(--green); border-color:transparent; }
+    .pri-chip.active.high   { border-color:var(--red); }
+    .pri-chip.active.medium { border-color:var(--gold); }
+    .pri-chip.active.low    { border-color:var(--green); }
+    .pri-chip:not(.active)  { opacity:.45; }
 
-    .progress-label strong { color: var(--text); }
+    /* ── Auth ── */
+    .auth { background:var(--surface); border-radius:20px; box-shadow:0 4px 24px rgba(44,36,64,.1); margin:40px auto; max-width:400px; padding:28px 24px; }
+    .auth-title { color:var(--primary); font-size:1.8rem; font-weight:800; margin-bottom:4px; text-align:center; }
+    .auth-sub   { color:var(--muted); font-size:14px; margin-bottom:24px; text-align:center; }
 
-    .progress-track {
-      background: var(--border);
-      border-radius: 99px;
-      height: 10px;
-      overflow: hidden;
-    }
+    /* ── Settings overlay ── */
+    .settings-overlay { background:rgba(0,0,0,.45); bottom:0; left:0; position:fixed; right:0; top:0; z-index:300; display:flex; align-items:flex-end; }
+    .settings-panel   { background:var(--surface); border-radius:20px 20px 0 0; max-height:82vh; overflow-y:auto; padding:24px 20px 36px; width:100%; }
+    .settings-title   { color:var(--primary); font-size:1.2rem; font-weight:800; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; }
 
-    .progress-fill {
-      background: linear-gradient(90deg, var(--primary), var(--green));
-      border-radius: 99px;
-      height: 100%;
-      transition: width 0.5s ease;
-    }
+    /* ── Color swatches ── */
+    .swatches { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .swatch   { border-radius:50%; cursor:pointer; height:28px; width:28px; border:3px solid transparent; transition:transform .12s; }
+    .swatch:hover  { transform:scale(1.15); }
+    .swatch.active { border-color:var(--text); }
 
-    .action-bar {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
+    /* ── Category list item ── */
+    .cat-row { align-items:center; display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+    .cat-dot  { border-radius:50%; flex-shrink:0; height:14px; width:14px; }
 
-    .card {
-      background: var(--surface);
-      border-radius: 16px;
-      box-shadow: 0 1px 6px rgba(44,36,64,0.07);
-      margin-bottom: 14px;
-      padding: 16px;
-    }
+    /* ── History ── */
+    .hist-date   { color:var(--gold); font-size:14px; font-weight:700; margin:12px 0 6px; }
+    .small-badge { border-radius:99px; font-size:11px; font-weight:600; padding:2px 8px; white-space:nowrap; }
 
-    .card.peach { border-left: 4px solid var(--peach); }
-    .card.error {
-      background: var(--red-light);
-      border-left: 4px solid var(--red);
-      color: var(--red);
-    }
-
-    .btn {
-      background: var(--primary-light);
-      border: none;
-      border-radius: 99px;
-      color: var(--primary);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 16px;
-      transition: background 0.15s, transform 0.1s;
-      white-space: nowrap;
-    }
-
-    .btn:hover { background: var(--border); }
-    .btn:active { transform: scale(0.96); }
-
-    .btn.primary {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .btn.primary:hover { background: #6a4dab; }
-
-    .btn.ghost {
-      background: transparent;
-      border: 1.5px solid var(--border);
-      color: var(--muted);
-    }
-
-    .btn.ghost:hover { background: var(--surface2); color: var(--text); }
-    .btn:disabled { cursor: default; opacity: 0.4; }
-
-    .in {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 15px;
-      padding: 11px 14px;
-      transition: border-color 0.15s;
-      width: 100%;
-    }
-
-    .in:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(124,92,191,0.12);
-      outline: none;
-    }
-
-    .form-row {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    label {
-      color: var(--muted);
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .section-head {
-      align-items: center;
-      display: flex;
-      gap: 8px;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      color: var(--text);
-      font-size: 17px;
-      font-weight: 700;
-    }
-
-    .tasks {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      list-style: none;
-    }
-
-    .task {
-      align-items: flex-start;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      display: flex;
-      gap: 12px;
-      padding: 14px;
-      transition: opacity 0.2s;
-    }
-
-    .task.sub {
-      background: var(--surface2);
-      border-left: 3px solid var(--primary);
-      margin-left: 20px;
-    }
-
-    .task.done { opacity: 0.5; }
-    .task.done .task-text { color: var(--muted); text-decoration: line-through; }
-    .task.dragging { opacity: 0.3; }
-    .task.drag-over-top { border-top: 2.5px solid var(--primary); }
-    .task.drag-over-bottom { border-bottom: 2.5px solid var(--primary); }
-
-    .task-text {
-      cursor: pointer;
-      font-size: 15px;
-      line-height: 1.45;
-      word-break: break-word;
-    }
-
-    .time-badge {
-      background: var(--primary-light);
-      border-radius: 99px;
-      color: var(--primary);
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 4px;
-      padding: 2px 9px;
-      white-space: nowrap;
-    }
-
-    .type-badge {
-      border: none;
-      border-radius: 99px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 9px;
-      white-space: nowrap;
-    }
-
-    .type-badge.recurring { background: var(--green-light); color: var(--green); }
-    .type-badge.today { background: var(--peach-light); color: var(--peach); }
-
-    .meta {
-      align-items: center;
-      display: flex;
-      flex-shrink: 0;
-      gap: 6px;
-    }
-
-    .icon-btn {
-      align-items: center;
-      background: transparent;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      color: var(--muted);
-      cursor: pointer;
-      display: flex;
-      font-size: 16px;
-      height: 36px;
-      justify-content: center;
-      min-width: 36px;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-
-    .icon-btn:hover { background: var(--surface2); border-color: var(--primary); color: var(--primary); }
-
-    .check {
-      accent-color: var(--primary);
-      cursor: pointer;
-      flex-shrink: 0;
-      height: 24px;
-      margin-top: 2px;
-      min-width: 24px;
-      width: 24px;
-    }
-
-    .drag-handle {
-      align-items: center;
-      background: transparent;
-      border: none;
-      cursor: grab;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      justify-content: center;
-      padding: 4px 6px;
-    }
-
-    .drag-handle span {
-      background: var(--border);
-      border-radius: 2px;
-      display: block;
-      height: 2px;
-      width: 16px;
-    }
-
-    .drag-handle:hover span { background: var(--primary); }
-
-    .time-picker {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .time-chip {
-      background: var(--surface2);
-      border: 1.5px solid var(--border);
-      border-radius: 99px;
-      color: var(--muted);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 5px 12px;
-      transition: all 0.15s;
-    }
-
-    .time-chip.active, .time-chip:hover {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .subtask-form { margin: 6px 0 6px 20px; }
-
-    .history-date {
-      color: var(--gold);
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      margin-top: 12px;
-    }
-
-    .small-badge {
-      border-radius: 99px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      white-space: nowrap;
-    }
-
-    .badge-recurring { background: var(--green-light); color: var(--green); }
-    .badge-today { background: var(--peach-light); color: var(--peach); }
-    .badge-done { background: var(--green-light); color: var(--green); }
-    .badge-open { background: var(--gold-light); color: var(--gold); }
-
-    .auth {
-      background: var(--surface);
-      border-radius: 20px;
-      box-shadow: 0 4px 24px rgba(44,36,64,0.1);
-      margin: 40px auto;
-      max-width: 400px;
-      padding: 28px 24px;
-    }
-
-    .auth-title {
-      color: var(--primary);
-      font-size: 1.8rem;
-      font-weight: 800;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-
-    .auth-sub {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    .loading {
-      color: var(--muted);
-      font-size: 15px;
-      padding: 60px 30px;
-      text-align: center;
-    }
-
+    /* ── Celebrate toast ── */
     @keyframes celebrate-in {
-      0%   { opacity: 0; transform: translate(-50%, 16px) scale(0.9); }
-      18%  { opacity: 1; transform: translate(-50%, -4px) scale(1.04); }
-      80%  { opacity: 1; transform: translate(-50%, -4px) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -4px) scale(1); }
+      0%   { opacity:0; transform:translate(-50%,16px) scale(.9); }
+      18%  { opacity:1; transform:translate(-50%,-4px) scale(1.04); }
+      80%  { opacity:1; transform:translate(-50%,-4px) scale(1); }
+      100% { opacity:0; transform:translate(-50%,-4px) scale(1); }
     }
+    .celebrate-toast { animation:celebrate-in 2.4s ease-out forwards; background:var(--primary); border-radius:99px; bottom:90px; box-shadow:0 8px 32px rgba(124,92,191,.35); color:#fff; font-size:17px; font-weight:700; left:50%; padding:14px 28px; pointer-events:none; position:fixed; text-align:center; z-index:9999; }
 
-    .celebrate-toast {
-      animation: celebrate-in 2.4s ease-out forwards;
-      background: var(--primary);
-      border-radius: 99px;
-      bottom: 90px;
-      box-shadow: 0 8px 32px rgba(124,92,191,0.35);
-      color: #fff;
-      font-size: 17px;
-      font-weight: 700;
-      left: 50%;
-      padding: 14px 28px;
-      pointer-events: none;
-      position: fixed;
-      text-align: center;
-      z-index: 9999;
-    }
+    /* ── Loading ── */
+    .loading { color:var(--muted); font-size:15px; padding:60px 30px; text-align:center; }
 
-    @media (max-width: 600px) {
-      #root { padding: 16px 12px 110px; }
-      .task { padding: 12px; }
-      .task.sub { margin-left: 12px; }
-      .subtask-form { margin-left: 12px; }
+    @media (max-width:600px) {
+      #root { padding:16px 12px 110px; }
+      .task.sub { margin-left:12px; }
+      .subtask-form { margin-left:12px; }
     }
   </style>
 </head>
-
 <body>
-  <div id="root"></div>
+<div id="root"></div>
+<script type="text/babel">
+  if (!window.React || !window.ReactDOM || !window.supabase) {
+    document.getElementById("root").innerHTML = '<div class="card error">Missing required scripts. Check your connection and reload.</div>';
+    throw new Error("Library preload failure");
+  }
 
-  <script type="text/babel">
-    if (!window.React || !window.ReactDOM || !window.supabase) {
-      document.getElementById("root").innerHTML =
-        '<div class="card error">Missing required scripts. Check your connection and reload.</div>';
-      throw new Error("Library preload failure");
+  const { useEffect, useRef, useState } = window.React;
+
+  const SUPABASE_URL      = "https://dgxtslpwsayucznkrqih.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_DQnkByElOKvZPt6HlxmrPg_DhSHnhpN";
+
+  const memStore = (() => {
+    const m = {};
+    return { getItem:k=>(k in m?m[k]:null), setItem:(k,v)=>{m[k]=String(v);}, removeItem:k=>{delete m[k];} };
+  })();
+
+  function safeLS() {
+    try { localStorage.setItem("__t__","1"); localStorage.removeItem("__t__"); return localStorage; }
+    catch { return memStore; }
+  }
+  const ls = safeLS();
+
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    auth:{ autoRefreshToken:true, persistSession:true, detectSessionInUrl:true, storage:ls }
+  });
+
+  // ── Date utils ──────────────────────────────────────────────────────────────
+  function nyDate(d) {
+    const p = new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(d);
+    const v = Object.fromEntries(p.map(x=>[x.type,x.value]));
+    return `${v.year}-${v.month}-${v.day}`;
+  }
+  const today   = () => nyDate(new Date());
+  const daysAgo = n => { const d=new Date(); d.setDate(d.getDate()-n); return nyDate(d); };
+  const greeting = () => { const h=new Date().getHours(); return h<12?"Good morning":h<17?"Good afternoon":"Good evening"; };
+
+  // ── Task text helpers ────────────────────────────────────────────────────────
+  function parseTask(text) {
+    const m = text.match(/\s*\[(\d+(?:m|h))\]$/);
+    return m ? { label:text.slice(0,text.length-m[0].length).trim(), estimate:m[1] } : { label:text, estimate:null };
+  }
+  function buildTask(label,est) { return est ? `${label} [${est}]` : label; }
+
+  // ── Cache ────────────────────────────────────────────────────────────────────
+  const mkCache = key => ({
+    get(uid){ try{ const r=JSON.parse(ls.getItem(`${key}_${uid}`)); return r?.date===today()?r.payload:null; }catch{return null;} },
+    set(uid,p){ try{ ls.setItem(`${key}_${uid}`,JSON.stringify({date:today(),payload:p})); }catch{} },
+    clear(uid){ try{ ls.removeItem(`${key}_${uid}`); }catch{} }
+  });
+  const dataCache = mkCache("rc_data");
+  const histCache = mkCache("rc_hist");
+
+  // ── Constants ────────────────────────────────────────────────────────────────
+  const PERMANENT_SECTIONS = [
+    { name:"Today",     order_index:0 },
+    { name:"This Week", order_index:1 },
+    { name:"Mid-Term",  order_index:2 },
+    { name:"Long Term", order_index:3 },
+  ];
+
+  const PRIORITIES = [
+    { value:"high",   label:"High", cls:"p-high"   },
+    { value:"medium", label:"Med",  cls:"p-medium"  },
+    { value:"low",    label:"Low",  cls:"p-low"     },
+  ];
+  const PRI_ORDER = { high:0, medium:1, low:2 };
+
+  const SWATCH_COLORS = ["#7c5cbf","#e8874d","#52b788","#4db0e8","#e07070","#c99a2e","#3dbdbd","#b0547a"];
+
+  const CHEERS = ["Nice work! ✓","You did it!","Keep going!","One more down!","You're on a roll!","Amazing!","Yes!","That's the one!","Crushing it!","Well done!"];
+
+  // ── App ──────────────────────────────────────────────────────────────────────
+  function App() { return <MainApp />; }
+
+  function MainApp() {
+    const [user,       setUser]       = useState(null);
+    const [loading,    setLoading]    = useState(true);
+    const [error,      setError]      = useState(null);
+    const [sections,   setSections]   = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [archive,    setArchive]    = useState(null);
+    const [showArchive,setShowArchive]= useState(false);
+    const userRef = useRef(null);
+    const dateRef = useRef(today());
+
+    useEffect(()=>{ userRef.current=user; },[user]);
+
+    useEffect(()=>{
+      const failsafe = setTimeout(()=>{
+        setLoading(p=>{ if(p) setError("Loading timed out. Try refreshing."); return false; });
+      },9000);
+
+      const {data:al} = sb.auth.onAuthStateChange(async(event,session)=>{
+        const u = session?.user||null;
+        setUser(u); setLoading(false);
+        if(event==="SIGNED_OUT"){
+          const id=userRef.current?.id;
+          if(id){ dataCache.clear(id); histCache.clear(id); }
+          setSections([]); setCategories([]); setArchive(null); setShowArchive(false);
+          return;
+        }
+        if(u){
+          const cached = dataCache.get(u.id);
+          if(cached) setSections(cached);
+          loadCategories(u.id);
+          ensureDaily(today(),u.id)
+            .catch(e=>console.warn("ensureDaily:",e.message))
+            .finally(()=>loadSections(u.id,true).catch(e=>setError("Load failed: "+e.message)));
+        }
+      });
+
+      const midnightWatch = setInterval(async()=>{
+        const cur=today(); if(cur===dateRef.current) return;
+        dateRef.current=cur;
+        const uid=userRef.current?.id; if(!uid) return;
+        try{
+          dataCache.clear(uid); histCache.clear(uid);
+          await ensureDaily(cur,uid); await loadSections(uid,true); setArchive(null);
+        }catch(e){ setError("Midnight refresh failed: "+e.message); }
+      },60000);
+
+      return ()=>{ clearTimeout(failsafe); clearInterval(midnightWatch); al?.subscription?.unsubscribe(); };
+    },[]);
+
+    async function ensurePermanentSections(userId) {
+      const {data:existing} = await sb.from("sections")
+        .select("name").eq("user_id",userId).eq("is_permanent",true);
+      const have = new Set((existing||[]).map(s=>s.name));
+      const missing = PERMANENT_SECTIONS.filter(s=>!have.has(s.name));
+      if(missing.length){
+        const {error} = await sb.from("sections").insert(
+          missing.map(s=>({...s,user_id:userId,is_permanent:true}))
+        );
+        if(error && error.code!=="23505") throw error;
+      }
     }
 
-    const { useEffect, useRef, useState } = window.React;
+    async function ensureDaily(date,userId) {
+      if(!userId) return;
+      const {data:tpls,error:te} = await sb.from("task_templates")
+        .select("id,section_id,text,parent_task_id,order_index,priority,category_id")
+        .eq("user_id",userId).order("order_index",{ascending:true});
+      if(te) throw te;
+      if(!tpls?.length) return;
 
-    const SUPABASE_URL = "https://dgxtslpwsayucznkrqih.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_DQnkByElOKvZPt6HlxmrPg_DhSHnhpN";
+      const {data:existing,error:ee} = await sb.from("tasks")
+        .select("id,template_id").eq("user_id",userId).eq("date",date).not("template_id","is",null);
+      if(ee) throw ee;
 
-    const memoryStorage = (() => {
-      const m = {};
-      return {
-        getItem: k => (k in m ? m[k] : null),
-        setItem: (k, v) => { m[k] = String(v); },
-        removeItem: k => { delete m[k]; }
-      };
-    })();
+      const haveIds = new Set((existing||[]).map(t=>String(t.template_id)));
+      const missing = tpls.filter(t=>!haveIds.has(String(t.id)));
+      if(!missing.length) return;
 
-    function getSafeStorage() {
+      const rows = missing.map(t=>({
+        section_id:t.section_id, user_id:userId, text:t.text, completed:false,
+        date, template_id:t.id, parent_task_id:null, order_index:t.order_index||0,
+        priority:t.priority||"medium", category_id:t.category_id||null
+      }));
+      const {data:created,error:ie} = await sb.from("tasks").insert(rows).select("id,template_id");
+      if(ie && ie.code!=="23505") throw ie;
+
+      const byTpl = {};
+      (existing||[]).forEach(t=>{ byTpl[String(t.template_id)]=t.id; });
+      (created||[]).forEach(t=>{ byTpl[String(t.template_id)]=t.id; });
+      const parentUps = missing
+        .filter(t=>t.parent_task_id&&byTpl[String(t.parent_task_id)]&&byTpl[String(t.id)])
+        .map(t=>sb.from("tasks").update({parent_task_id:byTpl[String(t.parent_task_id)]}).eq("id",byTpl[String(t.id)]));
+      if(parentUps.length) await Promise.all(parentUps);
+    }
+
+    async function loadCategories(userId) {
       try {
-        window.localStorage.setItem("__t__", "1");
-        window.localStorage.removeItem("__t__");
-        return window.localStorage;
-      } catch { return memoryStorage; }
+        const {data,error} = await sb.from("categories")
+          .select("id,name,color,order_index").eq("user_id",userId).order("order_index",{ascending:true});
+        if(error) throw error;
+        setCategories(data||[]);
+      } catch(e) {
+        console.warn("loadCategories:",e.message);
+        setCategories([]);
+      }
     }
 
-    const safeStorage = getSafeStorage();
+    async function loadSections(uid,force=false) {
+      if(!uid) return;
+      if(force) dataCache.clear(uid);
+      if(!force){
+        const cached=dataCache.get(uid);
+        if(cached){ setSections(cached); if(cached.some(s=>(s.tasks||[]).length>0)) return; }
+      }
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true, storage: safeStorage }
-    });
+      await ensurePermanentSections(uid);
 
-    function nyDate(d) {
-      const parts = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit"
-      }).formatToParts(d);
-      const v = Object.fromEntries(parts.map(p => [p.type, p.value]));
-      return `${v.year}-${v.month}-${v.day}`;
+      const {data:secs,error:se} = await sb.from("sections")
+        .select("id,user_id,name,order_index,is_permanent")
+        .eq("user_id",uid).eq("is_permanent",true).order("order_index",{ascending:true});
+      if(se) throw se;
+
+      const {data:tasks,error:te} = await sb.from("tasks")
+        .select("id,section_id,user_id,text,completed,date,template_id,parent_task_id,order_index,priority,category_id")
+        .eq("user_id",uid).eq("date",today()).order("order_index",{ascending:true});
+      if(te) throw te;
+
+      const allTasks = tasks||[];
+      let merged = (secs||[]).map(s=>({...s,tasks:allTasks.filter(t=>String(t.section_id)===String(s.id))}));
+
+      const knownIds = new Set((secs||[]).map(s=>String(s.id)));
+      const orphans  = allTasks.filter(t=>!knownIds.has(String(t.section_id)));
+      if(orphans.length&&merged.length){
+        const first=merged[0];
+        await Promise.all(orphans.map(t=>sb.from("tasks").update({section_id:first.id}).eq("id",t.id)));
+        merged[0]={...first,tasks:[...(first.tasks||[]),...orphans.map(t=>({...t,section_id:first.id}))]};
+      }
+
+      setSections(merged); dataCache.set(uid,merged);
     }
 
-    function today() { return nyDate(new Date()); }
-
-    function daysAgo(n) {
-      const d = new Date();
-      d.setDate(d.getDate() - n);
-      return nyDate(d);
+    async function loadArchive() {
+      if(showArchive){ setShowArchive(false); return; }
+      try{
+        const u=userRef.current; if(!u){ setError("Sign in to view history."); return; }
+        const {data:raw,error:re} = await sb.from("tasks")
+          .select("text,completed,date,template_id,section_id,priority,category_id")
+          .eq("user_id",u.id).lte("date",today()).gte("date",daysAgo(30)).order("date",{ascending:false});
+        if(re) throw re;
+        const sids = Array.from(new Set((raw||[]).map(t=>t.section_id).filter(Boolean)));
+        const snames={};
+        if(sids.length){
+          const {data:sd} = await sb.from("sections").select("id,name").eq("user_id",u.id).in("id",sids);
+          (sd||[]).forEach(s=>{ snames[String(s.id)]=s.name; });
+        }
+        const data=(raw||[]).map(t=>({...t,sname:snames[String(t.section_id)]||"Tasks"}))
+          .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+        setArchive(data); histCache.set(u.id,data); setShowArchive(true); setError(null);
+      }catch(e){ setError("Failed to load history: "+e.message); }
     }
 
-    function greeting() {
-      const h = new Date().getHours();
-      return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+    if(loading) return <div className="loading">Loading…</div>;
+    if(!user)   return <AuthScreen setError={setError}/>;
+
+    return (
+      <>
+        {error&&<div className="card error">{error} <button className="btn ghost" style={{marginLeft:8,fontSize:12}} onClick={()=>setError(null)}>Dismiss</button></div>}
+        <TaskApp
+          user={user} sections={sections} setSections={setSections}
+          categories={categories} setCategories={setCategories}
+          setError={setError} loadSections={loadSections}
+          loadArchive={loadArchive} archive={archive} showArchive={showArchive}
+          loadCategories={loadCategories}
+        />
+      </>
+    );
+  }
+
+  // ── Auth ─────────────────────────────────────────────────────────────────────
+  function AuthScreen({setError}) {
+    const [isLogin,setIsLogin]   = useState(true);
+    const [email,setEmail]       = useState("");
+    const [pw,setPw]             = useState("");
+    const [loading,setLoading]   = useState(false);
+    const [localErr,setLocalErr] = useState(null);
+
+    async function handleAuth(e){
+      e.preventDefault(); setLoading(true); setLocalErr(null);
+      try{
+        if(isLogin){ const {error}=await sb.auth.signInWithPassword({email,password:pw}); if(error) throw error; }
+        else{ const {error}=await sb.auth.signUp({email,password:pw}); if(error) throw error; alert("Check your email to confirm your account, then log in."); }
+      }catch(e){ setLocalErr(e.message); setError(e.message); }
+      finally{ setLoading(false); }
     }
 
-    // Store time estimate in task text as suffix: "Walk the dog [15m]"
-    function parseTask(text) {
-      const m = text.match(/\s*\[(\d+(?:m|h))\]$/);
-      if (!m) return { label: text, estimate: null };
-      return { label: text.slice(0, text.length - m[0].length).trim(), estimate: m[1] };
+    return (
+      <div className="auth">
+        <div className="auth-title">Rachel's Tasks</div>
+        <div className="auth-sub">{isLogin?"Welcome back!":"Create your account"}</div>
+        {localErr&&<div className="card error" style={{marginBottom:16}}>{localErr}</div>}
+        <form onSubmit={handleAuth}>
+          <div><label>Email</label><input className="in" type="email" required disabled={loading} value={email} onChange={e=>setEmail(e.target.value)}/></div>
+          <div style={{marginTop:12}}><label>Password</label><input className="in" type="password" required disabled={loading} value={pw} onChange={e=>setPw(e.target.value)}/></div>
+          <div className="form-row"><button className="btn primary" type="submit" disabled={loading} style={{flex:1}}>{loading?"Please wait…":(isLogin?"Log In":"Sign Up")}</button></div>
+          <div style={{textAlign:"center",marginTop:12}}>
+            <button className="btn ghost" type="button" disabled={loading} onClick={()=>setIsLogin(!isLogin)}>
+              {isLogin?"Need an account? Sign up":"Already have an account? Log in"}
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  // ── TaskApp ──────────────────────────────────────────────────────────────────
+  function TaskApp({user,sections,setSections,categories,setCategories,setError,loadSections,loadArchive,archive,showArchive,loadCategories}) {
+    const [showSettings,setShowSettings] = useState(false);
+    const [undoStack,setUndoStack]       = useState([]);
+    const [cheerMsg,setCheerMsg]         = useState(null);
+    const [cheerKey,setCheerKey]         = useState(0);
+    const cheerTimer = useRef(null);
+
+    function pushUndo(label,fn){ setUndoStack(p=>[...p.slice(-4),{label,undo:fn}]); }
+    async function applyUndo(){
+      if(!undoStack.length) return;
+      const top=undoStack[undoStack.length-1]; setUndoStack(p=>p.slice(0,-1));
+      try{ await top.undo(); }catch(e){ setError("Undo failed: "+e.message); }
+    }
+    function cheer(){
+      setCheerMsg(CHEERS[Math.floor(Math.random()*CHEERS.length)]); setCheerKey(k=>k+1);
+      if(cheerTimer.current) clearTimeout(cheerTimer.current);
+      cheerTimer.current=setTimeout(()=>setCheerMsg(null),2400);
     }
 
-    function buildTask(label, estimate) {
-      return estimate ? `${label} [${estimate}]` : label;
-    }
-
-    const dataCache = {
-      get(uid) {
-        try {
-          const r = JSON.parse(safeStorage.getItem(`rc_cache_${uid}`));
-          return r?.date === today() ? r.payload : null;
-        } catch { return null; }
-      },
-      set(uid, payload) {
-        try { safeStorage.setItem(`rc_cache_${uid}`, JSON.stringify({ date: today(), payload })); } catch {}
-      },
-      clear(uid) { try { safeStorage.removeItem(`rc_cache_${uid}`); } catch {} }
-    };
-
-    const histCache = {
-      get(uid) {
-        try {
-          const r = JSON.parse(safeStorage.getItem(`rc_hist_${uid}`));
-          return r?.date === today() ? r.payload : null;
-        } catch { return null; }
-      },
-      set(uid, payload) {
-        try { safeStorage.setItem(`rc_hist_${uid}`, JSON.stringify({ date: today(), payload })); } catch {}
-      },
-      clear(uid) { try { safeStorage.removeItem(`rc_hist_${uid}`); } catch {} }
-    };
-
-    const CHEERS = [
-      "Nice work! ✓", "You did it!", "Keep going!", "One more down!",
-      "You're on a roll!", "Amazing!", "Yes!", "That's the one!",
-      "Crushing it!", "Well done!"
-    ];
-
-    // ─── App root ───────────────────────────────────────────────────────────────
-
-    function App() { return <MainApp />; }
-
-    function MainApp() {
-      const [user, setUser]         = useState(null);
-      const [loading, setLoading]   = useState(true);
-      const [error, setError]       = useState(null);
-      const [sections, setSections] = useState([]);
-      const [archive, setArchive]   = useState(null);
-      const [showArchive, setShowArchive] = useState(false);
-      const userRef = useRef(null);
-      const dateRef = useRef(today());
-
-      useEffect(() => { userRef.current = user; }, [user]);
-
-      useEffect(() => {
-        const failsafe = setTimeout(() => {
-          setLoading(p => { if (p) setError("Loading timed out. Try refreshing."); return false; });
-        }, 9000);
-
-        const { data: al } = supabase.auth.onAuthStateChange(async (event, session) => {
-          const u = session?.user || null;
-          setUser(u);
-          setLoading(false);
-
-          if (event === "SIGNED_OUT") {
-            const id = userRef.current?.id;
-            if (id) { dataCache.clear(id); histCache.clear(id); }
-            setSections([]); setArchive(null); setShowArchive(false);
-            return;
-          }
-
-          if (u) {
-            const cached = dataCache.get(u.id);
-            if (cached) setSections(cached);
-            ensureDaily(today(), u.id)
-              .catch(e => console.warn("ensureDaily:", e.message))
-              .finally(() => loadSections(u.id, true).catch(e => setError("Load failed: " + e.message)));
-          }
+    // Move task from one section to another
+    async function moveTaskToSection(task,fromSectionId,toSectionId){
+      if(String(fromSectionId)===String(toSectionId)) return;
+      try{
+        await sb.from("tasks").update({section_id:toSectionId}).eq("id",task.id);
+        if(task.template_id) await sb.from("task_templates").update({section_id:toSectionId}).eq("id",task.template_id);
+        const updated={...task,section_id:toSectionId};
+        const next=sections.map(s=>{
+          if(String(s.id)===String(fromSectionId)) return {...s,tasks:(s.tasks||[]).filter(t=>String(t.id)!==String(task.id))};
+          if(String(s.id)===String(toSectionId))   return {...s,tasks:[...(s.tasks||[]),updated]};
+          return s;
         });
-
-        const midnightWatch = setInterval(async () => {
-          const cur = today();
-          if (cur === dateRef.current) return;
-          dateRef.current = cur;
-          const uid = userRef.current?.id;
-          if (!uid) return;
-          try {
-            dataCache.clear(uid); histCache.clear(uid);
-            await ensureDaily(cur, uid);
-            await loadSections(uid, true);
-            setArchive(null);
-          } catch (e) { setError("Midnight refresh failed: " + e.message); }
-        }, 60000);
-
-        return () => { clearTimeout(failsafe); clearInterval(midnightWatch); al?.subscription?.unsubscribe(); };
-      }, []);
-
-      async function ensureDaily(date, userId) {
-        if (!userId) return;
-        const { data: tpls, error: te } = await supabase.from("task_templates")
-          .select("id,section_id,text,parent_task_id,order_index")
-          .eq("user_id", userId).order("order_index", { ascending: true });
-        if (te) throw te;
-        if (!tpls?.length) return;
-
-        const { data: existing, error: ee } = await supabase.from("tasks")
-          .select("id,template_id").eq("user_id", userId).eq("date", date).not("template_id", "is", null);
-        if (ee) throw ee;
-
-        const existIds = new Set((existing || []).map(t => String(t.template_id)));
-        const missing = tpls.filter(t => !existIds.has(String(t.id)));
-        if (!missing.length) return;
-
-        const rows = missing.map(t => ({
-          section_id: t.section_id, user_id: userId, text: t.text,
-          completed: false, date, template_id: t.id, parent_task_id: null, order_index: t.order_index || 0
-        }));
-
-        const { data: created, error: ie } = await supabase.from("tasks").insert(rows).select("id,template_id");
-        if (ie && ie.code !== "23505") throw ie;
-
-        const byTpl = {};
-        (existing || []).forEach(t => { byTpl[String(t.template_id)] = t.id; });
-        (created || []).forEach(t => { byTpl[String(t.template_id)] = t.id; });
-
-        const parentUps = missing
-          .filter(t => t.parent_task_id && byTpl[String(t.parent_task_id)] && byTpl[String(t.id)])
-          .map(t => supabase.from("tasks").update({ parent_task_id: byTpl[String(t.parent_task_id)] }).eq("id", byTpl[String(t.id)]));
-        if (parentUps.length) await Promise.all(parentUps);
-      }
-
-      async function defaultSection(userId) {
-        const { data, error } = await supabase.from("sections")
-          .insert([{ user_id: userId, name: "My Tasks", order_index: 0 }])
-          .select("id,user_id,name,order_index").single();
-        if (error) {
-          if (error.code === "23505") {
-            // Race condition: another call already created it — just fetch it
-            const { data: existing, error: fe } = await supabase.from("sections")
-              .select("id,user_id,name,order_index")
-              .eq("user_id", userId).order("order_index", { ascending: true }).limit(1).single();
-            if (fe) throw fe;
-            return existing;
-          }
-          throw error;
-        }
-        return data;
-      }
-
-      async function loadSections(uid, force = false) {
-        if (!uid) return;
-        if (force) { dataCache.clear(uid); safeStorage.removeItem(`last_init_${uid}`); }
-
-        if (!force) {
-          const cached = dataCache.get(uid);
-          if (cached) {
-            setSections(cached);
-            if (cached.some(s => (s.tasks || []).length > 0)) return;
-          }
-        }
-
-        const { data: secs, error: se } = await supabase.from("sections")
-          .select("id,user_id,name,order_index").eq("user_id", uid).order("order_index", { ascending: true });
-        if (se) throw se;
-
-        let avail = secs || [];
-        if (!avail.length) avail = [await defaultSection(uid)];
-
-        const { data: tasks, error: te } = await supabase.from("tasks")
-          .select("id,section_id,user_id,text,completed,date,template_id,parent_task_id,order_index")
-          .eq("user_id", uid).eq("date", today()).order("order_index", { ascending: true });
-        if (te) throw te;
-
-        const allTasks = tasks || [];
-        let merged = avail.map(s => ({ ...s, tasks: allTasks.filter(t => String(t.section_id) === String(s.id)) }));
-
-        const knownIds = new Set(avail.map(s => String(s.id)));
-        const orphans = allTasks.filter(t => !knownIds.has(String(t.section_id)));
-        if (orphans.length) {
-          const fallback = avail[0];
-          await Promise.all(orphans.map(t => supabase.from("tasks").update({ section_id: fallback.id }).eq("id", t.id)));
-          merged = merged.map((s, i) => i === 0 ? { ...s, tasks: [...(s.tasks || []), ...orphans.map(t => ({...t, section_id: fallback.id}))] } : s);
-        }
-
-        setSections(merged);
-        dataCache.set(uid, merged);
-      }
-
-      async function loadArchive() {
-        if (showArchive) { setShowArchive(false); return; }
-        try {
-          const u = userRef.current;
-          if (!u) { setError("Sign in to view history."); return; }
-          const { data: raw, error: re } = await supabase.from("tasks")
-            .select("text,completed,date,template_id,section_id")
-            .eq("user_id", u.id).lte("date", today()).gte("date", daysAgo(30)).order("date", { ascending: false });
-          if (re) throw re;
-
-          const sids = Array.from(new Set((raw || []).map(t => t.section_id).filter(Boolean)));
-          const snames = {};
-          if (sids.length) {
-            const { data: sd } = await supabase.from("sections").select("id,name").eq("user_id", u.id).in("id", sids);
-            (sd || []).forEach(s => { snames[String(s.id)] = s.name; });
-          }
-
-          const data = (raw || [])
-            .map(t => ({ ...t, sname: snames[String(t.section_id)] || "Tasks" }))
-            .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-
-          setArchive(data);
-          histCache.set(u.id, data);
-          setShowArchive(true);
-          setError(null);
-        } catch (e) { setError("Failed to load history: " + e.message); }
-      }
-
-      if (loading) return <div className="loading">Loading…</div>;
-      if (!user)   return <AuthScreen setError={setError} />;
-
-      return (
-        <>
-          {error && (
-            <div className="card error">
-              {error}
-              <button className="btn ghost" style={{marginLeft:8,fontSize:12}} onClick={() => setError(null)}>Dismiss</button>
-            </div>
-          )}
-          <TaskApp
-            user={user} sections={sections} setSections={setSections}
-            setError={setError} loadSections={loadSections}
-            loadArchive={loadArchive} archive={archive} showArchive={showArchive}
-          />
-        </>
-      );
+        setSections(next); dataCache.set(user.id,next);
+      }catch(e){ setError("Failed to move task: "+e.message); }
     }
 
-    // ─── Auth ────────────────────────────────────────────────────────────────────
+    const todayPretty = new Date().toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric",timeZone:"America/New_York"});
+    const allTasks = sections.flatMap(s=>s.tasks||[]);
+    const done=allTasks.filter(t=>t.completed).length, total=allTasks.length;
+    const pct=total>0?Math.round((done/total)*100):0;
 
-    function AuthScreen({ setError }) {
-      const [isLogin, setIsLogin]     = useState(true);
-      const [email, setEmail]         = useState("");
-      const [password, setPassword]   = useState("");
-      const [loading, setLoading]     = useState(false);
-      const [localErr, setLocalErr]   = useState(null);
+    const groupedArchive={};
+    (archive||[]).forEach(t=>{ (groupedArchive[t.date]||=[]).push(t); });
+    const archiveDays=Object.entries(groupedArchive).sort(([a],[b])=>b.localeCompare(a))
+      .map(([day,items])=>{
+        const bySec={}; items.forEach(t=>{ (bySec[t.sname]||=[]).push(t); });
+        return {day,secs:Object.entries(bySec).sort(([a],[b])=>a.localeCompare(b))};
+      });
 
-      async function handleAuth(e) {
-        e.preventDefault();
-        setLoading(true); setLocalErr(null);
-        try {
-          if (isLogin) {
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-          } else {
-            const { error } = await supabase.auth.signUp({ email, password });
-            if (error) throw error;
-            alert("Check your email to confirm your account, then log in.");
-          }
-        } catch (e) { setLocalErr(e.message); setError(e.message); }
-        finally     { setLoading(false); }
-      }
+    return (
+      <>
+        <div className="greeting">{greeting()}, Rachel!</div>
+        <div className="date-tag">{todayPretty}</div>
 
-      return (
-        <div className="auth">
-          <div className="auth-title">Rachel's Tasks</div>
-          <div className="auth-sub">{isLogin ? "Welcome back!" : "Create your account"}</div>
-          {localErr && <div className="card error" style={{marginBottom:16}}>{localErr}</div>}
-          <form onSubmit={handleAuth}>
-            <div><label>Email</label>
-              <input className="in" type="email" required disabled={loading} value={email} onChange={e => setEmail(e.target.value)} />
+        {total>0&&(
+          <div className="progress-wrap">
+            <div className="progress-label">
+              <span>{pct===100?"All done today!":"Today's progress"}</span>
+              <strong>{done} of {total} done</strong>
             </div>
-            <div style={{marginTop:12}}><label>Password</label>
-              <input className="in" type="password" required disabled={loading} value={password} onChange={e => setPassword(e.target.value)} />
+            <div className="progress-track"><div className="progress-fill" style={{width:`${pct}%`}}/></div>
+          </div>
+        )}
+
+        <div className="action-bar">
+          <button className="btn primary" onClick={()=>setShowSettings(true)}>⚙ Settings</button>
+          <button className="btn ghost"   onClick={()=>loadSections(user.id,true)}>Refresh</button>
+          <button className="btn ghost"   onClick={loadArchive}>{showArchive?"Hide History":"History"}</button>
+          <button className="btn ghost"   onClick={applyUndo} disabled={!undoStack.length}
+            title={undoStack.length?`Undo: ${undoStack[undoStack.length-1].label}`:"Nothing to undo"}>Undo</button>
+          <button className="btn ghost"   onClick={()=>sb.auth.signOut()} style={{marginLeft:"auto"}}>Sign Out</button>
+        </div>
+
+        {showArchive&&archive&&(
+          <div className="card">
+            <div className="section-head"><div className="section-title" style={{color:"var(--gold)"}}>History — Last 30 Days</div></div>
+            {!archiveDays.length?<div style={{color:"var(--muted)",fontSize:14}}>No history yet.</div>
+            :archiveDays.map(({day,secs})=>(
+              <div key={day}>
+                <div className="hist-date">{day}</div>
+                {secs.map(([sname,items])=>(
+                  <div key={sname} style={{marginBottom:8}}>
+                    <div style={{color:"var(--muted)",fontSize:12,fontWeight:600,marginBottom:4}}>{sname}</div>
+                    <ul className="tasks">
+                      {items.map((t,i)=>{
+                        const {label}=parseTask(t.text);
+                        const pri=PRIORITIES.find(p=>p.value===(t.priority||"medium"));
+                        return(
+                          <li key={i} className="task" style={{opacity:.85}}>
+                            <div className="task-top">
+                              <div className="task-body">
+                                <span className="task-text" style={{textDecoration:t.completed?"line-through":"none"}}>{label}</span>
+                                <div className="task-chips">
+                                  <span className={`chip ${pri?.cls||"p-medium"}`}>{pri?.label||"Med"}</span>
+                                  <span className={`small-badge ${t.template_id?"":"" }`} style={{background:"var(--surface2)",color:"var(--muted)"}}>{t.template_id?"Recurring":"Today"}</span>
+                                  <span style={{background:"var(--surface2)",color:"var(--muted)"}} className="small-badge">{t.completed?"Done":"Open"}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {sections.map(section=>(
+          <div className="card" key={section.id} id={`sec-${section.id}`}>
+            <SectionComponent
+              user={user} section={section} sections={sections} setSections={setSections}
+              categories={categories} setError={setError} pushUndo={pushUndo}
+              onComplete={cheer} moveTaskToSection={moveTaskToSection}
+            />
+          </div>
+        ))}
+
+        {cheerMsg&&<div className="celebrate-toast" key={cheerKey}>{cheerMsg}</div>}
+
+        {showSettings&&(
+          <SettingsPanel
+            user={user} categories={categories} setCategories={setCategories}
+            setError={setError} onClose={()=>setShowSettings(false)} loadCategories={loadCategories}
+          />
+        )}
+      </>
+    );
+  }
+
+  // ── Settings panel ───────────────────────────────────────────────────────────
+  function SettingsPanel({user,categories,setCategories,setError,onClose,loadCategories}){
+    const [newName,setNewName]   = useState("");
+    const [newColor,setNewColor] = useState(SWATCH_COLORS[0]);
+    const [saving,setSaving]     = useState(false);
+
+    async function addCategory(e){
+      e.preventDefault();
+      const name=newName.trim(); if(!name) return;
+      setSaving(true);
+      try{
+        const {data,error}=await sb.from("categories")
+          .insert([{user_id:user.id,name,color:newColor,order_index:categories.length}]).select();
+        if(error) throw error;
+        setCategories([...categories,data[0]]);
+        setNewName(""); setNewColor(SWATCH_COLORS[0]);
+      }catch(e){ setError("Failed to add category: "+e.message); }
+      finally{ setSaving(false); }
+    }
+
+    async function deleteCategory(id){
+      if(!confirm("Delete this category? Tasks using it will keep their data but lose the label.")) return;
+      try{
+        const {error}=await sb.from("categories").delete().eq("id",id).eq("user_id",user.id);
+        if(error) throw error;
+        setCategories(categories.filter(c=>String(c.id)!==String(id)));
+      }catch(e){ setError("Failed to delete category: "+e.message); }
+    }
+
+    return(
+      <div className="settings-overlay" onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
+        <div className="settings-panel">
+          <div className="settings-title">
+            <span>Settings</span>
+            <button className="icon-btn" onClick={onClose} style={{border:"none",fontSize:20}}>×</button>
+          </div>
+
+          <div style={{fontWeight:700,fontSize:15,marginBottom:12}}>Categories</div>
+
+          {categories.length===0&&(
+            <div style={{color:"var(--muted)",fontSize:13,marginBottom:16}}>No categories yet. Add one below.</div>
+          )}
+
+          {categories.map(c=>(
+            <div className="cat-row" key={c.id}>
+              <div className="cat-dot" style={{background:c.color}}/>
+              <div style={{flex:1,fontSize:14,fontWeight:600}}>{c.name}</div>
+              <button className="btn danger" style={{fontSize:12,padding:"4px 12px"}} onClick={()=>deleteCategory(c.id)}>Remove</button>
+            </div>
+          ))}
+
+          <div style={{marginTop:20,fontWeight:700,fontSize:14,marginBottom:10}}>Add category</div>
+          <form onSubmit={addCategory}>
+            <input className="in sm" type="text" placeholder="Category name…" value={newName} onChange={e=>setNewName(e.target.value)}/>
+            <div className="swatches">
+              {SWATCH_COLORS.map(c=>(
+                <button key={c} type="button" className={`swatch${newColor===c?" active":""}`}
+                  style={{background:c}} onClick={()=>setNewColor(c)} title={c}/>
+              ))}
             </div>
             <div className="form-row">
-              <button className="btn primary" type="submit" disabled={loading} style={{flex:1}}>
-                {loading ? "Please wait…" : (isLogin ? "Log In" : "Sign Up")}
-              </button>
-            </div>
-            <div style={{textAlign:"center",marginTop:12}}>
-              <button className="btn ghost" type="button" disabled={loading} onClick={() => setIsLogin(!isLogin)}>
-                {isLogin ? "Need an account? Sign up" : "Already have an account? Log in"}
+              <button className="btn primary" type="submit" disabled={saving||!newName.trim()}>
+                {saving?"Saving…":"Add Category"}
               </button>
             </div>
           </form>
         </div>
-      );
+      </div>
+    );
+  }
+
+  // ── Section ──────────────────────────────────────────────────────────────────
+  function SectionComponent({user,section,sections,setSections,categories,setError,pushUndo,onComplete,moveTaskToSection}){
+    const [tasks,setTasks]             = useState(section.tasks||[]);
+    const [newText,setNewText]         = useState("");
+    const [newEstimate,setNewEstimate] = useState(null);
+    const [newPriority,setNewPriority] = useState("medium");
+    const [newCategoryId,setNewCatId]  = useState("");
+    const [taskType,setTaskType]       = useState("daily");
+    const [subtaskMode,setSubtaskMode] = useState(false);
+    const [forcedParent,setForcedParent]=useState(null);
+    const [draggedId,setDraggedId]     = useState(null);
+    const [dragOverId,setDragOverId]   = useState(null);
+    const [dropAbove,setDropAbove]     = useState(true);
+    const inputRef    = useRef(null);
+    const sectionsRef = useRef(sections);
+    const curDate     = today();
+
+    useEffect(()=>setTasks(section.tasks||[]),[section.tasks]);
+    useEffect(()=>{ sectionsRef.current=sections; },[sections]);
+
+    const sid  = id=>String(id);
+    const same = (a,b)=>sid(a)===sid(b);
+
+    function applyTasks(next){
+      setTasks(next);
+      const ns=sectionsRef.current.map(s=>same(s.id,section.id)?{...s,tasks:next}:s);
+      setSections(ns); dataCache.set(user.id,ns);
     }
 
-    // ─── TaskApp ─────────────────────────────────────────────────────────────────
+    function reindex(list){ return list.map((t,i)=>({...t,order_index:i})); }
 
-    function TaskApp({ user, sections, setSections, setError, loadSections, loadArchive, archive, showArchive }) {
-      const [showNewSection, setShowNewSection]   = useState(false);
-      const [newSectionName, setNewSectionName]   = useState("");
-      const [undoStack, setUndoStack]             = useState([]);
-      const [cheerMsg, setCheerMsg]               = useState(null);
-      const [cheerKey, setCheerKey]               = useState(0);
-      const cheerTimer = useRef(null);
-
-      function pushUndo(label, fn) {
-        setUndoStack(p => [...p.slice(-4), { label, undo: fn }]);
+    async function persistOrder(list){
+      const ups=[];
+      for(const t of list){
+        ups.push(sb.from("tasks").update({order_index:t.order_index}).eq("id",t.id));
+        if(t.template_id) ups.push(sb.from("task_templates").update({order_index:t.order_index}).eq("id",t.template_id));
       }
+      await Promise.all(ups);
+    }
 
-      async function applyUndo() {
-        if (!undoStack.length) return;
-        const top = undoStack[undoStack.length - 1];
-        setUndoStack(p => p.slice(0, -1));
-        try { await top.undo(); } catch (e) { setError("Undo failed: " + e.message); }
-      }
+    function isDesc(candId,ancId){
+      let cur=tasks.find(t=>same(t.id,candId)); const seen=new Set();
+      while(cur?.parent_task_id){ const k=sid(cur.id); if(seen.has(k)) break; seen.add(k); if(same(cur.parent_task_id,ancId)) return true; cur=tasks.find(t=>same(t.id,cur.parent_task_id)); }
+      return false;
+    }
 
-      function cheer() {
-        const msg = CHEERS[Math.floor(Math.random() * CHEERS.length)];
-        setCheerMsg(msg);
-        setCheerKey(k => k + 1);
-        if (cheerTimer.current) clearTimeout(cheerTimer.current);
-        cheerTimer.current = setTimeout(() => setCheerMsg(null), 2400);
-      }
+    function branch(rootId){
+      const ids=new Set([sid(rootId)]); let changed=true;
+      while(changed){ changed=false; tasks.forEach(t=>{ if(t.parent_task_id&&ids.has(sid(t.parent_task_id))&&!ids.has(sid(t.id))){ ids.add(sid(t.id)); changed=true; } }); }
+      return ids;
+    }
 
-      const todayPretty = new Date().toLocaleDateString("en-US", {
-        weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "America/New_York"
+    function insertAfterParent(pId){ let i=tasks.findIndex(t=>same(t.id,pId))+1; while(i<tasks.length&&isDesc(tasks[i].id,pId)) i++; return i; }
+
+    function startSubtask(pId){ setForcedParent(pId); setSubtaskMode(true); setTimeout(()=>inputRef.current?.focus(),0); }
+
+    function handleSort(){
+      const sorted=[...tasks].sort((a,b)=>{
+        const pd=(PRI_ORDER[a.priority]??1)-(PRI_ORDER[b.priority]??1);
+        if(pd!==0) return pd;
+        const ca=categories.find(c=>same(c.id,a.category_id))?.name??"￿";
+        const cb=categories.find(c=>same(c.id,b.category_id))?.name??"￿";
+        return ca.localeCompare(cb);
       });
-
-      const allTasks = sections.flatMap(s => s.tasks || []);
-      const done     = allTasks.filter(t => t.completed).length;
-      const total    = allTasks.length;
-      const pct      = total > 0 ? Math.round((done / total) * 100) : 0;
-
-      const groupedArchive = {};
-      (archive || []).forEach(t => { (groupedArchive[t.date] ||= []).push(t); });
-      const archiveDays = Object.entries(groupedArchive)
-        .sort(([a],[b]) => b.localeCompare(a))
-        .map(([day, items]) => {
-          const bySec = {};
-          items.forEach(t => { (bySec[t.sname] ||= []).push(t); });
-          return { day, sections: Object.entries(bySec).sort(([a],[b]) => a.localeCompare(b)) };
-        });
-
-      async function addSection(e) {
-        e.preventDefault();
-        if (!newSectionName.trim()) return;
-        try {
-          const { data, error } = await supabase.from("sections")
-            .insert([{ user_id: user.id, name: newSectionName.trim(), order_index: sections.length }]).select();
-          if (error) throw error;
-          const next = [...sections, { ...data[0], tasks: [] }];
-          setSections(next); dataCache.set(user.id, next);
-          setNewSectionName(""); setShowNewSection(false);
-        } catch (e) { setError("Failed to create section: " + e.message); }
-      }
-
-      async function deleteSection(id) {
-        if (!confirm("Delete this section and all its tasks?")) return;
-        try {
-          const { error } = await supabase.from("sections").delete().eq("id", id);
-          if (error) throw error;
-          const next = sections.filter(s => s.id !== id);
-          setSections(next); dataCache.set(user.id, next);
-        } catch (e) { setError("Failed to delete section: " + e.message); }
-      }
-
-      async function moveSection(id, dir) {
-        const idx = sections.findIndex(s => s.id === id);
-        const ti  = idx + dir;
-        if (idx < 0 || ti < 0 || ti >= sections.length) return;
-        const a = sections[idx], b = sections[ti];
-        const ao = a.order_index ?? idx, bo = b.order_index ?? ti;
-        const next = sections.map(s => {
-          if (s.id === a.id) return {...s, order_index: bo};
-          if (s.id === b.id) return {...s, order_index: ao};
-          return s;
-        }).sort((x,y) => x.order_index - y.order_index);
-        setSections(next); dataCache.set(user.id, next);
-        try {
-          await Promise.all([
-            supabase.from("sections").update({ order_index: bo }).eq("id", a.id),
-            supabase.from("sections").update({ order_index: ao }).eq("id", b.id)
-          ]);
-        } catch (e) { setError("Failed to reorder: " + e.message); }
-      }
-
-      return (
-        <>
-          <div className="greeting">{greeting()}, Rachel!</div>
-          <div className="date-tag">{todayPretty}</div>
-
-          {total > 0 && (
-            <div className="progress-wrap">
-              <div className="progress-label">
-                <span>{pct === 100 ? "All done today!" : "Today's progress"}</span>
-                <strong>{done} of {total} done</strong>
-              </div>
-              <div className="progress-track">
-                <div className="progress-fill" style={{width: `${pct}%`}} />
-              </div>
-            </div>
-          )}
-
-          <div className="action-bar">
-            <button className="btn primary" onClick={() => setShowNewSection(!showNewSection)}>+ Section</button>
-            <button className="btn ghost"   onClick={() => loadSections(user.id, true)}>Refresh</button>
-            <button className="btn ghost"   onClick={loadArchive}>{showArchive ? "Hide History" : "History"}</button>
-            <button className="btn ghost"   onClick={applyUndo} disabled={!undoStack.length}
-              title={undoStack.length ? `Undo: ${undoStack[undoStack.length-1].label}` : "Nothing to undo"}>Undo</button>
-            <button className="btn ghost"   onClick={() => supabase.auth.signOut()} style={{marginLeft:"auto"}}>Sign Out</button>
-          </div>
-
-          {showNewSection && (
-            <div className="card">
-              <form onSubmit={addSection}>
-                <label>New Section Name</label>
-                <input className="in" type="text" placeholder="e.g. Morning Routine" autoFocus
-                  value={newSectionName} onChange={e => setNewSectionName(e.target.value)} />
-                <div className="form-row">
-                  <button className="btn primary" type="submit">Create</button>
-                  <button className="btn ghost" type="button" onClick={() => setShowNewSection(false)}>Cancel</button>
-                </div>
-              </form>
-            </div>
-          )}
-
-          {showArchive && archive && (
-            <div className="card">
-              <div className="section-head">
-                <div className="section-title" style={{color:"var(--gold)"}}>History — Last 30 Days</div>
-              </div>
-              {!archiveDays.length ? (
-                <div style={{color:"var(--muted)",fontSize:14}}>No history yet.</div>
-              ) : archiveDays.map(({day, sections: daySecs}) => (
-                <div key={day}>
-                  <div className="history-date">{day}</div>
-                  {daySecs.map(([sname, items]) => (
-                    <div key={sname} style={{marginBottom:8}}>
-                      <div style={{color:"var(--muted)",fontSize:12,fontWeight:600,marginBottom:4}}>{sname}</div>
-                      <ul className="tasks">
-                        {items.map((t, i) => {
-                          const { label } = parseTask(t.text);
-                          return (
-                            <li key={i} className="task" style={{opacity:0.85}}>
-                              <span className="task-text" style={{textDecoration: t.completed ? "line-through" : "none"}}>{label}</span>
-                              <div className="meta">
-                                <span className={`small-badge ${t.template_id ? "badge-recurring" : "badge-today"}`}>
-                                  {t.template_id ? "Recurring" : "Today"}
-                                </span>
-                                <span className={`small-badge ${t.completed ? "badge-done" : "badge-open"}`}>
-                                  {t.completed ? "Done" : "Open"}
-                                </span>
-                              </div>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {!sections.length && (
-            <div className="card peach">No sections yet. Tap <strong>+ Section</strong> to get started.</div>
-          )}
-          {sections.length > 0 && total === 0 && (
-            <div className="card peach">No tasks for today yet — add one below!</div>
-          )}
-
-          {sections.map(section => (
-            <div className="card" key={section.id} id={`section-${section.id}`}>
-              <SectionComponent
-                user={user} section={section} sections={sections} setSections={setSections}
-                deleteSection={deleteSection} moveSection={moveSection}
-                setError={setError} pushUndo={pushUndo} onComplete={cheer}
-              />
-            </div>
-          ))}
-
-          {cheerMsg && (
-            <div className="celebrate-toast" key={cheerKey}>{cheerMsg}</div>
-          )}
-        </>
-      );
+      const normed=reindex(sorted); applyTasks(normed);
+      persistOrder(normed).catch(e=>setError("Sort sync failed: "+e.message));
     }
 
-    // ─── Section ─────────────────────────────────────────────────────────────────
+    async function addTask(e){
+      e.preventDefault();
+      const labelText=newText.trim(); if(!labelText) return;
+      const text=buildTask(labelText,newEstimate);
+      const prev=tasks;
+      const last=tasks[tasks.length-1];
+      const parentId=forcedParent||(subtaskMode&&last?(last.parent_task_id||last.id):null);
+      const parentTask=parentId?tasks.find(t=>same(t.id,parentId)):null;
+      const parentTplId=parentTask?.template_id||null;
+      const insertAt=parentId?insertAfterParent(parentId):tasks.length;
+      const catId=newCategoryId||null;
 
-    function SectionComponent({ user, section, sections, setSections, deleteSection, moveSection, setError, pushUndo, onComplete }) {
-      const [tasks, setTasks]                       = useState(section.tasks || []);
-      const [newText, setNewText]                   = useState("");
-      const [newEstimate, setNewEstimate]           = useState(null);
-      const [taskType, setTaskType]                 = useState("daily");
-      const [subtaskMode, setSubtaskMode]           = useState(false);
-      const [forcedParent, setForcedParent]         = useState(null);
-      const [draggedId, setDraggedId]               = useState(null);
-      const [dragOverId, setDragOverId]             = useState(null);
-      const [dropAbove, setDropAbove]               = useState(true);
-      const inputRef    = useRef(null);
-      const sectionsRef = useRef(sections);
-      const curDate     = today();
+      try{
+        let created;
+        const base={section_id:section.id,user_id:user.id,text,completed:false,date:curDate,
+          parent_task_id:parentId,order_index:insertAt,priority:newPriority,category_id:catId};
 
-      useEffect(() => setTasks(section.tasks || []), [section.tasks]);
-      useEffect(() => { sectionsRef.current = sections; }, [sections]);
-
-      const sid = id => String(id);
-      const same = (a, b) => sid(a) === sid(b);
-
-      function applyTasks(next) {
-        setTasks(next);
-        const nextSecs = sectionsRef.current.map(s => same(s.id, section.id) ? {...s, tasks: next} : s);
-        setSections(nextSecs);
-        dataCache.set(user.id, nextSecs);
-      }
-
-      function reindex(list) { return list.map((t, i) => ({...t, order_index: i})); }
-
-      async function persistOrder(list) {
-        const ups = [];
-        for (const t of list) {
-          ups.push(supabase.from("tasks").update({ order_index: t.order_index }).eq("id", t.id));
-          if (t.template_id) ups.push(supabase.from("task_templates").update({ order_index: t.order_index }).eq("id", t.template_id));
+        if(taskType==="daily"){
+          const {data:tpl,error:te}=await sb.from("task_templates")
+            .insert([{section_id:section.id,user_id:user.id,text,parent_task_id:parentTplId,
+              order_index:insertAt,priority:newPriority,category_id:catId}]).select("id");
+          if(te) throw te;
+          const {data,error}=await sb.from("tasks").insert([{...base,template_id:tpl[0].id}]).select();
+          if(error) throw error; created=data[0];
+        }else{
+          const {data,error}=await sb.from("tasks").insert([{...base,template_id:null}]).select();
+          if(error) throw error; created=data[0];
         }
-        await Promise.all(ups);
-      }
 
-      function isDesc(candidateId, ancestorId) {
-        let cur = tasks.find(t => same(t.id, candidateId));
-        const seen = new Set();
-        while (cur?.parent_task_id) {
-          const k = sid(cur.id);
-          if (seen.has(k)) break;
-          seen.add(k);
-          if (same(cur.parent_task_id, ancestorId)) return true;
-          cur = tasks.find(t => same(t.id, cur.parent_task_id));
-        }
-        return false;
-      }
+        const next=[...tasks]; next.splice(insertAt,0,created);
+        const normed=reindex(next); applyTasks(normed); await persistOrder(normed);
 
-      function branch(rootId) {
-        const ids = new Set([sid(rootId)]);
-        let changed = true;
-        while (changed) {
-          changed = false;
-          tasks.forEach(t => {
-            if (t.parent_task_id && ids.has(sid(t.parent_task_id)) && !ids.has(sid(t.id))) {
-              ids.add(sid(t.id)); changed = true;
-            }
-          });
-        }
-        return ids;
-      }
-
-      function insertAfterParent(parentId) {
-        const pi = tasks.findIndex(t => same(t.id, parentId));
-        if (pi < 0) return tasks.length;
-        let i = pi + 1;
-        while (i < tasks.length && isDesc(tasks[i].id, parentId)) i++;
-        return i;
-      }
-
-      function startSubtask(parentId) {
-        setForcedParent(parentId);
-        setSubtaskMode(true);
-        setTimeout(() => inputRef.current?.focus(), 0);
-      }
-
-      async function addTask(e) {
-        e.preventDefault();
-        const labelText = newText.trim();
-        if (!labelText) return;
-        const text = buildTask(labelText, newEstimate);
-        const prev = tasks;
-        const last = tasks[tasks.length - 1];
-        const parentId = forcedParent || (subtaskMode && last ? (last.parent_task_id || last.id) : null);
-        const parentTask = parentId ? tasks.find(t => same(t.id, parentId)) : null;
-        const parentTplId = parentTask?.template_id || null;
-        const insertAt = parentId ? insertAfterParent(parentId) : tasks.length;
-
-        try {
-          let created;
-          if (taskType === "daily") {
-            const { data: tpl, error: te } = await supabase.from("task_templates")
-              .insert([{ section_id: section.id, user_id: user.id, text, parent_task_id: parentTplId, order_index: insertAt }]).select("id");
-            if (te) throw te;
-            const { data, error } = await supabase.from("tasks")
-              .insert([{ section_id: section.id, user_id: user.id, text, completed: false, date: curDate, template_id: tpl[0].id, parent_task_id: parentId, order_index: insertAt }]).select();
-            if (error) throw error;
-            created = data[0];
-          } else {
-            const { data, error } = await supabase.from("tasks")
-              .insert([{ section_id: section.id, user_id: user.id, text, completed: false, date: curDate, template_id: null, parent_task_id: parentId, order_index: insertAt }]).select();
-            if (error) throw error;
-            created = data[0];
-          }
-
-          const next = [...tasks]; next.splice(insertAt, 0, created);
-          const normed = reindex(next);
-          applyTasks(normed); await persistOrder(normed);
-
-          pushUndo(`Add "${labelText}"`, async () => {
-            await supabase.from("tasks").delete().eq("id", created.id).eq("user_id", user.id);
-            if (created.template_id) await supabase.from("task_templates").delete().eq("id", created.template_id).eq("user_id", user.id);
-            applyTasks(prev);
-          });
-
-          setNewText(""); setNewEstimate(null); setSubtaskMode(false); setForcedParent(null);
-        } catch (e) { setError("Failed to add task: " + e.message); }
-      }
-
-      async function toggleTask(taskId, completed) {
-        const prev = tasks;
-        const txt = prev.find(t => same(t.id, taskId))?.text ?? "";
-        applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, completed} : t));
-        if (completed) onComplete();
-        pushUndo(`${completed ? "Complete" : "Uncomplete"} "${parseTask(txt).label}"`, async () => {
-          await supabase.from("tasks").update({ completed: !completed }).eq("id", taskId).eq("user_id", user.id);
+        pushUndo(`Add "${labelText}"`,async()=>{
+          await sb.from("tasks").delete().eq("id",created.id).eq("user_id",user.id);
+          if(created.template_id) await sb.from("task_templates").delete().eq("id",created.template_id).eq("user_id",user.id);
           applyTasks(prev);
         });
-        try {
-          const { data, error } = await supabase.from("tasks").update({ completed }).eq("id", taskId).eq("user_id", user.id).select("id").maybeSingle();
-          if (error) throw error;
-          if (!data) throw new Error("Task not updated.");
-        } catch (e) { applyTasks(prev); setError("Failed to update: " + e.message); }
-      }
 
-      async function deleteTask(taskId) {
-        const ids = branch(taskId);
-        const toDelete = tasks.filter(t => ids.has(sid(t.id)));
-        if (!toDelete.length) return;
-        const tplIds = Array.from(new Set(toDelete.map(t => t.template_id).filter(Boolean)));
-        let tplsToRestore = [];
-        if (tplIds.length) {
-          const { data } = await supabase.from("task_templates").select("*").in("id", tplIds).eq("user_id", user.id);
-          tplsToRestore = data || [];
+        setNewText(""); setNewEstimate(null); setNewPriority("medium"); setNewCatId("");
+        setSubtaskMode(false); setForcedParent(null);
+      }catch(e){ setError("Failed to add task: "+e.message); }
+    }
+
+    async function toggleTask(taskId,completed){
+      const prev=tasks;
+      const txt=prev.find(t=>same(t.id,taskId))?.text??"";
+      applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,completed}:t));
+      if(completed) onComplete();
+      pushUndo(`${completed?"Complete":"Uncomplete"} "${parseTask(txt).label}"`,async()=>{
+        await sb.from("tasks").update({completed:!completed}).eq("id",taskId).eq("user_id",user.id);
+        applyTasks(prev);
+      });
+      try{
+        const {data,error}=await sb.from("tasks").update({completed}).eq("id",taskId).eq("user_id",user.id).select("id").maybeSingle();
+        if(error) throw error; if(!data) throw new Error("Task not updated.");
+      }catch(e){ applyTasks(prev); setError("Failed to update: "+e.message); }
+    }
+
+    async function deleteTask(taskId){
+      const ids=branch(taskId);
+      const toDel=tasks.filter(t=>ids.has(sid(t.id))); if(!toDel.length) return;
+      const tplIds=Array.from(new Set(toDel.map(t=>t.template_id).filter(Boolean)));
+      let tplsBack=[];
+      if(tplIds.length){ const {data}=await sb.from("task_templates").select("*").in("id",tplIds).eq("user_id",user.id); tplsBack=data||[]; }
+      const prev=tasks; applyTasks(tasks.filter(t=>!ids.has(sid(t.id))));
+      const rootTxt=toDel.find(t=>same(t.id,taskId))?.text??"task";
+      pushUndo(`Delete "${parseTask(rootTxt).label}"`,async()=>{
+        if(tplsBack.length) await sb.from("task_templates").insert(tplsBack);
+        await sb.from("tasks").insert(toDel.map(t=>({...t,user_id:user.id})));
+        applyTasks(prev);
+      });
+      try{
+        const {error}=await sb.from("tasks").delete().in("id",Array.from(ids)).eq("user_id",user.id);
+        if(error) throw error;
+        if(tplIds.length){ const {error:te}=await sb.from("task_templates").delete().in("id",tplIds).eq("user_id",user.id); if(te) throw te; }
+      }catch(e){ applyTasks(prev); setError("Failed to delete: "+e.message); }
+    }
+
+    async function updateType(taskId,nextType){
+      const task=tasks.find(t=>same(t.id,taskId)); if(!task) return;
+      const isDaily=Boolean(task.template_id);
+      if((nextType==="daily"&&isDaily)||(nextType==="one-time"&&!isDaily)) return;
+      const prev=tasks;
+      if(nextType==="one-time"){
+        applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,template_id:null}:t));
+        try{
+          await sb.from("tasks").update({template_id:null}).eq("id",taskId).eq("user_id",user.id);
+          await sb.from("task_templates").delete().eq("id",task.template_id).eq("user_id",user.id);
+        }catch(e){ applyTasks(prev); setError("Switch failed: "+e.message); }
+        return;
+      }
+      let newTplId=null;
+      try{
+        const pt=task.parent_task_id?tasks.find(t=>same(t.id,task.parent_task_id)):null;
+        const {data:td,error:te}=await sb.from("task_templates")
+          .insert([{section_id:task.section_id,user_id:user.id,text:task.text,
+            parent_task_id:pt?.template_id||null,order_index:task.order_index||0,
+            priority:task.priority||"medium",category_id:task.category_id||null}]).select("id").single();
+        if(te) throw te; newTplId=td.id;
+        applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,template_id:newTplId}:t));
+        await sb.from("tasks").update({template_id:newTplId}).eq("id",taskId).eq("user_id",user.id);
+      }catch(e){
+        if(newTplId){ try{ await sb.from("task_templates").delete().eq("id",newTplId).eq("user_id",user.id); }catch{} }
+        applyTasks(prev); setError("Switch failed: "+e.message);
+      }
+    }
+
+    async function updateParent(taskId,parentId){
+      const task=tasks.find(t=>same(t.id,taskId));
+      try{
+        if(parentId&&isDesc(parentId,taskId)){ setError("Cannot parent to a descendant."); return; }
+        await sb.from("tasks").update({parent_task_id:parentId}).eq("id",taskId);
+        if(task?.template_id){
+          const pt=parentId?tasks.find(t=>same(t.id,parentId)):null;
+          await sb.from("task_templates").update({parent_task_id:pt?.template_id||null}).eq("id",task.template_id);
         }
-        const prev = tasks;
-        applyTasks(tasks.filter(t => !ids.has(sid(t.id))));
-        const rootText = toDelete.find(t => same(t.id, taskId))?.text ?? "task";
-        pushUndo(`Delete "${parseTask(rootText).label}"`, async () => {
-          if (tplsToRestore.length) await supabase.from("task_templates").insert(tplsToRestore);
-          await supabase.from("tasks").insert(toDelete.map(t => ({...t, user_id: user.id})));
-          applyTasks(prev);
-        });
-        try {
-          const { error } = await supabase.from("tasks").delete().in("id", Array.from(ids)).eq("user_id", user.id);
-          if (error) throw error;
-          if (tplIds.length) {
-            const { error: te } = await supabase.from("task_templates").delete().in("id", tplIds).eq("user_id", user.id);
-            if (te) throw te;
-          }
-        } catch (e) { applyTasks(prev); setError("Failed to delete: " + e.message); }
-      }
+        applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,parent_task_id:parentId}:t));
+      }catch(e){ setError("Failed to update subtask: "+e.message); }
+    }
 
-      async function updateType(taskId, nextType) {
-        const task = tasks.find(t => same(t.id, taskId));
-        if (!task) return;
-        const isDaily = Boolean(task.template_id);
-        if ((nextType === "daily" && isDaily) || (nextType === "one-time" && !isDaily)) return;
-        const prev = tasks;
+    async function updatePriority(taskId,priority){
+      const prev=tasks; applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,priority}:t));
+      try{
+        await sb.from("tasks").update({priority}).eq("id",taskId).eq("user_id",user.id);
+        const task=prev.find(t=>same(t.id,taskId));
+        if(task?.template_id) await sb.from("task_templates").update({priority}).eq("id",task.template_id);
+      }catch(e){ applyTasks(prev); setError("Failed to update priority: "+e.message); }
+    }
 
-        if (nextType === "one-time") {
-          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, template_id: null} : t));
-          try {
-            await supabase.from("tasks").update({ template_id: null }).eq("id", taskId).eq("user_id", user.id);
-            await supabase.from("task_templates").delete().eq("id", task.template_id).eq("user_id", user.id);
-          } catch (e) { applyTasks(prev); setError("Switch failed: " + e.message); }
-          return;
-        }
+    async function updateCategory(taskId,categoryId){
+      const prev=tasks; applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,category_id:categoryId||null}:t));
+      try{
+        await sb.from("tasks").update({category_id:categoryId||null}).eq("id",taskId).eq("user_id",user.id);
+        const task=prev.find(t=>same(t.id,taskId));
+        if(task?.template_id) await sb.from("task_templates").update({category_id:categoryId||null}).eq("id",task.template_id);
+      }catch(e){ applyTasks(prev); setError("Failed to update category: "+e.message); }
+    }
 
-        let newTplId = null;
-        try {
-          const pt = task.parent_task_id ? tasks.find(t => same(t.id, task.parent_task_id)) : null;
-          const { data: td, error: te } = await supabase.from("task_templates")
-            .insert([{ section_id: task.section_id, user_id: user.id, text: task.text, parent_task_id: pt?.template_id || null, order_index: task.order_index || 0 }])
-            .select("id").single();
-          if (te) throw te;
-          newTplId = td.id;
-          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, template_id: newTplId} : t));
-          await supabase.from("tasks").update({ template_id: newTplId }).eq("id", taskId).eq("user_id", user.id);
-        } catch (e) {
-          if (newTplId) { try { await supabase.from("task_templates").delete().eq("id", newTplId).eq("user_id", user.id); } catch {} }
-          applyTasks(prev); setError("Switch failed: " + e.message);
-        }
-      }
+    async function updateText(taskId,newTxt){
+      const text=newTxt.trim(); if(!text) return;
+      try{
+        await sb.from("tasks").update({text}).eq("id",taskId);
+        const task=tasks.find(t=>same(t.id,taskId));
+        if(task?.template_id) await sb.from("task_templates").update({text}).eq("id",task.template_id);
+        applyTasks(tasks.map(t=>same(t.id,taskId)?{...t,text}:t));
+      }catch(e){ setError("Update failed: "+e.message); }
+    }
 
-      async function updateParent(taskId, parentId) {
-        const task = tasks.find(t => same(t.id, taskId));
-        try {
-          if (parentId && isDesc(parentId, taskId)) { setError("Cannot parent to a descendant."); return; }
-          await supabase.from("tasks").update({ parent_task_id: parentId }).eq("id", taskId);
-          if (task?.template_id) {
-            const pt = parentId ? tasks.find(t => same(t.id, parentId)) : null;
-            await supabase.from("task_templates").update({ parent_task_id: pt?.template_id || null }).eq("id", task.template_id);
-          }
-          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, parent_task_id: parentId} : t));
-        } catch (e) { setError("Failed to update subtask: " + e.message); }
-      }
+    async function moveToPos(fromId,toId,above){
+      if(same(fromId,toId)) return;
+      const prevNormed=reindex([...tasks]); const bIds=branch(fromId);
+      if(bIds.has(sid(toId))) return;
+      const bTasks=tasks.filter(t=>bIds.has(sid(t.id))); const others=tasks.filter(t=>!bIds.has(sid(t.id)));
+      const ti=others.findIndex(t=>same(t.id,toId)); if(ti<0) return;
+      const at=above?ti:ti+1;
+      const normed=reindex([...others.slice(0,at),...bTasks,...others.slice(at)]);
+      applyTasks(normed);
+      const txt=tasks.find(t=>same(t.id,fromId))?.text??"task";
+      pushUndo(`Move "${parseTask(txt).label}"`,async()=>{ applyTasks(prevNormed); await persistOrder(prevNormed); });
+      try{ await persistOrder(normed); }catch(e){ setError("Order sync failed: "+e.message); }
+    }
 
-      async function moveToPosition(fromId, toId, above) {
-        if (same(fromId, toId)) return;
-        const prevNormed = reindex([...tasks]);
-        const bIds = branch(fromId);
-        if (bIds.has(sid(toId))) return;
-        const branchTasks = tasks.filter(t => bIds.has(sid(t.id)));
-        const others      = tasks.filter(t => !bIds.has(sid(t.id)));
-        const ti = others.findIndex(t => same(t.id, toId));
-        if (ti < 0) return;
-        const at = above ? ti : ti + 1;
-        const normed = reindex([...others.slice(0, at), ...branchTasks, ...others.slice(at)]);
-        applyTasks(normed);
-        const txt = tasks.find(t => same(t.id, fromId))?.text ?? "task";
-        pushUndo(`Move "${parseTask(txt).label}"`, async () => { applyTasks(prevNormed); await persistOrder(prevNormed); });
-        try { await persistOrder(normed); } catch (e) { setError("Order sync failed: " + e.message); }
-      }
+    const TIME_OPTS=["5m","15m","30m","1h","2h"];
 
-      async function updateText(taskId, newTxt) {
-        const text = newTxt.trim();
-        if (!text) return;
-        try {
-          await supabase.from("tasks").update({ text }).eq("id", taskId);
-          const task = tasks.find(t => same(t.id, taskId));
-          if (task?.template_id) await supabase.from("task_templates").update({ text }).eq("id", task.template_id);
-          applyTasks(tasks.map(t => same(t.id, taskId) ? {...t, text} : t));
-        } catch (e) { setError("Update failed: " + e.message); }
-      }
+    function TaskComposer({inline}){
+      return(
+        <form className={inline?"subtask-form":""} onSubmit={addTask} style={{marginTop:inline?0:14}}>
+          <input className="in" ref={inputRef} type="text" value={newText}
+            placeholder={forcedParent||subtaskMode?"Add subtask…":"What do you need to do?"}
+            onChange={e=>setNewText(e.target.value)}/>
 
-      const TIME_OPTS = ["5m", "15m", "30m", "1h", "2h"];
-
-      function TaskComposer({ inline }) {
-        return (
-          <form className={inline ? "subtask-form" : ""} onSubmit={addTask} style={{marginTop: inline ? 0 : 14}}>
-            <input className="in" ref={inputRef} type="text" value={newText}
-              placeholder={forcedParent || subtaskMode ? "Add subtask…" : "What do you need to do?"}
-              onChange={e => setNewText(e.target.value)}
-            />
-            <div className="time-picker">
-              {TIME_OPTS.map(opt => (
-                <button key={opt} type="button"
-                  className={`time-chip ${newEstimate === opt ? "active" : ""}`}
-                  onClick={() => setNewEstimate(newEstimate === opt ? null : opt)}>
-                  {opt}
-                </button>
-              ))}
-              <span style={{color:"var(--muted)",fontSize:12,lineHeight:"30px",marginLeft:2}}>estimate</span>
-            </div>
-            <div className="form-row">
-              <button type="button" className={`btn ${taskType === "daily" ? "primary" : "ghost"}`} onClick={() => setTaskType("daily")}>Recurring</button>
-              <button type="button" className={`btn ${taskType === "one-time" ? "primary" : "ghost"}`} onClick={() => setTaskType("one-time")}>Today Only</button>
-              <button type="submit" className="btn primary" style={{marginLeft:"auto"}}>Add</button>
-              {inline && (
-                <button type="button" className="btn ghost" onClick={() => { setForcedParent(null); setSubtaskMode(false); setNewText(""); setNewEstimate(null); }}>Cancel</button>
-              )}
-            </div>
-          </form>
-        );
-      }
-
-      return (
-        <>
-          <div className="section-head">
-            <div className="section-title">{section.name}</div>
-            <div className="meta">
-              <button className="icon-btn" title="Move up"   onClick={() => moveSection(section.id, -1)}>↑</button>
-              <button className="icon-btn" title="Move down" onClick={() => moveSection(section.id, 1)}>↓</button>
-              <button className="icon-btn" title="Delete"    onClick={() => deleteSection(section.id)} style={{color:"var(--red)"}}>×</button>
-            </div>
-          </div>
-
-          <ul className="tasks">
-            {tasks.map(task => (
-              <React.Fragment key={task.id}>
-                <TaskItem
-                  task={task}
-                  toggleTask={toggleTask} deleteTask={deleteTask}
-                  updateText={updateText}  updateParent={updateParent}
-                  updateType={updateType}  startSubtask={startSubtask}
-                  draggedId={draggedId} dragOverId={dragOverId} dropAbove={dropAbove}
-                  onDragStart={id => setDraggedId(id)}
-                  onDragOver={(id, ab) => { setDragOverId(id); setDropAbove(ab); }}
-                  onDragEnd={() => { setDraggedId(null); setDragOverId(null); }}
-                  onDrop={(tid, ab) => { if (draggedId && !same(draggedId, tid)) moveToPosition(draggedId, tid, ab); setDraggedId(null); setDragOverId(null); }}
-                />
-                {forcedParent && same(forcedParent, task.id) && <TaskComposer inline />}
-              </React.Fragment>
+          <div className="pri-picker">
+            {PRIORITIES.map(p=>(
+              <button key={p.value} type="button"
+                className={`pri-chip ${p.value}${newPriority===p.value?" active":""}`}
+                onClick={()=>setNewPriority(p.value)}>{p.label}</button>
             ))}
-          </ul>
+          </div>
 
-          {!forcedParent && <TaskComposer inline={false} />}
-        </>
+          <div className="time-picker">
+            {TIME_OPTS.map(o=>(
+              <button key={o} type="button" className={`time-chip${newEstimate===o?" active":""}`}
+                onClick={()=>setNewEstimate(newEstimate===o?null:o)}>{o}</button>
+            ))}
+            <span style={{color:"var(--muted)",fontSize:12,lineHeight:"30px",marginLeft:2}}>estimate</span>
+          </div>
+
+          {categories.length>0&&(
+            <div style={{marginTop:8}}>
+              <select className="in sm" value={newCategoryId} onChange={e=>setNewCatId(e.target.value)}>
+                <option value="">No category</option>
+                {categories.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </div>
+          )}
+
+          <div className="form-row">
+            <button type="button" className={`btn${taskType==="daily"?" primary":" ghost"}`} onClick={()=>setTaskType("daily")}>Recurring</button>
+            <button type="button" className={`btn${taskType==="one-time"?" primary":" ghost"}`} onClick={()=>setTaskType("one-time")}>Today Only</button>
+            <button type="submit" className="btn primary" style={{marginLeft:"auto"}}>Add</button>
+            {inline&&<button type="button" className="btn ghost" onClick={()=>{setForcedParent(null);setSubtaskMode(false);setNewText("");setNewEstimate(null);setNewPriority("medium");setNewCatId("");}}>Cancel</button>}
+          </div>
+        </form>
       );
     }
 
-    // ─── Task item ───────────────────────────────────────────────────────────────
+    const doneCnt=tasks.filter(t=>t.completed).length;
 
-    function TaskItem({ task, toggleTask, deleteTask, updateText, updateParent, updateType, startSubtask, draggedId, dragOverId, dropAbove, onDragStart, onDragOver, onDragEnd, onDrop }) {
-      const [editing, setEditing] = useState(false);
-      const [draft, setDraft]     = useState(task.text);
+    return(
+      <>
+        <div className="section-head">
+          <div>
+            <div className="section-title">{section.name}</div>
+            {tasks.length>0&&<div style={{color:"var(--muted)",fontSize:12,marginTop:2}}>{doneCnt}/{tasks.length} done</div>}
+          </div>
+          <div style={{display:"flex",gap:6}}>
+            {tasks.length>1&&<button className="btn ghost" style={{fontSize:12,padding:"6px 12px"}} onClick={handleSort}>↕ Sort</button>}
+          </div>
+        </div>
 
-      useEffect(() => setDraft(task.text), [task.text]);
-
-      const { label, estimate } = parseTask(task.text);
-
-      function save() {
-        const t = draft.trim();
-        if (t && t !== task.text) updateText(task.id, t);
-        setEditing(false);
-      }
-
-      const isDragging = String(draggedId) === String(task.id);
-      const isDragOver = String(dragOverId) === String(task.id) && !isDragging;
-
-      return (
-        <li
-          className={[
-            "task",
-            task.completed       ? "done"             : "",
-            task.parent_task_id  ? "sub"              : "",
-            isDragging           ? "dragging"          : "",
-            isDragOver && dropAbove  ? "drag-over-top"    : "",
-            isDragOver && !dropAbove ? "drag-over-bottom" : ""
-          ].join(" ")}
-          draggable
-          onDragStart={e => { e.dataTransfer.effectAllowed = "move"; onDragStart(task.id); }}
-          onDragOver={e => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; const r = e.currentTarget.getBoundingClientRect(); onDragOver(task.id, e.clientY < r.top + r.height / 2); }}
-          onDragEnd={onDragEnd}
-          onDrop={e => { e.preventDefault(); const r = e.currentTarget.getBoundingClientRect(); onDrop(task.id, e.clientY < r.top + r.height / 2); }}
-        >
-          <input className="check" type="checkbox" checked={Boolean(task.completed)} onChange={e => toggleTask(task.id, e.target.checked)} />
-
-          <div style={{flex:1, minWidth:0}}>
-            {editing ? (
-              <input className="in" value={draft} autoFocus style={{fontSize:15}}
-                onChange={e => setDraft(e.target.value)}
-                onBlur={save}
-                onKeyDown={e => { if (e.key === "Enter") save(); if (e.key === "Escape") { setDraft(task.text); setEditing(false); } }}
+        <ul className="tasks">
+          {tasks.map(task=>(
+            <React.Fragment key={task.id}>
+              <TaskItem
+                task={task} section={section} sections={sections}
+                categories={categories}
+                toggleTask={toggleTask} deleteTask={deleteTask}
+                updateText={updateText} updateParent={updateParent}
+                updateType={updateType} updatePriority={updatePriority}
+                updateCategory={updateCategory}
+                startSubtask={startSubtask}
+                moveTaskToSection={moveTaskToSection}
+                draggedId={draggedId} dragOverId={dragOverId} dropAbove={dropAbove}
+                onDragStart={id=>setDraggedId(id)}
+                onDragOver={(id,ab)=>{ setDragOverId(id); setDropAbove(ab); }}
+                onDragEnd={()=>{ setDraggedId(null); setDragOverId(null); }}
+                onDrop={(tid,ab)=>{ if(draggedId&&!same(draggedId,tid)) moveToPos(draggedId,tid,ab); setDraggedId(null); setDragOverId(null); }}
               />
-            ) : (
-              <span className="task-text" title="Tap to edit" onClick={() => setEditing(true)}>{label}</span>
-            )}
-            {estimate && !editing && (
-              <div><span className="time-badge">⏱ {estimate}</span></div>
-            )}
-          </div>
+              {forcedParent&&same(forcedParent,task.id)&&<TaskComposer inline/>}
+            </React.Fragment>
+          ))}
+        </ul>
 
-          <div className="meta">
-            <div className="drag-handle" title="Drag to reorder"><span/><span/><span/></div>
-            <button className="icon-btn" title="Add subtask" onClick={() => startSubtask(task.id)} style={{fontSize:18}}>+</button>
-            {task.parent_task_id && (
-              <button className="icon-btn" title="Remove indent" onClick={() => updateParent(task.id, null)} style={{fontSize:14}}>↰</button>
-            )}
-            <button className={`type-badge ${task.template_id ? "recurring" : "today"}`}
-              title={task.template_id ? "Recurring — click to make today-only" : "Today only — click to make recurring"}
-              onClick={() => updateType(task.id, task.template_id ? "one-time" : "daily")}>
-              {task.template_id ? "Recurring" : "Today"}
-            </button>
-            <button className="icon-btn" title="Delete task" onClick={() => deleteTask(task.id)} style={{color:"var(--red)",fontSize:18}}>×</button>
-          </div>
-        </li>
-      );
+        {!forcedParent&&<TaskComposer inline={false}/>}
+      </>
+    );
+  }
+
+  // ── TaskItem ─────────────────────────────────────────────────────────────────
+  function TaskItem({task,section,sections,categories,toggleTask,deleteTask,updateText,updateParent,updateType,updatePriority,updateCategory,startSubtask,moveTaskToSection,draggedId,dragOverId,dropAbove,onDragStart,onDragOver,onDragEnd,onDrop}){
+    const [editing,setEditing] = useState(false);
+    const [draft,setDraft]     = useState(task.text);
+
+    useEffect(()=>setDraft(task.text),[task.text]);
+
+    const {label,estimate} = parseTask(task.text);
+    const pri = PRIORITIES.find(p=>p.value===(task.priority||"medium"))||PRIORITIES[1];
+    const cat = categories.find(c=>String(c.id)===String(task.category_id));
+
+    function save(){ const t=draft.trim(); if(t&&t!==task.text) updateText(task.id,t); setEditing(false); }
+
+    function cyclePri(){
+      const order=["high","medium","low"];
+      const next=order[(order.indexOf(task.priority||"medium")+1)%order.length];
+      updatePriority(task.id,next);
     }
 
-    const root = window.ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
+    const isDragging = String(draggedId)===String(task.id);
+    const isDragOver = String(dragOverId)===String(task.id)&&!isDragging;
+
+    return(
+      <li
+        className={["task",task.completed?"done":"",task.parent_task_id?"sub":"",isDragging?"dragging":"",isDragOver&&dropAbove?"drag-over-top":"",isDragOver&&!dropAbove?"drag-over-bottom":""].join(" ")}
+        draggable onDragStart={e=>{e.dataTransfer.effectAllowed="move";onDragStart(task.id);}}
+        onDragOver={e=>{e.preventDefault();e.dataTransfer.dropEffect="move";const r=e.currentTarget.getBoundingClientRect();onDragOver(task.id,e.clientY<r.top+r.height/2);}}
+        onDragEnd={onDragEnd}
+        onDrop={e=>{e.preventDefault();const r=e.currentTarget.getBoundingClientRect();onDrop(task.id,e.clientY<r.top+r.height/2);}}
+      >
+        <div className="task-top">
+          <input className="check" type="checkbox" checked={Boolean(task.completed)} onChange={e=>toggleTask(task.id,e.target.checked)}/>
+          <div className="task-body">
+            {editing?(
+              <input className="in" value={draft} autoFocus style={{fontSize:15}}
+                onChange={e=>setDraft(e.target.value)}
+                onBlur={save}
+                onKeyDown={e=>{ if(e.key==="Enter") save(); if(e.key==="Escape"){setDraft(task.text);setEditing(false);} }}/>
+            ):(
+              <span className="task-text" title="Tap to edit" onClick={()=>setEditing(true)}>{label}</span>
+            )}
+
+            {!editing&&(
+              <div className="task-chips">
+                {/* Priority — click to cycle */}
+                <button className={`chip ${pri.cls}`} onClick={cyclePri} title="Click to change priority">{pri.label}</button>
+
+                {/* Category — select to change */}
+                <select className="pill-select" value={task.category_id||""} onChange={e=>updateCategory(task.id,e.target.value||null)}
+                  style={cat?{background:cat.color,color:"#fff",borderColor:cat.color}:{}}
+                  title="Change category">
+                  <option value="">No category</option>
+                  {categories.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}
+                </select>
+
+                {/* Section — select to move */}
+                <select className="pill-select" value={String(task.section_id)}
+                  onChange={e=>moveTaskToSection(task,section.id,e.target.value)}
+                  title="Move to section">
+                  {sections.map(s=><option key={s.id} value={String(s.id)}>{s.name}</option>)}
+                </select>
+
+                {/* Time estimate */}
+                {estimate&&<span className="time-badge">⏱ {estimate}</span>}
+
+                {/* Recurring / Today badge */}
+                <button className={`chip ${task.template_id?"type-recurring":"type-today"}`}
+                  onClick={()=>updateType(task.id,task.template_id?"one-time":"daily")}
+                  title={task.template_id?"Recurring — click to make today-only":"Today only — click to make recurring"}>
+                  {task.template_id?"Recurring":"Today"}
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div style={{display:"flex",gap:4,flexShrink:0,alignItems:"flex-start",marginTop:2}}>
+            <div className="drag-handle" title="Drag to reorder"><span/><span/><span/></div>
+            <button className="icon-btn" title="Add subtask" onClick={()=>startSubtask(task.id)} style={{fontSize:18}}>+</button>
+            {task.parent_task_id&&<button className="icon-btn" title="Remove indent" onClick={()=>updateParent(task.id,null)} style={{fontSize:14}}>↰</button>}
+            <button className="icon-btn" title="Delete task" onClick={()=>deleteTask(task.id)} style={{color:"var(--red)",fontSize:18}}>×</button>
+          </div>
+        </div>
+      </li>
+    );
+  }
+
+  const root = window.ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App/>);
+</script>
 </body>
 </html>
