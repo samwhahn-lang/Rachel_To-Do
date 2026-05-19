@@ -630,7 +630,17 @@
         const { data, error } = await supabase.from("sections")
           .insert([{ user_id: userId, name: "My Tasks", order_index: 0 }])
           .select("id,user_id,name,order_index").single();
-        if (error) throw error;
+        if (error) {
+          if (error.code === "23505") {
+            // Race condition: another call already created it — just fetch it
+            const { data: existing, error: fe } = await supabase.from("sections")
+              .select("id,user_id,name,order_index")
+              .eq("user_id", userId).order("order_index", { ascending: true }).limit(1).single();
+            if (fe) throw fe;
+            return existing;
+          }
+          throw error;
+        }
         return data;
       }
 
