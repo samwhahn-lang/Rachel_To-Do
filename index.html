@@ -43,168 +43,148 @@
 
     #root { max-width: 640px; margin: 0 auto; padding: 20px 16px 110px; }
 
-    /* ── Header ── */
-    .greeting  { color: var(--primary); font-size: clamp(1.5rem,5vw,2.2rem); font-weight: 800; letter-spacing:-.02em; text-align:center; margin-bottom:4px; }
-    .date-tag  { color: var(--muted); font-size:14px; text-align:center; margin-bottom:18px; }
+    .greeting  { color:var(--primary); font-size:clamp(1.5rem,5vw,2.2rem); font-weight:800; letter-spacing:-.02em; text-align:center; margin-bottom:4px; }
+    .date-tag  { color:var(--muted); font-size:14px; text-align:center; margin-bottom:18px; }
 
-    /* ── Progress ── */
-    .progress-wrap { background:var(--surface); border-radius:16px; box-shadow:0 1px 6px rgba(44,36,64,.07); margin-bottom:16px; padding:14px 16px; }
+    .progress-wrap  { background:var(--surface); border-radius:16px; box-shadow:0 1px 6px rgba(44,36,64,.07); margin-bottom:16px; padding:14px 16px; }
     .progress-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-bottom:8px; }
     .progress-label strong { color:var(--text); }
     .progress-track { background:var(--border); border-radius:99px; height:10px; overflow:hidden; }
     .progress-fill  { background:linear-gradient(90deg,var(--primary),var(--green)); border-radius:99px; height:100%; transition:width .5s ease; }
 
-    /* ── Action bar ── */
     .action-bar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; align-items:center; }
 
-    /* ── Cards ── */
     .card { background:var(--surface); border-radius:16px; box-shadow:0 1px 6px rgba(44,36,64,.07); margin-bottom:14px; padding:16px; }
-    .card.warn { border-left:4px solid var(--peach); }
+    .card.warn  { border-left:4px solid var(--peach); }
     .card.error { background:var(--red-light); border-left:4px solid var(--red); color:var(--red); font-size:14px; }
 
-    /* ── Buttons ── */
     .btn { background:var(--primary-light); border:none; border-radius:99px; color:var(--primary); cursor:pointer; font-family:inherit; font-size:13px; font-weight:600; padding:8px 16px; transition:background .15s,transform .1s; white-space:nowrap; }
-    .btn:hover   { background:var(--border); }
-    .btn:active  { transform:scale(.96); }
+    .btn:hover  { background:var(--border); }
+    .btn:active { transform:scale(.96); }
     .btn.primary { background:var(--primary); color:#fff; }
     .btn.primary:hover { background:#6a4dab; }
-    .btn.ghost   { background:transparent; border:1.5px solid var(--border); color:var(--muted); }
+    .btn.ghost  { background:transparent; border:1.5px solid var(--border); color:var(--muted); }
     .btn.ghost:hover { background:var(--surface2); color:var(--text); }
-    .btn.danger  { background:var(--red-light); color:var(--red); }
+    .btn.danger { background:var(--red-light); color:var(--red); }
     .btn:disabled { cursor:default; opacity:.4; }
 
-    /* ── Inputs ── */
     .in { background:var(--surface); border:1.5px solid var(--border); border-radius:12px; color:var(--text); font-family:inherit; font-size:15px; padding:11px 14px; transition:border-color .15s; width:100%; }
     .in:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(124,92,191,.12); outline:none; }
-    .in.sm    { font-size:13px; padding:8px 12px; }
-
+    .in.sm { font-size:13px; padding:8px 12px; }
     select.in { cursor:pointer; }
 
     label { color:var(--muted); display:block; font-size:13px; font-weight:600; margin-bottom:6px; }
-
     .form-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; align-items:center; }
 
-    /* ── Icon buttons ── */
     .icon-btn { align-items:center; background:transparent; border:1.5px solid var(--border); border-radius:10px; color:var(--muted); cursor:pointer; display:flex; font-size:16px; height:36px; justify-content:center; min-width:36px; transition:background .15s,border-color .15s,color .15s; }
     .icon-btn:hover { background:var(--surface2); border-color:var(--primary); color:var(--primary); }
 
-    /* ── Section head ── */
-    .section-head { align-items:center; display:flex; gap:8px; justify-content:space-between; margin-bottom:12px; }
+    .section-head  { align-items:center; display:flex; gap:8px; justify-content:space-between; margin-bottom:12px; }
     .section-title { color:var(--text); font-size:17px; font-weight:700; }
 
-    /* ── Tasks ── */
     .tasks { display:flex; flex-direction:column; gap:8px; list-style:none; }
 
     .task { background:var(--surface); border:1.5px solid var(--border); border-radius:14px; padding:12px 14px; transition:opacity .2s; }
     .task.sub      { background:var(--surface2); border-left:3px solid var(--primary); margin-left:20px; }
     .task.done     { opacity:.48; }
     .task.done .task-text { color:var(--muted); text-decoration:line-through; }
-    .task.dragging      { opacity:.3; }
-    .task.drag-over-top    { border-top:2.5px solid var(--primary); }
-    .task.drag-over-bottom { border-bottom:2.5px solid var(--primary); }
+    .task.dragging          { opacity:.3; }
+    .task.drag-over-top     { border-top:2.5px solid var(--primary); }
+    .task.drag-over-bottom  { border-bottom:2.5px solid var(--primary); }
 
-    .task-top { display:flex; align-items:flex-start; gap:10px; }
+    .task-top  { display:flex; align-items:flex-start; gap:10px; }
     .task-body { flex:1; min-width:0; }
-
     .task-text { cursor:pointer; font-size:15px; line-height:1.45; word-break:break-word; display:block; }
-
     .task-chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; align-items:center; }
 
     .check { accent-color:var(--primary); cursor:pointer; flex-shrink:0; height:24px; margin-top:2px; min-width:24px; width:24px; }
 
-    /* ── Chips / badges ── */
     .chip { border:none; border-radius:99px; cursor:pointer; font-family:inherit; font-size:11px; font-weight:700; padding:3px 10px; white-space:nowrap; line-height:1.6; }
-
     .chip.p-high   { background:var(--red-light);   color:var(--red); }
     .chip.p-medium { background:var(--gold-light);  color:var(--gold); }
     .chip.p-low    { background:var(--green-light); color:var(--green); }
-
     .chip.type-recurring { background:var(--green-light); color:var(--green); }
     .chip.type-today     { background:var(--peach-light);  color:var(--peach); }
+    .chip.add-time       { background:var(--surface2); color:var(--muted); }
 
-    .time-badge { background:var(--primary-light); border-radius:99px; color:var(--primary); display:inline-block; font-size:11px; font-weight:600; padding:3px 9px; }
+    .time-badge { background:var(--primary-light); border-radius:99px; color:var(--primary); display:inline-block; font-size:11px; font-weight:600; padding:3px 9px; cursor:pointer; border:none; font-family:inherit; line-height:1.6; }
 
-    /* category chip - bg/color set inline */
-    .cat-chip { border-radius:99px; font-size:11px; font-weight:700; padding:3px 10px; color:#fff; white-space:nowrap; cursor:pointer; border:none; font-family:inherit; line-height:1.6; }
-
-    /* ── Pill select (section mover + category changer) ── */
     .pill-select {
       appearance:none; -webkit-appearance:none;
       background:var(--surface2);
-      border:1.5px solid var(--border);
-      border-radius:99px;
-      color:var(--muted);
-      cursor:pointer;
-      font-family:inherit;
-      font-size:11px;
-      font-weight:700;
-      padding:3px 22px 3px 10px;
+      border:1.5px solid var(--border); border-radius:99px;
+      color:var(--muted); cursor:pointer;
+      font-family:inherit; font-size:11px; font-weight:700;
+      padding:3px 22px 3px 10px; line-height:1.6;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238f87b0'/%3E%3C/svg%3E");
-      background-repeat:no-repeat;
-      background-position:right 7px center;
-      line-height:1.6;
+      background-repeat:no-repeat; background-position:right 7px center;
     }
     .pill-select:focus { outline:none; border-color:var(--primary); }
 
-    /* ── Drag handle ── */
     .drag-handle { align-items:center; background:transparent; border:none; cursor:grab; display:flex; flex-direction:column; gap:3px; justify-content:center; padding:4px 6px; }
     .drag-handle span { background:var(--border); border-radius:2px; display:block; height:2px; width:14px; }
     .drag-handle:hover span { background:var(--primary); }
 
-    /* ── Subtask form indent ── */
     .subtask-form { margin:6px 0 6px 20px; }
 
-    /* ── Time picker ── */
     .time-picker { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
     .time-chip { background:var(--surface2); border:1.5px solid var(--border); border-radius:99px; color:var(--muted); cursor:pointer; font-family:inherit; font-size:12px; font-weight:600; padding:5px 12px; transition:all .15s; }
     .time-chip.active,.time-chip:hover { background:var(--primary-light); border-color:var(--primary); color:var(--primary); }
+    .time-chip.clear { background:var(--red-light); border-color:var(--red); color:var(--red); }
+    .time-chip.clear:hover { background:var(--red); color:#fff; }
 
-    /* ── Priority picker (form) ── */
     .pri-picker { display:flex; gap:6px; margin-top:8px; }
     .pri-chip { border-radius:99px; cursor:pointer; font-family:inherit; font-size:12px; font-weight:700; padding:5px 14px; border:1.5px solid transparent; transition:all .15s; }
-    .pri-chip.high   { background:var(--red-light);   color:var(--red);   border-color:transparent; }
-    .pri-chip.medium { background:var(--gold-light);  color:var(--gold);  border-color:transparent; }
-    .pri-chip.low    { background:var(--green-light); color:var(--green); border-color:transparent; }
+    .pri-chip.high   { background:var(--red-light);   color:var(--red); }
+    .pri-chip.medium { background:var(--gold-light);  color:var(--gold); }
+    .pri-chip.low    { background:var(--green-light); color:var(--green); }
     .pri-chip.active.high   { border-color:var(--red); }
     .pri-chip.active.medium { border-color:var(--gold); }
     .pri-chip.active.low    { border-color:var(--green); }
     .pri-chip:not(.active)  { opacity:.45; }
+
+    /* ── Floating undo ── */
+    .float-undo {
+      align-items:center; background:var(--text); border:none; border-radius:99px;
+      bottom:76px; box-shadow:0 4px 20px rgba(44,36,64,.28); color:var(--surface);
+      cursor:pointer; display:flex; font-family:inherit; font-size:14px; font-weight:700;
+      gap:6px; padding:11px 20px; position:fixed; right:16px; transition:transform .15s;
+      z-index:200;
+    }
+    .float-undo:hover { transform:scale(1.05); }
+    .float-undo:active { transform:scale(.97); }
+
+    /* ── Gear overlay (bottom sheet) ── */
+    .gear-overlay { background:rgba(0,0,0,.45); bottom:0; left:0; position:fixed; right:0; top:0; z-index:300; display:flex; align-items:flex-end; }
+    .gear-panel   { background:var(--surface); border-radius:20px 20px 0 0; max-height:85vh; overflow-y:auto; padding:24px 20px 40px; width:100%; }
+    .gear-title   { color:var(--primary); font-size:1.1rem; font-weight:800; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; }
+    .gear-section { font-weight:700; font-size:14px; color:var(--text); margin:20px 0 10px; padding-top:16px; border-top:1px solid var(--border); }
+    .gear-section:first-of-type { margin-top:0; padding-top:0; border-top:none; }
+
+    .cat-row  { align-items:center; display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+    .cat-dot  { border-radius:50%; flex-shrink:0; height:14px; width:14px; }
+    .swatches { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .swatch   { border-radius:50%; cursor:pointer; height:28px; width:28px; border:3px solid transparent; transition:transform .12s; }
+    .swatch:hover { transform:scale(1.15); }
+    .swatch.active { border-color:var(--text); }
 
     /* ── Auth ── */
     .auth { background:var(--surface); border-radius:20px; box-shadow:0 4px 24px rgba(44,36,64,.1); margin:40px auto; max-width:400px; padding:28px 24px; }
     .auth-title { color:var(--primary); font-size:1.8rem; font-weight:800; margin-bottom:4px; text-align:center; }
     .auth-sub   { color:var(--muted); font-size:14px; margin-bottom:24px; text-align:center; }
 
-    /* ── Settings overlay ── */
-    .settings-overlay { background:rgba(0,0,0,.45); bottom:0; left:0; position:fixed; right:0; top:0; z-index:300; display:flex; align-items:flex-end; }
-    .settings-panel   { background:var(--surface); border-radius:20px 20px 0 0; max-height:82vh; overflow-y:auto; padding:24px 20px 36px; width:100%; }
-    .settings-title   { color:var(--primary); font-size:1.2rem; font-weight:800; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; }
+    .loading { color:var(--muted); font-size:15px; padding:60px 30px; text-align:center; }
 
-    /* ── Color swatches ── */
-    .swatches { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
-    .swatch   { border-radius:50%; cursor:pointer; height:28px; width:28px; border:3px solid transparent; transition:transform .12s; }
-    .swatch:hover  { transform:scale(1.15); }
-    .swatch.active { border-color:var(--text); }
-
-    /* ── Category list item ── */
-    .cat-row { align-items:center; display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
-    .cat-dot  { border-radius:50%; flex-shrink:0; height:14px; width:14px; }
-
-    /* ── History ── */
-    .hist-date   { color:var(--gold); font-size:14px; font-weight:700; margin:12px 0 6px; }
+    .hist-date { color:var(--gold); font-size:14px; font-weight:700; margin:12px 0 6px; }
     .small-badge { border-radius:99px; font-size:11px; font-weight:600; padding:2px 8px; white-space:nowrap; }
 
-    /* ── Celebrate toast ── */
     @keyframes celebrate-in {
       0%   { opacity:0; transform:translate(-50%,16px) scale(.9); }
       18%  { opacity:1; transform:translate(-50%,-4px) scale(1.04); }
       80%  { opacity:1; transform:translate(-50%,-4px) scale(1); }
       100% { opacity:0; transform:translate(-50%,-4px) scale(1); }
     }
-    .celebrate-toast { animation:celebrate-in 2.4s ease-out forwards; background:var(--primary); border-radius:99px; bottom:90px; box-shadow:0 8px 32px rgba(124,92,191,.35); color:#fff; font-size:17px; font-weight:700; left:50%; padding:14px 28px; pointer-events:none; position:fixed; text-align:center; z-index:9999; }
-
-    /* ── Loading ── */
-    .loading { color:var(--muted); font-size:15px; padding:60px 30px; text-align:center; }
+    .celebrate-toast { animation:celebrate-in 2.4s ease-out forwards; background:var(--primary); border-radius:99px; bottom:140px; box-shadow:0 8px 32px rgba(124,92,191,.35); color:#fff; font-size:17px; font-weight:700; left:50%; padding:14px 28px; pointer-events:none; position:fixed; text-align:center; z-index:9999; }
 
     @media (max-width:600px) {
       #root { padding:16px 12px 110px; }
@@ -241,24 +221,22 @@
     auth:{ autoRefreshToken:true, persistSession:true, detectSessionInUrl:true, storage:ls }
   });
 
-  // ── Date utils ──────────────────────────────────────────────────────────────
+  // ── Utilities ────────────────────────────────────────────────────────────────
   function nyDate(d) {
     const p = new Intl.DateTimeFormat("en-CA",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(d);
     const v = Object.fromEntries(p.map(x=>[x.type,x.value]));
     return `${v.year}-${v.month}-${v.day}`;
   }
-  const today   = () => nyDate(new Date());
-  const daysAgo = n => { const d=new Date(); d.setDate(d.getDate()-n); return nyDate(d); };
+  const today    = () => nyDate(new Date());
+  const daysAgo  = n => { const d=new Date(); d.setDate(d.getDate()-n); return nyDate(d); };
   const greeting = () => { const h=new Date().getHours(); return h<12?"Good morning":h<17?"Good afternoon":"Good evening"; };
 
-  // ── Task text helpers ────────────────────────────────────────────────────────
   function parseTask(text) {
     const m = text.match(/\s*\[(\d+(?:m|h))\]$/);
     return m ? { label:text.slice(0,text.length-m[0].length).trim(), estimate:m[1] } : { label:text, estimate:null };
   }
   function buildTask(label,est) { return est ? `${label} [${est}]` : label; }
 
-  // ── Cache ────────────────────────────────────────────────────────────────────
   const mkCache = key => ({
     get(uid){ try{ const r=JSON.parse(ls.getItem(`${key}_${uid}`)); return r?.date===today()?r.payload:null; }catch{return null;} },
     set(uid,p){ try{ ls.setItem(`${key}_${uid}`,JSON.stringify({date:today(),payload:p})); }catch{} },
@@ -268,7 +246,7 @@
   const histCache = mkCache("rc_hist");
 
   // ── Constants ────────────────────────────────────────────────────────────────
-  const PERMANENT_SECTIONS = [
+  const DEFAULT_SECTIONS = [
     { name:"Today",     order_index:0 },
     { name:"This Week", order_index:1 },
     { name:"Mid-Term",  order_index:2 },
@@ -283,10 +261,11 @@
   const PRI_ORDER = { high:0, medium:1, low:2 };
 
   const SWATCH_COLORS = ["#7c5cbf","#e8874d","#52b788","#4db0e8","#e07070","#c99a2e","#3dbdbd","#b0547a"];
+  const TIME_OPTS = ["5m","15m","30m","1h","2h"];
 
   const CHEERS = ["Nice work! ✓","You did it!","Keep going!","One more down!","You're on a roll!","Amazing!","Yes!","That's the one!","Crushing it!","Well done!"];
 
-  // ── App ──────────────────────────────────────────────────────────────────────
+  // ── MainApp ──────────────────────────────────────────────────────────────────
   function App() { return <MainApp />; }
 
   function MainApp() {
@@ -339,27 +318,13 @@
       return ()=>{ clearTimeout(failsafe); clearInterval(midnightWatch); al?.subscription?.unsubscribe(); };
     },[]);
 
-    async function ensurePermanentSections(userId) {
-      // Remove any old non-permanent sections that have no tasks today
-      // (covers accounts created before the restructure)
-      const {data:nonPerm} = await sb.from("sections")
-        .select("id").eq("user_id",userId).eq("is_permanent",false);
-      if(nonPerm?.length){
-        const ids = nonPerm.map(s=>s.id);
-        const {data:occupiedTasks} = await sb.from("tasks")
-          .select("section_id").eq("user_id",userId).eq("date",today()).in("section_id",ids);
-        const occupiedIds = new Set((occupiedTasks||[]).map(t=>String(t.section_id)));
-        const emptyIds = ids.filter(id=>!occupiedIds.has(String(id)));
-        if(emptyIds.length) await sb.from("sections").delete().in("id",emptyIds);
-      }
-
-      // Upsert the 4 permanent sections — on order_index conflict, rename + mark permanent
-      const {error} = await sb.from("sections")
-        .upsert(
-          PERMANENT_SECTIONS.map(s=>({...s,user_id:userId,is_permanent:true})),
-          {onConflict:"user_id,order_index"}
-        );
-      if(error) throw error;
+    async function ensureDefaultSections(userId) {
+      const {data:existing} = await sb.from("sections").select("id").eq("user_id",userId).limit(1);
+      if(existing?.length) return;
+      const {error} = await sb.from("sections").insert(
+        DEFAULT_SECTIONS.map(s=>({...s,user_id:userId}))
+      );
+      if(error && error.code!=="23505") throw error;
     }
 
     async function ensureDaily(date,userId) {
@@ -389,22 +354,19 @@
       const byTpl = {};
       (existing||[]).forEach(t=>{ byTpl[String(t.template_id)]=t.id; });
       (created||[]).forEach(t=>{ byTpl[String(t.template_id)]=t.id; });
-      const parentUps = missing
+      const ups = missing
         .filter(t=>t.parent_task_id&&byTpl[String(t.parent_task_id)]&&byTpl[String(t.id)])
         .map(t=>sb.from("tasks").update({parent_task_id:byTpl[String(t.parent_task_id)]}).eq("id",byTpl[String(t.id)]));
-      if(parentUps.length) await Promise.all(parentUps);
+      if(ups.length) await Promise.all(ups);
     }
 
     async function loadCategories(userId) {
-      try {
+      try{
         const {data,error} = await sb.from("categories")
           .select("id,name,color,order_index").eq("user_id",userId).order("order_index",{ascending:true});
         if(error) throw error;
         setCategories(data||[]);
-      } catch(e) {
-        console.warn("loadCategories:",e.message);
-        setCategories([]);
-      }
+      }catch(e){ console.warn("loadCategories:",e.message); setCategories([]); }
     }
 
     async function loadSections(uid,force=false) {
@@ -415,11 +377,11 @@
         if(cached){ setSections(cached); if(cached.some(s=>(s.tasks||[]).length>0)) return; }
       }
 
-      await ensurePermanentSections(uid);
+      await ensureDefaultSections(uid);
 
       const {data:secs,error:se} = await sb.from("sections")
-        .select("id,user_id,name,order_index,is_permanent")
-        .eq("user_id",uid).eq("is_permanent",true).order("order_index",{ascending:true});
+        .select("id,user_id,name,order_index")
+        .eq("user_id",uid).order("order_index",{ascending:true});
       if(se) throw se;
 
       const {data:tasks,error:te} = await sb.from("tasks")
@@ -480,10 +442,10 @@
 
   // ── Auth ─────────────────────────────────────────────────────────────────────
   function AuthScreen({setError}) {
-    const [isLogin,setIsLogin]   = useState(true);
-    const [email,setEmail]       = useState("");
-    const [pw,setPw]             = useState("");
-    const [loading,setLoading]   = useState(false);
+    const [isLogin,setIsLogin] = useState(true);
+    const [email,setEmail]     = useState("");
+    const [pw,setPw]           = useState("");
+    const [loading,setLoading] = useState(false);
     const [localErr,setLocalErr] = useState(null);
 
     async function handleAuth(e){
@@ -516,10 +478,11 @@
 
   // ── TaskApp ──────────────────────────────────────────────────────────────────
   function TaskApp({user,sections,setSections,categories,setCategories,setError,loadSections,loadArchive,archive,showArchive,loadCategories}) {
-    const [showSettings,setShowSettings] = useState(false);
-    const [undoStack,setUndoStack]       = useState([]);
-    const [cheerMsg,setCheerMsg]         = useState(null);
-    const [cheerKey,setCheerKey]         = useState(0);
+    const [showNewSection,setShowNewSection] = useState(false);
+    const [newSectionName,setNewSectionName] = useState("");
+    const [undoStack,setUndoStack]           = useState([]);
+    const [cheerMsg,setCheerMsg]             = useState(null);
+    const [cheerKey,setCheerKey]             = useState(0);
     const cheerTimer = useRef(null);
 
     function pushUndo(label,fn){ setUndoStack(p=>[...p.slice(-4),{label,undo:fn}]); }
@@ -534,7 +497,6 @@
       cheerTimer.current=setTimeout(()=>setCheerMsg(null),2400);
     }
 
-    // Move task from one section to another
     async function moveTaskToSection(task,fromSectionId,toSectionId){
       if(String(fromSectionId)===String(toSectionId)) return;
       try{
@@ -548,6 +510,58 @@
         });
         setSections(next); dataCache.set(user.id,next);
       }catch(e){ setError("Failed to move task: "+e.message); }
+    }
+
+    async function addSection(e){
+      e.preventDefault();
+      if(!newSectionName.trim()) return;
+      try{
+        const {data,error} = await sb.from("sections")
+          .insert([{user_id:user.id,name:newSectionName.trim(),order_index:sections.length}]).select();
+        if(error) throw error;
+        const next=[...sections,{...data[0],tasks:[]}];
+        setSections(next); dataCache.set(user.id,next);
+        setNewSectionName(""); setShowNewSection(false);
+      }catch(e){ setError("Failed to create section: "+e.message); }
+    }
+
+    async function deleteSection(sectionId){
+      if(!confirm("Delete this section and all its tasks?")) return;
+      try{
+        const {error}=await sb.from("sections").delete().eq("id",sectionId).eq("user_id",user.id);
+        if(error) throw error;
+        const next=sections.filter(s=>String(s.id)!==String(sectionId));
+        setSections(next); dataCache.set(user.id,next);
+      }catch(e){ setError("Failed to delete section: "+e.message); }
+    }
+
+    async function renameSection(sectionId,newName){
+      if(!newName.trim()) return;
+      try{
+        await sb.from("sections").update({name:newName.trim()}).eq("id",sectionId).eq("user_id",user.id);
+        const next=sections.map(s=>String(s.id)===String(sectionId)?{...s,name:newName.trim()}:s);
+        setSections(next); dataCache.set(user.id,next);
+      }catch(e){ setError("Failed to rename section: "+e.message); }
+    }
+
+    async function moveSection(sectionId,dir){
+      const idx=sections.findIndex(s=>String(s.id)===String(sectionId));
+      const ti=idx+dir;
+      if(idx<0||ti<0||ti>=sections.length) return;
+      const a=sections[idx], b=sections[ti];
+      const ao=a.order_index??idx, bo=b.order_index??ti;
+      const next=sections.map(s=>{
+        if(String(s.id)===String(a.id)) return {...s,order_index:bo};
+        if(String(s.id)===String(b.id)) return {...s,order_index:ao};
+        return s;
+      }).sort((x,y)=>x.order_index-y.order_index);
+      setSections(next); dataCache.set(user.id,next);
+      try{
+        await Promise.all([
+          sb.from("sections").update({order_index:bo}).eq("id",a.id),
+          sb.from("sections").update({order_index:ao}).eq("id",b.id)
+        ]);
+      }catch(e){ setError("Failed to reorder: "+e.message); }
     }
 
     const todayPretty = new Date().toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric",timeZone:"America/New_York"});
@@ -579,13 +593,25 @@
         )}
 
         <div className="action-bar">
-          <button className="btn primary" onClick={()=>setShowSettings(true)}>⚙ Settings</button>
+          <button className="btn primary" onClick={()=>setShowNewSection(!showNewSection)}>+ Section</button>
           <button className="btn ghost"   onClick={()=>loadSections(user.id,true)}>Refresh</button>
           <button className="btn ghost"   onClick={loadArchive}>{showArchive?"Hide History":"History"}</button>
-          <button className="btn ghost"   onClick={applyUndo} disabled={!undoStack.length}
-            title={undoStack.length?`Undo: ${undoStack[undoStack.length-1].label}`:"Nothing to undo"}>Undo</button>
           <button className="btn ghost"   onClick={()=>sb.auth.signOut()} style={{marginLeft:"auto"}}>Sign Out</button>
         </div>
+
+        {showNewSection&&(
+          <div className="card">
+            <form onSubmit={addSection}>
+              <label>New Section Name</label>
+              <input className="in" type="text" placeholder="e.g. Evening Routine" autoFocus
+                value={newSectionName} onChange={e=>setNewSectionName(e.target.value)}/>
+              <div className="form-row">
+                <button className="btn primary" type="submit">Create</button>
+                <button className="btn ghost" type="button" onClick={()=>setShowNewSection(false)}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        )}
 
         {showArchive&&archive&&(
           <div className="card">
@@ -608,8 +634,8 @@
                                 <span className="task-text" style={{textDecoration:t.completed?"line-through":"none"}}>{label}</span>
                                 <div className="task-chips">
                                   <span className={`chip ${pri?.cls||"p-medium"}`}>{pri?.label||"Med"}</span>
-                                  <span className={`small-badge ${t.template_id?"":"" }`} style={{background:"var(--surface2)",color:"var(--muted)"}}>{t.template_id?"Recurring":"Today"}</span>
-                                  <span style={{background:"var(--surface2)",color:"var(--muted)"}} className="small-badge">{t.completed?"Done":"Open"}</span>
+                                  <span className="small-badge" style={{background:"var(--surface2)",color:"var(--muted)"}}>{t.template_id?"Recurring":"Today"}</span>
+                                  <span className="small-badge" style={{background:"var(--surface2)",color:"var(--muted)"}}>{t.completed?"Done":"Open"}</span>
                                 </div>
                               </div>
                             </div>
@@ -624,71 +650,113 @@
           </div>
         )}
 
+        {!sections.length&&<div className="card warn">No sections yet. Tap <strong>+ Section</strong> to create one.</div>}
+        {sections.length>0&&total===0&&<div className="card warn">No tasks for today yet — add one below!</div>}
+
         {sections.map(section=>(
           <div className="card" key={section.id} id={`sec-${section.id}`}>
             <SectionComponent
               user={user} section={section} sections={sections} setSections={setSections}
-              categories={categories} setError={setError} pushUndo={pushUndo}
+              categories={categories} setCategories={setCategories}
+              setError={setError} pushUndo={pushUndo}
               onComplete={cheer} moveTaskToSection={moveTaskToSection}
+              deleteSection={deleteSection} renameSection={renameSection}
+              moveSection={moveSection} loadCategories={loadCategories}
             />
           </div>
         ))}
 
-        {cheerMsg&&<div className="celebrate-toast" key={cheerKey}>{cheerMsg}</div>}
-
-        {showSettings&&(
-          <SettingsPanel
-            user={user} categories={categories} setCategories={setCategories}
-            setError={setError} onClose={()=>setShowSettings(false)} loadCategories={loadCategories}
-          />
+        {/* Floating undo button */}
+        {undoStack.length>0&&(
+          <button className="float-undo" onClick={applyUndo}
+            title={`Undo: ${undoStack[undoStack.length-1].label}`}>
+            ↩ {undoStack[undoStack.length-1].label.length>30
+              ? undoStack[undoStack.length-1].label.slice(0,30)+"…"
+              : undoStack[undoStack.length-1].label}
+          </button>
         )}
+
+        {cheerMsg&&<div className="celebrate-toast" key={cheerKey}>{cheerMsg}</div>}
       </>
     );
   }
 
-  // ── Settings panel ───────────────────────────────────────────────────────────
-  function SettingsPanel({user,categories,setCategories,setError,onClose,loadCategories}){
-    const [newName,setNewName]   = useState("");
-    const [newColor,setNewColor] = useState(SWATCH_COLORS[0]);
-    const [saving,setSaving]     = useState(false);
+  // ── Section Gear Panel ───────────────────────────────────────────────────────
+  function SectionGearPanel({section,sections,categories,setCategories,user,setError,onRename,onDelete,onMoveUp,onMoveDown,onClose,loadCategories}) {
+    const [draftName,setDraftName]   = useState(section.name);
+    const [newCatName,setNewCatName] = useState("");
+    const [newCatColor,setNewCatColor] = useState(SWATCH_COLORS[0]);
+    const [saving,setSaving]         = useState(false);
+
+    const sectionIdx = sections.findIndex(s=>String(s.id)===String(section.id));
+    const canMoveUp   = sectionIdx > 0;
+    const canMoveDown = sectionIdx < sections.length - 1;
+
+    async function saveName(){
+      if(draftName.trim()===section.name || !draftName.trim()) return;
+      await onRename(section.id, draftName.trim());
+    }
 
     async function addCategory(e){
       e.preventDefault();
-      const name=newName.trim(); if(!name) return;
+      const name=newCatName.trim(); if(!name) return;
       setSaving(true);
       try{
         const {data,error}=await sb.from("categories")
-          .insert([{user_id:user.id,name,color:newColor,order_index:categories.length}]).select();
+          .insert([{user_id:user.id,name,color:newCatColor,order_index:categories.length}]).select();
         if(error) throw error;
         setCategories([...categories,data[0]]);
-        setNewName(""); setNewColor(SWATCH_COLORS[0]);
+        setNewCatName(""); setNewCatColor(SWATCH_COLORS[0]);
       }catch(e){ setError("Failed to add category: "+e.message); }
       finally{ setSaving(false); }
     }
 
     async function deleteCategory(id){
-      if(!confirm("Delete this category? Tasks using it will keep their data but lose the label.")) return;
+      if(!confirm("Remove this category? Tasks using it will keep their data but lose the label.")) return;
       try{
         const {error}=await sb.from("categories").delete().eq("id",id).eq("user_id",user.id);
         if(error) throw error;
         setCategories(categories.filter(c=>String(c.id)!==String(id)));
-      }catch(e){ setError("Failed to delete category: "+e.message); }
+      }catch(e){ setError("Failed to remove category: "+e.message); }
     }
 
     return(
-      <div className="settings-overlay" onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
-        <div className="settings-panel">
-          <div className="settings-title">
-            <span>Settings</span>
+      <div className="gear-overlay" onClick={e=>{ if(e.target===e.currentTarget) onClose(); }}>
+        <div className="gear-panel">
+          <div className="gear-title">
+            <span>⚙ Section Settings</span>
             <button className="icon-btn" onClick={onClose} style={{border:"none",fontSize:20}}>×</button>
           </div>
 
-          <div style={{fontWeight:700,fontSize:15,marginBottom:12}}>Categories</div>
+          {/* ── Rename ── */}
+          <div className="gear-section">Rename Section</div>
+          <div style={{display:"flex",gap:8}}>
+            <input className="in sm" style={{flex:1}} value={draftName}
+              onChange={e=>setDraftName(e.target.value)}
+              onKeyDown={e=>{ if(e.key==="Enter"){ saveName(); onClose(); } }}/>
+            <button className="btn primary" style={{whiteSpace:"nowrap"}} onClick={()=>{ saveName(); onClose(); }}>Save</button>
+          </div>
+
+          {/* ── Move ── */}
+          <div style={{display:"flex",gap:8,marginTop:12}}>
+            <button className="btn ghost" disabled={!canMoveUp}   onClick={()=>{ onMoveUp();   onClose(); }} style={{flex:1}}>↑ Move Up</button>
+            <button className="btn ghost" disabled={!canMoveDown} onClick={()=>{ onMoveDown(); onClose(); }} style={{flex:1}}>↓ Move Down</button>
+          </div>
+
+          {/* ── Delete ── */}
+          <div style={{marginTop:10}}>
+            <button className="btn danger" style={{width:"100%"}} onClick={()=>{ onDelete(section.id); onClose(); }}>
+              Delete Section &amp; All Its Tasks
+            </button>
+          </div>
+
+          {/* ── Categories ── */}
+          <div className="gear-section">Categories</div>
+          <div style={{color:"var(--muted)",fontSize:12,marginBottom:10}}>Global — apply to any task across all sections.</div>
 
           {categories.length===0&&(
-            <div style={{color:"var(--muted)",fontSize:13,marginBottom:16}}>No categories yet. Add one below.</div>
+            <div style={{color:"var(--muted)",fontSize:13,marginBottom:12}}>No categories yet. Add one below.</div>
           )}
-
           {categories.map(c=>(
             <div className="cat-row" key={c.id}>
               <div className="cat-dot" style={{background:c.color}}/>
@@ -697,17 +765,17 @@
             </div>
           ))}
 
-          <div style={{marginTop:20,fontWeight:700,fontSize:14,marginBottom:10}}>Add category</div>
+          <div style={{marginTop:16,fontWeight:700,fontSize:13,color:"var(--text)",marginBottom:8}}>Add category</div>
           <form onSubmit={addCategory}>
-            <input className="in sm" type="text" placeholder="Category name…" value={newName} onChange={e=>setNewName(e.target.value)}/>
+            <input className="in sm" type="text" placeholder="Category name…" value={newCatName} onChange={e=>setNewCatName(e.target.value)}/>
             <div className="swatches">
               {SWATCH_COLORS.map(c=>(
-                <button key={c} type="button" className={`swatch${newColor===c?" active":""}`}
-                  style={{background:c}} onClick={()=>setNewColor(c)} title={c}/>
+                <button key={c} type="button" className={`swatch${newCatColor===c?" active":""}`}
+                  style={{background:c}} onClick={()=>setNewCatColor(c)} title={c}/>
               ))}
             </div>
             <div className="form-row">
-              <button className="btn primary" type="submit" disabled={saving||!newName.trim()}>
+              <button className="btn primary" type="submit" disabled={saving||!newCatName.trim()}>
                 {saving?"Saving…":"Add Category"}
               </button>
             </div>
@@ -718,7 +786,7 @@
   }
 
   // ── Section ──────────────────────────────────────────────────────────────────
-  function SectionComponent({user,section,sections,setSections,categories,setError,pushUndo,onComplete,moveTaskToSection}){
+  function SectionComponent({user,section,sections,setSections,categories,setCategories,setError,pushUndo,onComplete,moveTaskToSection,deleteSection,renameSection,moveSection,loadCategories}) {
     const [tasks,setTasks]             = useState(section.tasks||[]);
     const [newText,setNewText]         = useState("");
     const [newEstimate,setNewEstimate] = useState(null);
@@ -730,6 +798,7 @@
     const [draggedId,setDraggedId]     = useState(null);
     const [dragOverId,setDragOverId]   = useState(null);
     const [dropAbove,setDropAbove]     = useState(true);
+    const [showGear,setShowGear]       = useState(false);
     const inputRef    = useRef(null);
     const sectionsRef = useRef(sections);
     const curDate     = today();
@@ -770,7 +839,6 @@
     }
 
     function insertAfterParent(pId){ let i=tasks.findIndex(t=>same(t.id,pId))+1; while(i<tasks.length&&isDesc(tasks[i].id,pId)) i++; return i; }
-
     function startSubtask(pId){ setForcedParent(pId); setSubtaskMode(true); setTimeout(()=>inputRef.current?.focus(),0); }
 
     function handleSort(){
@@ -933,6 +1001,12 @@
       }catch(e){ setError("Update failed: "+e.message); }
     }
 
+    async function updateEstimate(taskId,newEstimate){
+      const task=tasks.find(t=>same(t.id,taskId)); if(!task) return;
+      const {label}=parseTask(task.text);
+      await updateText(taskId,buildTask(label,newEstimate));
+    }
+
     async function moveToPos(fromId,toId,above){
       if(same(fromId,toId)) return;
       const prevNormed=reindex([...tasks]); const bIds=branch(fromId);
@@ -947,15 +1021,12 @@
       try{ await persistOrder(normed); }catch(e){ setError("Order sync failed: "+e.message); }
     }
 
-    const TIME_OPTS=["5m","15m","30m","1h","2h"];
-
     function TaskComposer({inline}){
       return(
         <form className={inline?"subtask-form":""} onSubmit={addTask} style={{marginTop:inline?0:14}}>
           <input className="in" ref={inputRef} type="text" value={newText}
             placeholder={forcedParent||subtaskMode?"Add subtask…":"What do you need to do?"}
             onChange={e=>setNewText(e.target.value)}/>
-
           <div className="pri-picker">
             {PRIORITIES.map(p=>(
               <button key={p.value} type="button"
@@ -963,7 +1034,6 @@
                 onClick={()=>setNewPriority(p.value)}>{p.label}</button>
             ))}
           </div>
-
           <div className="time-picker">
             {TIME_OPTS.map(o=>(
               <button key={o} type="button" className={`time-chip${newEstimate===o?" active":""}`}
@@ -971,7 +1041,6 @@
             ))}
             <span style={{color:"var(--muted)",fontSize:12,lineHeight:"30px",marginLeft:2}}>estimate</span>
           </div>
-
           {categories.length>0&&(
             <div style={{marginTop:8}}>
               <select className="in sm" value={newCategoryId} onChange={e=>setNewCatId(e.target.value)}>
@@ -980,7 +1049,6 @@
               </select>
             </div>
           )}
-
           <div className="form-row">
             <button type="button" className={`btn${taskType==="daily"?" primary":" ghost"}`} onClick={()=>setTaskType("daily")}>Recurring</button>
             <button type="button" className={`btn${taskType==="one-time"?" primary":" ghost"}`} onClick={()=>setTaskType("one-time")}>Today Only</button>
@@ -1000,8 +1068,9 @@
             <div className="section-title">{section.name}</div>
             {tasks.length>0&&<div style={{color:"var(--muted)",fontSize:12,marginTop:2}}>{doneCnt}/{tasks.length} done</div>}
           </div>
-          <div style={{display:"flex",gap:6}}>
+          <div style={{display:"flex",gap:6,alignItems:"center"}}>
             {tasks.length>1&&<button className="btn ghost" style={{fontSize:12,padding:"6px 12px"}} onClick={handleSort}>↕ Sort</button>}
+            <button className="icon-btn" title="Section settings" onClick={()=>setShowGear(true)}>⚙</button>
           </div>
         </div>
 
@@ -1014,7 +1083,7 @@
                 toggleTask={toggleTask} deleteTask={deleteTask}
                 updateText={updateText} updateParent={updateParent}
                 updateType={updateType} updatePriority={updatePriority}
-                updateCategory={updateCategory}
+                updateCategory={updateCategory} updateEstimate={updateEstimate}
                 startSubtask={startSubtask}
                 moveTaskToSection={moveTaskToSection}
                 draggedId={draggedId} dragOverId={dragOverId} dropAbove={dropAbove}
@@ -1029,14 +1098,29 @@
         </ul>
 
         {!forcedParent&&<TaskComposer inline={false}/>}
+
+        {showGear&&(
+          <SectionGearPanel
+            section={section} sections={sections}
+            categories={categories} setCategories={setCategories}
+            user={user} setError={setError}
+            onRename={renameSection}
+            onDelete={deleteSection}
+            onMoveUp={()=>moveSection(section.id,-1)}
+            onMoveDown={()=>moveSection(section.id,1)}
+            onClose={()=>setShowGear(false)}
+            loadCategories={loadCategories}
+          />
+        )}
       </>
     );
   }
 
   // ── TaskItem ─────────────────────────────────────────────────────────────────
-  function TaskItem({task,section,sections,categories,toggleTask,deleteTask,updateText,updateParent,updateType,updatePriority,updateCategory,startSubtask,moveTaskToSection,draggedId,dragOverId,dropAbove,onDragStart,onDragOver,onDragEnd,onDrop}){
-    const [editing,setEditing] = useState(false);
-    const [draft,setDraft]     = useState(task.text);
+  function TaskItem({task,section,sections,categories,toggleTask,deleteTask,updateText,updateParent,updateType,updatePriority,updateCategory,updateEstimate,startSubtask,moveTaskToSection,draggedId,dragOverId,dropAbove,onDragStart,onDragOver,onDragEnd,onDrop}){
+    const [editing,setEditing]               = useState(false);
+    const [draft,setDraft]                   = useState(task.text);
+    const [editingEstimate,setEditingEst]    = useState(false);
 
     useEffect(()=>setDraft(task.text),[task.text]);
 
@@ -1048,8 +1132,7 @@
 
     function cyclePri(){
       const order=["high","medium","low"];
-      const next=order[(order.indexOf(task.priority||"medium")+1)%order.length];
-      updatePriority(task.id,next);
+      updatePriority(task.id,order[(order.indexOf(task.priority||"medium")+1)%order.length]);
     }
 
     const isDragging = String(draggedId)===String(task.id);
@@ -1077,33 +1160,53 @@
 
             {!editing&&(
               <div className="task-chips">
-                {/* Priority — click to cycle */}
+                {/* Priority */}
                 <button className={`chip ${pri.cls}`} onClick={cyclePri} title="Click to change priority">{pri.label}</button>
 
-                {/* Category — select to change */}
-                <select className="pill-select" value={task.category_id||""} onChange={e=>updateCategory(task.id,e.target.value||null)}
+                {/* Category */}
+                <select className="pill-select" value={task.category_id||""}
+                  onChange={e=>updateCategory(task.id,e.target.value||null)}
                   style={cat?{background:cat.color,color:"#fff",borderColor:cat.color}:{}}
                   title="Change category">
                   <option value="">No category</option>
                   {categories.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
 
-                {/* Section — select to move */}
+                {/* Section (move) */}
                 <select className="pill-select" value={String(task.section_id)}
                   onChange={e=>moveTaskToSection(task,section.id,e.target.value)}
                   title="Move to section">
                   {sections.map(s=><option key={s.id} value={String(s.id)}>{s.name}</option>)}
                 </select>
 
-                {/* Time estimate */}
-                {estimate&&<span className="time-badge">⏱ {estimate}</span>}
+                {/* Time estimate — click to edit */}
+                {!editingEstimate&&(
+                  estimate
+                    ? <button className="time-badge" onClick={()=>setEditingEst(true)} title="Edit time estimate">⏱ {estimate}</button>
+                    : <button className="chip add-time" onClick={()=>setEditingEst(true)} title="Add time estimate">+ time</button>
+                )}
 
-                {/* Recurring / Today badge */}
-                <button className={`chip ${task.template_id?"type-recurring":"type-today"}`}
-                  onClick={()=>updateType(task.id,task.template_id?"one-time":"daily")}
-                  title={task.template_id?"Recurring — click to make today-only":"Today only — click to make recurring"}>
-                  {task.template_id?"Recurring":"Today"}
-                </button>
+                {/* Inline estimate picker */}
+                {editingEstimate&&(
+                  <div style={{display:"flex",flexWrap:"wrap",gap:4,alignItems:"center",marginTop:2,width:"100%"}}>
+                    {TIME_OPTS.map(o=>(
+                      <button key={o} type="button"
+                        className={`time-chip${estimate===o?" active":""}`}
+                        onClick={()=>{ updateEstimate(task.id,estimate===o?null:o); setEditingEst(false); }}>{o}</button>
+                    ))}
+                    {estimate&&<button type="button" className="time-chip clear" onClick={()=>{ updateEstimate(task.id,null); setEditingEst(false); }}>clear</button>}
+                    <button type="button" className="time-chip" onClick={()=>setEditingEst(false)}>cancel</button>
+                  </div>
+                )}
+
+                {/* Recurring badge */}
+                {!editingEstimate&&(
+                  <button className={`chip ${task.template_id?"type-recurring":"type-today"}`}
+                    onClick={()=>updateType(task.id,task.template_id?"one-time":"daily")}
+                    title={task.template_id?"Recurring — click to make today-only":"Today only — click to make recurring"}>
+                    {task.template_id?"Recurring":"Today"}
+                  </button>
+                )}
               </div>
             )}
           </div>
