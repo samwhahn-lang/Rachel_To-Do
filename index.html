@@ -478,11 +478,12 @@
 
   // ── Auth ─────────────────────────────────────────────────────────────────────
   function AuthScreen({setError}) {
-    const [isLogin,setIsLogin] = useState(true);
-    const [email,setEmail]     = useState("");
-    const [pw,setPw]           = useState("");
-    const [loading,setLoading] = useState(false);
+    const [isLogin,setIsLogin]   = useState(true);
+    const [email,setEmail]       = useState("");
+    const [pw,setPw]             = useState("");
+    const [loading,setLoading]   = useState(false);
     const [localErr,setLocalErr] = useState(null);
+    const [resetSent,setResetSent] = useState(false);
 
     async function handleAuth(e){
       e.preventDefault(); setLoading(true); setLocalErr(null);
@@ -493,20 +494,47 @@
       finally{ setLoading(false); }
     }
 
+    async function handleReset(){
+      if(!email.trim()){ setLocalErr("Enter your email address above first."); return; }
+      setLoading(true); setLocalErr(null);
+      try{
+        const {error} = await sb.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: window.location.href
+        });
+        if(error) throw error;
+        setResetSent(true);
+      }catch(e){ setLocalErr(e.message); }
+      finally{ setLoading(false); }
+    }
+
     return (
       <div className="auth">
         <div className="auth-title">Rachel's Tasks</div>
         <div className="auth-sub">{isLogin?"Welcome back!":"Create your account"}</div>
         {localErr&&<div className="card error" style={{marginBottom:16}}>{localErr}</div>}
+        {resetSent&&(
+          <div className="card" style={{marginBottom:16,background:"var(--green-light)",borderLeft:"4px solid var(--green)",color:"var(--green)"}}>
+            Password reset email sent! Check your inbox.
+          </div>
+        )}
         <form onSubmit={handleAuth}>
-          <div><label>Email</label><input className="in" type="email" required disabled={loading} value={email} onChange={e=>setEmail(e.target.value)}/></div>
+          <div><label>Email</label><input className="in" type="email" required disabled={loading} value={email} onChange={e=>{ setEmail(e.target.value); setResetSent(false); }}/></div>
           <div style={{marginTop:12}}><label>Password</label><input className="in" type="password" required disabled={loading} value={pw} onChange={e=>setPw(e.target.value)}/></div>
           <div className="form-row"><button className="btn primary" type="submit" disabled={loading} style={{flex:1}}>{loading?"Please wait…":(isLogin?"Log In":"Sign Up")}</button></div>
           <div style={{textAlign:"center",marginTop:12}}>
-            <button className="btn ghost" type="button" disabled={loading} onClick={()=>setIsLogin(!isLogin)}>
+            <button className="btn ghost" type="button" disabled={loading} onClick={()=>{ setIsLogin(!isLogin); setResetSent(false); setLocalErr(null); }}>
               {isLogin?"Need an account? Sign up":"Already have an account? Log in"}
             </button>
           </div>
+          {isLogin&&(
+            <div style={{textAlign:"center",marginTop:8}}>
+              <button type="button" disabled={loading}
+                style={{background:"none",border:"none",color:"var(--muted)",cursor:"pointer",fontSize:13,textDecoration:"underline",fontFamily:"inherit"}}
+                onClick={handleReset}>
+                Forgot password?
+              </button>
+            </div>
+          )}
         </form>
       </div>
     );
