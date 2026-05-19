@@ -340,16 +340,26 @@
     },[]);
 
     async function ensurePermanentSections(userId) {
-      const {data:existing} = await sb.from("sections")
-        .select("name").eq("user_id",userId).eq("is_permanent",true);
-      const have = new Set((existing||[]).map(s=>s.name));
-      const missing = PERMANENT_SECTIONS.filter(s=>!have.has(s.name));
-      if(missing.length){
-        const {error} = await sb.from("sections").insert(
-          missing.map(s=>({...s,user_id:userId,is_permanent:true}))
-        );
-        if(error && error.code!=="23505") throw error;
+      // Remove any old non-permanent sections that have no tasks today
+      // (covers accounts created before the restructure)
+      const {data:nonPerm} = await sb.from("sections")
+        .select("id").eq("user_id",userId).eq("is_permanent",false);
+      if(nonPerm?.length){
+        const ids = nonPerm.map(s=>s.id);
+        const {data:occupiedTasks} = await sb.from("tasks")
+          .select("section_id").eq("user_id",userId).eq("date",today()).in("section_id",ids);
+        const occupiedIds = new Set((occupiedTasks||[]).map(t=>String(t.section_id)));
+        const emptyIds = ids.filter(id=>!occupiedIds.has(String(id)));
+        if(emptyIds.length) await sb.from("sections").delete().in("id",emptyIds);
       }
+
+      // Upsert the 4 permanent sections — on order_index conflict, rename + mark permanent
+      const {error} = await sb.from("sections")
+        .upsert(
+          PERMANENT_SECTIONS.map(s=>({...s,user_id:userId,is_permanent:true})),
+          {onConflict:"user_id,order_index"}
+        );
+      if(error) throw error;
     }
 
     async function ensureDaily(date,userId) {
