@@ -325,6 +325,7 @@
     const [categories, setCategories] = useState([]);
     const [archive,    setArchive]    = useState(null);
     const [showArchive,setShowArchive]= useState(false);
+    const [showPwReset,setShowPwReset]= useState(false);
     const userRef = useRef(null);
     const dateRef = useRef(today());
 
@@ -338,6 +339,7 @@
       const {data:al} = sb.auth.onAuthStateChange(async(event,session)=>{
         const u = session?.user||null;
         setUser(u); setLoading(false);
+        if(event==="PASSWORD_RECOVERY"){ setShowPwReset(true); return; }
         if(event==="SIGNED_OUT"){
           const id=userRef.current?.id;
           if(id){ dataCache.clear(id); histCache.clear(id); }
@@ -473,6 +475,7 @@
     }
 
     if(loading) return <div className="loading">Loading…</div>;
+    if(showPwReset&&user) return <SetPasswordScreen onDone={()=>setShowPwReset(false)}/>;
     if(!user)   return <AuthScreen setError={setError}/>;
 
     return (
@@ -485,6 +488,50 @@
           loadCategories={loadCategories}
         />
       </>
+    );
+  }
+
+  // ── Set Password (after reset link) ──────────────────────────────────────────
+  function SetPasswordScreen({onDone}) {
+    const [pw,setPw]           = useState("");
+    const [pw2,setPw2]         = useState("");
+    const [loading,setLoading] = useState(false);
+    const [localErr,setLocalErr] = useState(null);
+    const [done,setDone]       = useState(false);
+
+    async function handleSubmit(e){
+      e.preventDefault();
+      if(pw!==pw2){ setLocalErr("Passwords don't match."); return; }
+      if(pw.length<6){ setLocalErr("Password must be at least 6 characters."); return; }
+      setLoading(true); setLocalErr(null);
+      try{
+        const {error}=await sb.auth.updateUser({password:pw});
+        if(error) throw error;
+        setDone(true);
+        setTimeout(onDone,2000);
+      }catch(e){ setLocalErr(e.message); }
+      finally{ setLoading(false); }
+    }
+
+    return(
+      <div className="auth">
+        <div className="auth-title">New Password</div>
+        <div className="auth-sub">Choose a new password for your account.</div>
+        {localErr&&<div className="card error" style={{marginBottom:16}}>{localErr}</div>}
+        {done?(
+          <div className="card" style={{marginBottom:16,background:"var(--green-light)",borderLeft:"4px solid var(--green)",color:"var(--green)"}}>
+            Password updated! Taking you to your tasks…
+          </div>
+        ):(
+          <form onSubmit={handleSubmit}>
+            <div><label>New Password</label><input className="in" type="password" required autoFocus disabled={loading} value={pw} onChange={e=>setPw(e.target.value)}/></div>
+            <div style={{marginTop:12}}><label>Confirm Password</label><input className="in" type="password" required disabled={loading} value={pw2} onChange={e=>setPw2(e.target.value)}/></div>
+            <div className="form-row">
+              <button className="btn primary" type="submit" disabled={loading} style={{flex:1}}>{loading?"Saving…":"Set Password"}</button>
+            </div>
+          </form>
+        )}
+      </div>
     );
   }
 
