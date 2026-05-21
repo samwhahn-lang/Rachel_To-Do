@@ -480,7 +480,7 @@
         <TaskApp
           user={user} sections={sections} setSections={setSections}
           categories={categories} setCategories={setCategories}
-          setError={setError} loadSections={loadSections}
+          error={error} setError={setError} loadSections={loadSections}
           loadArchive={loadArchive} archive={archive} showArchive={showArchive}
           loadCategories={loadCategories}
         />
@@ -553,7 +553,7 @@
   }
 
   // ── TaskApp ──────────────────────────────────────────────────────────────────
-  function TaskApp({user,sections,setSections,categories,setCategories,setError,loadSections,loadArchive,archive,showArchive,loadCategories}) {
+  function TaskApp({user,sections,setSections,categories,setCategories,error,setError,loadSections,loadArchive,archive,showArchive,loadCategories}) {
     const [showNewSection,setShowNewSection] = useState(false);
     const [newSectionName,setNewSectionName] = useState("");
     const [undoStack,setUndoStack]           = useState([]);
