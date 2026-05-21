@@ -222,6 +222,19 @@
     }
     .celebrate-toast { animation:celebrate-in 2.4s ease-out forwards; background:var(--primary); border-radius:99px; bottom:140px; box-shadow:0 8px 32px rgba(124,92,191,.35); color:#fff; font-size:17px; font-weight:700; left:50%; padding:14px 28px; pointer-events:none; position:fixed; text-align:center; z-index:9999; }
 
+    .error-toast {
+      align-items:flex-start; background:var(--red); border-radius:14px;
+      bottom:80px; box-shadow:0 4px 20px rgba(224,112,112,.4);
+      color:#fff; display:flex; font-size:14px; font-weight:600;
+      gap:10px; left:12px; padding:14px 16px; position:fixed;
+      right:12px; z-index:500; line-height:1.4;
+    }
+    .error-toast button {
+      background:rgba(255,255,255,.25); border:none; border-radius:8px;
+      color:#fff; cursor:pointer; flex-shrink:0; font-family:inherit;
+      font-size:12px; font-weight:700; padding:4px 10px;
+    }
+
     @media (max-width:600px) {
       #root { padding:16px 12px 110px; }
       .task.sub { margin-left:12px; }
@@ -464,7 +477,6 @@
 
     return (
       <>
-        {error&&<div className="card error">{error} <button className="btn ghost" style={{marginLeft:8,fontSize:12}} onClick={()=>setError(null)}>Dismiss</button></div>}
         <TaskApp
           user={user} sections={sections} setSections={setSections}
           categories={categories} setCategories={setCategories}
@@ -586,7 +598,7 @@
         const next=[...sections,{...data[0],tasks:[]}];
         setSections(next); dataCache.set(user.id,next);
         setNewSectionName(""); setShowNewSection(false);
-      }catch(e){ setError("Failed to create section: "+e.message); }
+      }catch(e){ console.error("addSection error:",e); setError("Failed to create section: "+e.message); }
     }
 
     async function deleteSection(sectionId){
@@ -756,6 +768,13 @@
         )}
 
         {cheerMsg&&<div className="celebrate-toast" key={cheerKey}>{cheerMsg}</div>}
+
+        {error&&(
+          <div className="error-toast">
+            <span style={{flex:1}}>{error}</span>
+            <button onClick={()=>setError(null)}>✕</button>
+          </div>
+        )}
       </>
     );
   }
@@ -972,7 +991,7 @@
 
         setNewText(""); setNewEstimate(null); setNewPriority("medium"); setNewCatId("");
         setSubtaskMode(false); setForcedParent(null);
-      }catch(e){ setError("Failed to add task: "+e.message); }
+      }catch(e){ console.error("addTask error:",e); setError("Failed to add task: "+e.message); }
     }
 
     async function toggleTask(taskId,completed){
